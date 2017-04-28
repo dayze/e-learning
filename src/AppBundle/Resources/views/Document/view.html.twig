@@ -1,0 +1,23 @@
+{% extends 'base_app.html.twig' %}
+{% block body %}
+    <h1>Documents</h1>
+    <div class="row col-md-12 custyle">
+        <table class="table table-striped custab sortable" id="document-table">
+            <thead>
+            <a id="document-add-modal" class="btn btn-primary btn-xs "><b>+</b> Ajouter un nouveau document</a>
+            <tr>
+                <th>Nom</th>
+                <th>Section</th>
+                <th>Type</th>
+                <th></th>
+            </tr>
+            </thead>
+            {% for document in documents %}
+                {% include "AppBundle:Document/part:raw.html.twig" %}
+
+            {% endfor %}
+        </table>
+    </div>
+    <div id="crudModal"></div>
+    <script src="{{ asset('public/js/controller/document.js') }}"></script>
+{% endblock %}

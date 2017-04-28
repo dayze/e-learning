@@ -1,0 +1,7 @@
+app_debug:
+    path: /debug
+    defaults: { _controller: AppBundle:Base:debug }
+
+app_homepage:
+    path:     /
+    defaults: { _controller: AppBundle:Base:index }

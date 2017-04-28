@@ -1,0 +1,29 @@
+body{
+    height: 100vh;
+    font-family: -apple-system, BlinkMacSystemFont, Helvetica, sans-serif;
+}
+
+.content {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.form-signin {
+    width: 28%;
+    z-index: 2;
+    background: white;
+    padding : 30px 30px 55px 30px;
+    border-radius: 5%;
+}
+
+.bg-img {
+    background: url("../img/bg_login3.jpg");
+    background-size: cover;
+    display: block;
+    height: 100%;
+    left: 0;
+    position: fixed;
+    right: 0;
+    z-index: 1;
+}

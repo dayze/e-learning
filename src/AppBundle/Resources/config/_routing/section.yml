@@ -1,0 +1,25 @@
+app_section:
+    path: section/
+    defaults: { _controller: AppBundle:Section:display }
+
+app_createSection:
+    path: section/create
+    defaults: { _controller: AppBundle:Section:create }
+    options:
+        expose: true
+
+app_deleteSection:
+    path: section/delete/{id}
+    defaults: { _controller: AppBundle:Section:delete }
+    requirements:
+            id: '\d+'
+    options:
+        expose: true
+
+app_editSection:
+    path: section/edit/{id}
+    defaults: { _controller: AppBundle:Section:edit }
+    requirements:
+            id: '\d+'
+    options:
+        expose: true

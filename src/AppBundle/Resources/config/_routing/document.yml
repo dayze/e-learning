@@ -1,0 +1,25 @@
+app_document:
+    path: /document
+    defaults: { _controller: AppBundle:Document:index }
+
+app_document_create:
+     path: /document/create
+     defaults: { _controller: AppBundle:Document:create }
+     options:
+         expose: true
+
+app_document_delete:
+     path: /document/delete/{id}
+     defaults: { _controller: AppBundle:Document:delete }
+     requirements:
+         id: '\d+'
+     options:
+         expose: true
+
+app_document_edit:
+    path: /document/edit/{id}
+    defaults: { _controller: AppBundle:Document:edit }
+    requirements:
+        id: '\d+'
+    options:
+        expose: true

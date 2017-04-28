@@ -1,0 +1,23 @@
+{% extends 'base_app.html.twig' %}
+{% block body %}
+    <h1>Formateurs</h1>
+    <div class="row col-md-12 custyle">
+        <table class="table table-striped custab" id="user-table">
+            <thead>
+            <a id="user-add-modal" class="btn btn-primary btn-xs"><b>+</b> Ajouter un nouveau formateur</a>
+            <tr>
+                <th>Nom</th>
+                <th>Email</th>
+                <th></th>
+            </tr>
+            </thead>
+
+            {% for user in users %}
+                {% include 'AppBundle:Supervisor/part:raw.html.twig' %}
+            {% endfor %}
+
+        </table>
+    </div>
+    <div id="crudModal"></div>
+    <script src="{{ asset('public/js/controller/supervisor.js') }}"></script>
+{% endblock %}

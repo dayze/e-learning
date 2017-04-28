@@ -1,0 +1,23 @@
+{% extends 'base_app.html.twig' %}
+{% block body %}
+    <h1>Elèves</h1>
+    <div class="row col-md-12 custyle">
+        <div id="userType" data-userType="user" hidden></div>
+        <table class="table table-striped custab sortable" id="user-table">
+            <thead>
+            <a id="user-add-modal" class="btn btn-primary btn-xs"><b>+</b> Ajouter un élève</a>
+            <tr>
+                <th>Nom</th>
+                <th>Email</th>
+                <th>Promotion</th>
+                <th></th>
+            </tr>
+            </thead>
+            {% for user in section.users %}
+                {% include "AppBundle:User/part:raw.html.twig" %}
+            {% endfor %}
+        </table>
+    </div>
+    <div id="crudModal"></div>
+    <script src="{{ asset('public/js/controller/supervisor.js') }}"></script>
+{% endblock %}

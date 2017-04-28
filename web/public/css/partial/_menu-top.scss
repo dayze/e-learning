@@ -1,0 +1,98 @@
+$primary-blue: rgba(0, 133, 202, 1);
+$primary-pantone: #753bbd;
+$padding-min: 10px;
+$hover-color: rgba(255, 255, 255, 0.2);
+nav {
+  #topbar {
+    height: 35px;
+    background: $primary-blue;
+    position: relative;
+    #logo-top {
+      position: absolute;
+      padding-right: 10px;
+      padding-left: 10px;
+      max-height: 25px;
+      line-height: 35px;
+      img {
+        max-height: 100%;
+      }
+    }
+    .burger-menu {
+      cursor: pointer;
+      position: absolute;
+      left: 150px;
+      bottom:0;
+      .bar1, .bar2, .bar3 {
+        width: 27px;
+        height: 4px;
+        background-color: white;
+        transition: 0.4s;
+        margin: 5px 0;
+      }
+      .change.bar1 {
+        -webkit-transform: rotate(-45deg) translate(-9px, 6px) ;
+        transform: rotate(-45deg) translate(-9px, 6px);
+      }
+      .change.bar2 {
+        -webkit-transform: rotate(-45deg) translate(-9px, 6px) ;
+        opacity: 0;
+      }
+      .change.bar3 {
+        -webkit-transform: rotate(-45deg) translate(-9px, 6px) ;
+        transform: rotate(45deg) translate(-8px, -8px);
+      }
+    }
+    #content-top-user {
+      position: absolute;
+      right: 0;
+      height: 35px;
+      margin-right: 10px;
+      .dropdown {
+        display: inline-block;
+        cursor: pointer;
+
+        .user-text {
+          color: white;
+          padding: 7px 7px;
+          .circle {
+            width: 17px;
+            height: 17px;
+            border-radius: 8.5px;
+            font-size: 10px;
+            color: #fff;
+            line-height: 17px;
+            text-align: center;
+            background: $primary-pantone;
+            position: absolute;
+            top: 0;
+            right: 0;
+
+          }
+        }
+        .user-text:hover {
+          background: $hover-color;
+        }
+      }
+      .dropdown-menu {
+        right: 0;
+        left: auto;
+        width: 240px;
+        padding:0;
+        .user-notif-top {
+          padding: 10px 10px 10px 10px;
+          p {
+            font-size: 0.9em;
+            margin:0;
+            font-style: italic;
+          }
+        }
+        .user-notif-top:hover {
+          background: #ecf0f1;
+        }
+      }
+      .caret {
+        display: none
+      }
+    }
+  }
+}

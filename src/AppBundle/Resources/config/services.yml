@@ -1,0 +1,26 @@
+services:
+    app.base:
+        abstract: true
+        arguments:
+            entityManager: "@doctrine.orm.entity_manager"
+            container: "@service_container"
+
+    app.section:
+        class: AppBundle\Service\SectionService
+        parent: app.base
+
+    app.document:
+        class: AppBundle\Service\DocumentService
+        parent: app.base
+
+    app.user:
+        class: AppBundle\Service\UserService
+        parent: app.base
+
+    app.course:
+        class: AppBundle\Service\CourseService
+        parent: app.base
+
+    app.file_uploader:
+        class: AppBundle\Service\FileUploader
+        arguments: ['%document_directory%']

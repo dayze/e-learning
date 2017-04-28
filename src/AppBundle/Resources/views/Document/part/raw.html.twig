@@ -1,0 +1,15 @@
+<tr>
+    <td>{{ document.name }}</td>
+    <td>
+        {% for section in document.sections %}
+            {{ section.name }}
+        {% endfor %}
+    </td>
+    <td>{{ document.type }}</td>
+    <td>
+        <a href="{{ asset('uploads/document/' ~ document.path) }}" target="_blank" class="btn btn-success btn-xs"><i
+                    class="fa fa-eye"></i></a>
+        <a data-id="{{ document.id }}" class="btn btn-primary btn-xs ajaxEdit"><i class="fa fa-edit"></i></a>
+        <a data-id="{{ document.id }}" class="btn btn-danger btn-xs ajaxDelete"><i class="fa fa-remove"></i></a>
+    </td>
+</tr>

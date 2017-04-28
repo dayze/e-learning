@@ -1,0 +1,24 @@
+{% extends 'base_app.html.twig' %}
+{% block body %}
+    <h1>Sections</h1>
+    <div class="row col-md-12 custyle">
+        <table class="table table-striped custab sortable" id="section-table">
+            <thead>
+            <a data-toggle="modal" id="section-add-modal" class="btn btn-primary btn-xs"><b>+</b>
+                Ajouter une nouvelle section</a>
+            <tr>
+                <th>Nom</th>
+                <th>Promotion</th>
+                <th></th>
+            </tr>
+            </thead>
+            {% for section in sections %}
+                {% include "AppBundle:Section/part:raw.html.twig" %}
+            {% endfor %}
+        </table>
+    </div>
+    <div id="addSectionModal">
+    </div>
+    <script src="{{ asset('public/js/main.js') }}"></script>
+    <script src="{{ asset('public/js/controller/section.js') }}"></script>
+{% endblock %}

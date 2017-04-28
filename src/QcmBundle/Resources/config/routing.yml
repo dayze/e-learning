@@ -1,0 +1,9 @@
+qcm_display_all:
+    path:     /qcm
+    defaults: { _controller: QcmBundle:Base:displayAll }
+
+qcm_display_questions:
+    path: /qcm/{id}
+    requirements:
+        id: '\d+'
+    defaults: { _controller: QcmBundle:Base:displayQuestionOfQcm }

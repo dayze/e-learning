@@ -1,0 +1,14 @@
+base:
+    resource: "@AppBundle/Resources/config/_routing/base.yml"
+
+section:
+    resource: "@AppBundle/Resources/config/_routing/section.yml"
+
+document:
+    resource: "@AppBundle/Resources/config/_routing/document.yml"
+
+user:
+    resource: "@AppBundle/Resources/config/_routing/user.yml"
+
+course:
+    resource: "@AppBundle/Resources/config/_routing/course.yml"

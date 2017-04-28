@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <title></title>
+</head>
+<body>
+
+</body>
+</html>
+
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <title>E-learning | {% block title %}Accueil{% endblock %}</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ asset('public/css/reset.css') }}">
+    <link rel="stylesheet" href="{{ asset('public/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('public/css/main.css') }}">
+    <link rel="stylesheet" href="{{ asset('public/css/font-awesome.css') }}">
+    <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
+    <script src="{{ asset('public/js/jquery.js') }}"></script>
+    <script src="{{ asset('public/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('public/js/sorttable.js') }}"></script>
+    {% block stylesheets %}{% endblock %}
+    <style>
+
+    </style>
+</head>
+<body>
+<header>
+    <nav>
+        <div id="topbar">
+            <div id="logo-top">
+                <img id="logo-top-img" src="{{ asset('public/img/logo_w.png') }}" alt="logo du site e-learning">
+            </div>
+            <div class="burger-menu">
+                <div class="bar1"></div>
+                <div class="bar2"></div>
+                <div class="bar3"></div>
+            </div>
+            <div id="content-top-user">
+                <div class="dropdown">
+                    <span class="" type="" data-toggle="dropdown">
+                        <div class="user-text"><i class="fa fa-bell fa-lg"><div class="circle">1</div></i></div>
+                        <span class="caret"></span></span>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <div class="user-notif-top">
+                                <i class="fa fa-desktop"></i>
+                                <span>Système</span>
+                                <p>Il vous reste 3h de cours à rattraper</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="dropdown">
+                    <span class="" data-toggle="dropdown">
+                        <div class="user-text"><i
+                                    class="fa fa-user fa-lg"></i><span> {{ app.user.username }}</span></div>
+                        <span class="caret"></span></span>
+                    <ul class="dropdown-menu">
+                        <li><a href="{{ path('fos_user_security_logout') }}">Mon profil</a></li>
+                        <li><a href="{{ path('fos_user_security_logout') }}">Se déconnecter</a></li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </nav>
+</header>
+<div id="wrapper">
+    <div id="sidebar-wrapper">
+        <ul class="sidebar-nav">
+            <li>
+                <a class="active" href="#"><i class="fa fa-home"></i> Dashboard</a>
+            </li>
+            <li>
+                <a href="{{ path('app_supervisor_display') }}"><i class="fa fa-address-book"></i> Formateurs</a>
+            </li>
+            <li>
+                <a href="{{ path('app_section') }}"><i class="fa fa-folder"></i> Sections</a>
+            </li>
+            <li>
+                <a href="{{ path('app_course') }}"><i class="fa fa-book"></i> Cours</a>
+            </li>
+            <li>
+                <a href="{{ path('app_document') }}"><i class="fa fa-file"></i> Documents</a>
+            </li>
+
+            <li>
+                <a href="{{ path('qcm_display_all') }}"><i class="fa fa-bookmark"> </i> Exercices</a>
+            </li>
+        </ul>
+    </div>
+    <div id="page-content-wrapper">
+        {% block body %}{% endblock %}
+    </div>
+    <!-- /#page-content-wrapper -->
+
+</div>
+<!-- /#wrapper -->
+
+{% block javascripts %}{% endblock %}
+
+<script>
+    $(".burger-menu").click(function (e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("toggled");
+        $(".burger-menu").children('div').toggleClass('change');
+    });
+    $(".menu-1 li").click(function (e) {
+        $(e.target).children('ul').toggle();
+    });
+
+
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,25 @@
+app_course:
+    path: cours/
+    defaults: { _controller: AppBundle:Course:display }
+
+app_create_course:
+    path: cours/create
+    defaults: { _controller: AppBundle:Course:create }
+    options:
+        expose: true
+
+app_delete_course:
+    path: cours/delete/{id}
+    defaults: { _controller: AppBundle:Course:delete }
+    requirements:
+            id: '\d+'
+    options:
+        expose: true
+
+app_edit_course:
+    path: cours/edit/{id}
+    defaults: { _controller: AppBundle:Course:edit }
+    requirements:
+            id: '\d+'
+    options:
+        expose: true
