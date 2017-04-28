@@ -34,6 +34,12 @@ class Course
     private $supervisor;
 
     /**
+     * @ORM\OneToMany(targetEntity="CourseCategory", mappedBy="course")
+     */
+    private $courseCategories;
+
+
+    /**
      * Get id
      *
      * @return int
@@ -82,5 +88,23 @@ class Course
     {
         $this->supervisor = $supervisor;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getCourseCategories()
+    {
+        return $this->courseCategories;
+    }
+
+    /**
+     * @param mixed $courseCategories
+     */
+    public function setCourseCategories($courseCategories)
+    {
+        $this->courseCategories = $courseCategories;
+    }
+
+
 }
 

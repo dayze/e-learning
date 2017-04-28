@@ -5,10 +5,10 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * CourseCategory
+ * Course
  *
  * @ORM\Table(name="course_category")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\CourseCategoryRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\CourseRepository")
  */
 class CourseCategory
 {
@@ -28,6 +28,11 @@ class CourseCategory
      */
     private $name;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="Course", inversedBy="courses")
+     */
+    private $course;
+
 
     /**
      * Get id
@@ -44,7 +49,7 @@ class CourseCategory
      *
      * @param string $name
      *
-     * @return CourseCategory
+     * @return $this
      */
     public function setName($name)
     {
@@ -62,5 +67,22 @@ class CourseCategory
     {
         return $this->name;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getCourse()
+    {
+        return $this->course;
+    }
+
+    /**
+     * @param mixed $course
+     */
+    public function setCourse($course)
+    {
+        $this->course = $course;
+    }
+
 }
 
