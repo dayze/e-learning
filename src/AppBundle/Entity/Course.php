@@ -34,7 +34,7 @@ class Course
     private $supervisor;
 
     /**
-     * @ORM\OneToMany(targetEntity="CourseCategory", mappedBy="course")
+     * @ORM\OneToMany(targetEntity="CourseCategory", mappedBy="course", cascade={"remove"})
      */
     private $courseCategories;
 

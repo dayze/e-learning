@@ -181,6 +181,13 @@ body {
   box-shadow: 3px 3px 0px transparent;
   transition: 0.5s; }
 
+.course-category {
+  background-color: #3498db; }
+  .course-category td {
+    padding-left: 30px !important; }
+  .course-category td, .course-category a {
+    color: #ecf0f1; }
+
 h1, h2, h3, h4, p, span, a {
   font-family: -apple-system, BlinkMacSystemFont, Helvetica, sans-serif; }
 

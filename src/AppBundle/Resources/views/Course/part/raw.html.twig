@@ -1,7 +1,12 @@
-<tr>
+<tr class="clickable">
     <td>{{ course.name }}</td>
     <td>
-        <a data-id="{{ section.id }}" href="" class="btn btn-primary btn-xs ajaxEdit"><i class="fa fa-edit"></i></a>
-        <a data-id="{{ section.id }}" class="btn btn-danger btn-xs ajaxDelete"><i class="fa fa-remove"></i></a>
+        <a data-id="{{ course.id }}" href="" class="btn btn-primary btn-xs" id="courseCategory-add-modal">+ Ajouter une matière</a>
+        <a data-toggle="collapse" data-target=".course{{ course.id }}" class="btn btn-success btn-xs"><i class="fa fa-eye"></i></a>
+        <a data-id="{{ course.id }}" href="" class="btn btn-primary btn-xs ajaxEdit"><i class="fa fa-edit"></i></a>
+        <a data-id="{{ course.id }}" class="btn btn-danger btn-xs ajaxDeleteCategory"><i class="fa fa-remove"></i></a>
     </td>
 </tr>
+{% for courseCategory in course.courseCategories %}
+    {% include 'AppBundle:CourseCategory/part:raw.html.twig' %}
+{% endfor %}

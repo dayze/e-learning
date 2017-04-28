@@ -29,7 +29,7 @@ class CourseCategory
     private $name;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Course", inversedBy="courses")
+     * @ORM\ManyToOne(targetEntity="Course", inversedBy="courseCategories")
      */
     private $course;
 

@@ -1,10 +1,10 @@
 {% extends 'base_app.html.twig' %}
 {% block body %}
-    <h1>Sections</h1>
+    <h1>Cours</h1>
     <div class="row col-md-12 custyle">
-        <table class="table table-striped custab sortable" id="section-table">
+        <table class="table custab" id="course-table">
             <thead>
-            <a data-toggle="modal" id="section-add-modal" class="btn btn-primary btn-xs"><b>+</b>
+            <a data-toggle="modal" id="course-add-modal" class="btn btn-primary btn-xs"><b>+</b>
                 Ajouter un nouveau cours</a>
             <tr>
                 <th>Nom</th>
@@ -16,8 +16,14 @@
             {% endfor %}
         </table>
     </div>
-    <div id="addSectionModal">
+    <div id="crudModal">
     </div>
     <script src="{{ asset('public/js/main.js') }}"></script>
-    <script src="{{ asset('public/js/controller/section.js') }}"></script>
+    <script src="{{ asset('public/js/controller/course.js') }}"></script>
+    <script src="{{ asset('public/js/controller/courseCategory.js') }}"></script>
+    <script>
+        $('.collapse').on('show.bs.collapse', function () {
+            $('.collapse.in').collapse('hide');
+        });
+    </script>
 {% endblock %}

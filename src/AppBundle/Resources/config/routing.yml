@@ -12,3 +12,6 @@ user:
 
 course:
     resource: "@AppBundle/Resources/config/_routing/course.yml"
+
+courseCategory:
+    resource: "@AppBundle/Resources/config/_routing/courseCategory.yml"

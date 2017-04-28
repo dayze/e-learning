@@ -1,0 +1,23 @@
+app_create_courseCategory:
+    path: coursCategory/create/{id}
+    defaults: { _controller: AppBundle:CourseCategory:create }
+    requirements:
+        id: '\d+'
+    options:
+        expose: true
+
+app_delete_courseCategory:
+    path: coursCategory/delete/{id}
+    defaults: { _controller: AppBundle:CourseCategory:delete }
+    requirements:
+            id: '\d+'
+    options:
+        expose: true
+
+app_edit_courseCategory:
+    path: coursCategory/edit/{id}
+    defaults: { _controller: AppBundle:CourseCategory:edit }
+    requirements:
+            id: '\d+'
+    options:
+        expose: true

@@ -21,6 +21,10 @@ services:
         class: AppBundle\Service\CourseService
         parent: app.base
 
+    app.course_category:
+        class: AppBundle\Service\CourseCategoryService
+        parent: app.base
+
     app.file_uploader:
         class: AppBundle\Service\FileUploader
         arguments: ['%document_directory%']

@@ -5,10 +5,10 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Ajout d'un cours</h4>
+                    <h4 class="modal-title">Ajout d'une matière</h4>
                 </div>
                 <div class="modal-body">
-                    <form method="POST" class="ajaxForm" action="{{ form.vars.action }}">
+                    <form method="POST" class="ajaxFormCategory" action="{{ form.vars.action }}">
                         <div class="form-group">
                             {{ form_errors(form) }}
                             {{ form_label(form.name, "Nom :") }}
