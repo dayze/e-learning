@@ -21,7 +21,7 @@ class Supervisor extends User
     }
 
     /**
-     * @ORM\ManyToOne(targetEntity="Course", inversedBy="supervisor")
+     * @ORM\OneToMany(targetEntity="Course", mappedBy="supervisor")
      */
     private $courses;
 

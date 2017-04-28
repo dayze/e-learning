@@ -29,7 +29,7 @@ class Course
     private $name;
 
     /**
-     * @ORM\OneToMany(targetEntity="Supervisor", mappedBy="courses")
+     * @ORM\ManyToOne(targetEntity="Supervisor", inversedBy="courses")
      */
     private $supervisor;
 

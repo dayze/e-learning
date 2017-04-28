@@ -19,7 +19,7 @@ class LoadCourseData extends AbstractFixture implements OrderedFixtureInterface
     {
         $course1 = new Course();
         $course1->setName('Français');
-        $course1->setSupervisor($this->getReference("supervisor1")); //todo that
+        $course1->setSupervisor($this->getReference("supervisor1"));
         $manager->persist($course1);
         $this->addReference('course1', $course1);
         $manager->flush();
