@@ -33,6 +33,11 @@ class CourseCategory
      */
     private $course;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Document", mappedBy="courseCategory")
+     */
+    private $documents;
+
 
     /**
      * Get id
@@ -82,6 +87,22 @@ class CourseCategory
     public function setCourse($course)
     {
         $this->course = $course;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDocuments()
+    {
+        return $this->documents;
+    }
+
+    /**
+     * @param mixed $documents
+     */
+    public function setDocuments($documents)
+    {
+        $this->documents = $documents;
     }
 
 }

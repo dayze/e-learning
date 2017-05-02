@@ -22,7 +22,7 @@ class LoadSectionData extends AbstractFixture implements OrderedFixtureInterface
         $section1->setPromotion(new \DateTime());
         $section1->addUser($this->getReference('user1'))
             ->addUser($this->getReference('user2'));
-        $section1->addDocument($this->getReference("document1"))->addDocument($this->getReference("document2"));
+        //$section1->addDocument($this->getReference("document1"))->addDocument($this->getReference("document2"));
         $manager->persist($section1);
         $manager->flush();
         $this->addReference('section1', $section1);

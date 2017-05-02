@@ -23,6 +23,7 @@ class LoadDocumentData extends AbstractFixture implements OrderedFixtureInterfac
         $document1->setAvailable(true);
         $document1->setName("Cours 1");
         $document1->setType('pdf');
+        $document1->setCourseCategory($this->getReference('courseCategory1'));
         $manager->persist($document1);
         $this->addReference('document1', $document1);
 
@@ -39,6 +40,6 @@ class LoadDocumentData extends AbstractFixture implements OrderedFixtureInterfac
 
     public function getOrder()
     {
-        return 2;
+        return 6;
     }
 }

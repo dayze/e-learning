@@ -114,5 +114,10 @@ class QcmAnswer
         $this->qcmQuestion = $qcmQuestion;
     }
 
+    public function __toString()
+    {
+        return $this->response;
+    }
+
 }
 

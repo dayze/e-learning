@@ -1,16 +1,9 @@
 {% form_theme form 'bootstrap_3_layout.html.twig' %}
 {% extends 'base_app.html.twig' %}
 {% block body %}
-    <h1>{{ qcmQuestions[0].qcm.name }}</h1>
-{#
-    {% for qcmQuestion in qcmQuestions %}
-        <h2>{{ qcmQuestion.question }}</h2>
-        {% for answer in qcmQuestion.qcmAnswers %}
-            <input type="radio">{{ answer.response }} <br>
-        {% endfor %}
-    {% endfor %}
-#}
+    {#<h1>{{ qcmQuestions[0].qcm.name }}</h1>#}
     {{ form_start(form) }}
-    {{ form_widget(form) }}
     {{ form_end(form) }}
+    {{ form_rest(form) }}
+
 {% endblock %}

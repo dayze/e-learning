@@ -2,6 +2,7 @@
 
 namespace QcmBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -12,6 +13,11 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Qcm
 {
+    public function __construct()
+    {
+        $this->qcmQuestions = new ArrayCollection();
+    }
+
     /**
      * @var int
      *
@@ -28,6 +34,10 @@ class Qcm
      */
     private $name;
 
+    /**
+     * @ORM\OneToMany(targetEntity="QcmQuestion", mappedBy="qcm", cascade={"persist", "remove"})
+     */
+    private $qcmQuestions;
 
     /**
      * Get id
@@ -61,6 +71,25 @@ class Qcm
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getQcmQuestions()
+    {
+        return $this->qcmQuestions;
+    }
+
+    public function addQcmQuestion(QcmQuestion $qcmQuestion)
+    {
+        $qcmQuestion->addQcm($this);
+        $this->qcmQuestions->add($qcmQuestion);
+    }
+
+    public function removeQcmQuestion(QcmQuestion $qcmQuestion)
+    {
+        $this->qcmQuestions->removeElement($qcmQuestion);
     }
 }
 

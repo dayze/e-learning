@@ -43,7 +43,7 @@ class QcmQuestion
     private $question;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Qcm")
+     * @ORM\ManyToOne(targetEntity="Qcm", inversedBy="qcmQuestions", cascade={"persist", "remove"})
      */
     private $qcm;
 
@@ -126,6 +126,11 @@ class QcmQuestion
         $this->qcm = $qcm;
     }
 
+    public function addQcm(Qcm $qcm)
+    {
+        $this->qcm = $qcm;
+    }
+
     /**
      * @return mixed
      */
@@ -140,6 +145,11 @@ class QcmQuestion
     public function setQcmAnswers($qcmAnswers)
     {
         $this->qcmAnswers = $qcmAnswers;
+    }
+
+    public function __toString()
+    {
+        return $this->question;
     }
 }
 

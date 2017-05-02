@@ -7,3 +7,25 @@ qcm_display_questions:
     requirements:
         id: '\d+'
     defaults: { _controller: QcmBundle:Base:displayQuestionOfQcm }
+
+app_create_qcm:
+    path: qcm/create
+    defaults: { _controller: QcmBundle:Base:create }
+    options:
+        expose: true
+
+app_delete_qcm:
+    path: qcm/delete/{id}
+    defaults: { _controller: QcmBundle:Base:delete }
+    requirements:
+            id: '\d+'
+    options:
+        expose: true
+
+app_edit_qcm:
+    path: qcm/edit/{id}
+    defaults: { _controller: QcmBundle:Base:edit }
+    requirements:
+            id: '\d+'
+    options:
+        expose: true

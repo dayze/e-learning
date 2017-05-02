@@ -50,6 +50,11 @@ class Document
     private $sections;
 
     /**
+     * @ORM\ManyToOne(targetEntity="CourseCategory", inversedBy="documents")
+     */
+    private $courseCategory;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)
@@ -190,6 +195,22 @@ class Document
     public function setType($type)
     {
         $this->type = $type;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCourseCategory()
+    {
+        return $this->courseCategory;
+    }
+
+    /**
+     * @param mixed $courseCategory
+     */
+    public function setCourseCategory($courseCategory)
+    {
+        $this->courseCategory = $courseCategory;
     }
 }
 

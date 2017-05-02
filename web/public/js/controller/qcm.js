@@ -1,32 +1,29 @@
-var controllerDocument = function () {
+var controllerQcm = function () {
+
 };
 
 /*************************************CRUD**************************************************/
-controllerDocument.prototype.addEditProcessing = function () {
+controllerQcm.prototype.addEditProcessing = function () {
     var that = this;
     $('body').on('submit', '.ajaxForm', function (e) {
         e.preventDefault();
-        console.log(new FormData($(this)[0]));
         $.ajax({
-            type:"post",
-            contentType:false,
-            processData:false,
-            cache:false,
+            type: $(this).attr('method'),
             url: $(this).attr('action'),
-            data: new FormData($(this)[0])
+            data: $(this).serialize()
         })
             .done(function (resp) {
                 $("#crudModal").modal("hide");
-                if (resp.action == "new") {
-                    $("#document-table").find("tr:last").after(resp.data);
-                    $("#document-table").find("tr:last").hide().fadeIn(400);
+                if(resp.action == "new"){
+                /*    $("#course-table").find("tr:last").after(resp.data);
+                    $("#course-table").find("tr:last").hide().fadeIn(400);*/
                 }
-                else if (resp.action == "edit") {
+                else if(resp.action == "edit"){
                     $(".ajaxEdit[data-id=" + resp.id + "]").parents('tr').replaceWith(resp.data);
                 }
             })
             .fail(function (jqXHR, textStatus, errorThrown) {
-                console.log(jqXHR.responseJSON);
+                console.log(jqXHR);
                 if (typeof jqXHR.responseJSON !== 'undefined') {
                     if (jqXHR.responseJSON.hasOwnProperty('form')) {
                         $("#crudModal").replaceWith(jqXHR.responseJSON.form);
@@ -40,14 +37,14 @@ controllerDocument.prototype.addEditProcessing = function () {
     })
 };
 
-controllerDocument.prototype.deleteProcess = function () {
+controllerQcm.prototype.deleteProcess = function () {
     var that = this;
     $('body').on('click', '.ajaxDelete', function (e) {
         e.preventDefault();
         that.sectionRawElement = $(this).parents('tr');
         $.ajax({
             type: "GET",
-            url: Routing.generate("app_document_delete", {"id": $(this).attr('data-id')})
+            url: Routing.generate("app_delete_qcm", {"id": $(this).attr('data-id')})
         })
             .done(function (resp) {
                 that.sectionRawElement.fadeOut(400, function () {
@@ -66,12 +63,12 @@ controllerDocument.prototype.deleteProcess = function () {
 
 };
 
-controllerDocument.prototype.newDisplay = function () {
-    $('body').on('click', '#document-add-modal', function (e) {
+controllerQcm.prototype.newDisplay = function () {
+    $('body').on('click', '#qcm-add-modal', function (e) {
         e.preventDefault();
         $.ajax({
             type: "GET",
-            url: Routing.generate("app_document_create")
+            url: Routing.generate("app_create_qcm")
         })
             .done(function (resp) {
                 $("#crudModal").replaceWith(resp.form);
@@ -85,13 +82,13 @@ controllerDocument.prototype.newDisplay = function () {
 
 };
 
-controllerDocument.prototype.editDisplay = function () {
+controllerQcm.prototype.editDisplay = function () {
     var that = this;
     $('body').on('click', '.ajaxEdit', function (e) {
         e.preventDefault();
         $.ajax({
             type: "GET",
-            url: Routing.generate("app_document_edit", {"id": $(this).attr('data-id')})
+            url: Routing.generate("app_edit_course", {"id": $(this).attr('data-id')})
         })
             .done(function (resp) {
                 $("#crudModal").replaceWith(resp.form);
@@ -107,14 +104,14 @@ controllerDocument.prototype.editDisplay = function () {
 /*************************************OTHERS**************************************************/
 
 
-controllerDocument.prototype.init = function () {
+controllerQcm.prototype.init = function () {
     this.addEditProcessing();
     this.deleteProcess();
     this.newDisplay();
     this.editDisplay();
-    };
+};
 
 $(function () {
-    var controller = new controllerDocument();
+    var controller = new controllerQcm();
     controller.init();
 });

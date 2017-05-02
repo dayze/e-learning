@@ -29,6 +29,12 @@
                     </div>
                     <div class="form-group">
                         {{ form_errors(form) }}
+                        {{ form_label(form.courseCategory, "Matière :") }}
+                        {{ form_widget(form.courseCategory) }}
+                        <div class="bg-danger">{{ form_errors(form.courseCategory) }}</div>
+                    </div>
+                    <div class="form-group">
+                        {{ form_errors(form) }}
                         {{ form_label(form.available, "Public :") }}
                         {{ form_widget(form.available) }}
                         <div class="bg-danger">{{ form_errors(form.available) }}</div>

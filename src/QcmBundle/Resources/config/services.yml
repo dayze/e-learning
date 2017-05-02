@@ -1,4 +1,5 @@
 services:
-#    qcm.example:
-#        class: QcmBundle\Example
-#        arguments: ["@service_id", "plain_value", "%parameter%"]
+    app.qcm:
+        class: QcmBundle\Service\QcmService
+        parent: app.base
+

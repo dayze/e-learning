@@ -21,6 +21,7 @@ class LoadCourseCategoryData extends AbstractFixture implements OrderedFixtureIn
         $courseCategory1 = new CourseCategory();
         $courseCategory1->setName('grammaire');
         $courseCategory1->setCourse($this->getReference("course1"));
+        $this->addReference('courseCategory1', $courseCategory1);
         $manager->persist($courseCategory1);
         $manager->flush();
     }
