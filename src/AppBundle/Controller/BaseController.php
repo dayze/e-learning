@@ -19,7 +19,12 @@ class BaseController extends Controller
     {
         $securityContext = $this->get('security.authorization_checker');
         if ($securityContext->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
-            return $this->dashboardAction();
+            if($securityContext->isGranted('ROLE_ADMIN')){
+                return $this->dashboardAction();
+            }
+            else if($securityContext->isGranted('ROLE_STUDENT')){
+                return $this->studentDashboardAction();
+            }
         } else {
             return $this->redirectToRoute('fos_user_security_login');
         }
@@ -30,6 +35,10 @@ class BaseController extends Controller
         return $this->render('AppBundle:Default:homepage.html.twig');
     }
 
+    public function studentDashboardAction()
+    {
+        
+    }
 
 
 }

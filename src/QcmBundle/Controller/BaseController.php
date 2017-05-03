@@ -106,29 +106,29 @@ class BaseController extends Controller
         return new JsonResponse(array("error" => false), 200);
     }
 
-    public function editAction(Request $request, Course $course)
+    public function editAction(Request $request, Qcm $qcm)
     {
-        $form = $this->get("form.factory")->create(CourseType::class, $course, array(
-            'action' => $this->generateUrl('app_edit_course', array('id' => $course->getId())),
+        $form = $this->get("form.factory")->create(QcmType::class, $qcm, array(
+            'action' => $this->generateUrl('app_edit_qcm', array('id' => $qcm->getId())),
             'method' => 'POST'));
         $form->handleRequest($request);
         if ($form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
-            $data = $this->renderView("AppBundle:Course/part:raw.html.twig", array("course" => $course));
+            $data = $this->renderView("QcmBundle:qcm/part:raw.html.twig", array("qcm" => $qcm));
             return new JsonResponse(
-                array("error" => false, "data" => $data, "id" => $course->getId(), "action" => "edit")
+                array("error" => false, "data" => $data, "id" => $qcm->getId(), "action" => "edit")
                 , 200);
         }
         else if(!$form->isValid() && $form->isSubmitted()){
             return new JsonResponse(array(
                 'error' => true,
-                'form' => $this->renderView('AppBundle:Course/part:crudModal.html.twig', array('course' => $course,
+                'form' => $this->renderView('QcmBundle:qcm/part:crudModal.html.twig', array('qcm' => $qcm,
                     'form' => $form->createView()))),400);
 
         }
         return new JsonResponse(array(
             'error' => true,
-            'form' => $this->renderView('AppBundle:Course/part:crudModal.html.twig', array('course' => $course,
+            'form' => $this->renderView('QcmBundle:qcm/part:crudModal.html.twig', array('qcm' => $qcm,
                 'form' => $form->createView()))));
     }
 }

@@ -48,7 +48,7 @@ class QcmQuestion
     private $qcm;
 
     /**
-     * @ORM\OneToMany(targetEntity="QcmAnswer", mappedBy="qcmQuestion", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="QcmAnswer", mappedBy="qcmQuestion", cascade={"persist", "remove"})
      */
     private $qcmAnswers;
 
@@ -145,6 +145,17 @@ class QcmQuestion
     public function setQcmAnswers($qcmAnswers)
     {
         $this->qcmAnswers = $qcmAnswers;
+    }
+
+    public function addQcmAnswer(QcmAnswer $qcmAnswer) //todo maybe here
+    {
+        $qcmAnswer->addQcmQuestion($this);
+        $this->qcmAnswers->add($qcmAnswer);
+    }
+
+    public function removeQcmAnswer(QcmAnswer $qcmAnswer)
+    {
+        $this->qcmAnswers->removeElement($qcmAnswer);
     }
 
     public function __toString()

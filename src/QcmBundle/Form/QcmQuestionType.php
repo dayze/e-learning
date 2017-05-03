@@ -3,7 +3,7 @@
 namespace QcmBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -13,6 +13,17 @@ class QcmQuestionType extends AbstractType
     {
         $builder
             ->add('question')
+            ->add('qcmAnswers', CollectionType::class, [
+                'entry_type' => QcmAnswerType::class,
+                'allow_add' => true,
+                'by_reference' => false,
+                'prototype' => true,
+                'allow_delete' => true,
+                'prototype_name' => '__children_name__',
+                'attr' => ['class' => 'child-collection'],
+                'entry_options' => ['label' => false],
+                'label' => 'Réponse :'
+            ])
             ;
     }
 

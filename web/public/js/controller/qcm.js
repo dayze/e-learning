@@ -88,7 +88,7 @@ controllerQcm.prototype.editDisplay = function () {
         e.preventDefault();
         $.ajax({
             type: "GET",
-            url: Routing.generate("app_edit_course", {"id": $(this).attr('data-id')})
+            url: Routing.generate("app_edit_qcm", {"id": $(this).attr('data-id')})
         })
             .done(function (resp) {
                 $("#crudModal").replaceWith(resp.form);

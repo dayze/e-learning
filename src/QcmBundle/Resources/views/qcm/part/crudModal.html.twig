@@ -1,5 +1,5 @@
-{% form_theme form 'bootstrap_3_layout.html.twig' %}
-    <div id="crudModal" class="modal fade" role="dialog">
+{% form_theme form 'bootstrap_3_layout.html.twig' 'QcmBundle::jquery.collection.html.twig' %}
+<div id="crudModal" class="modal fade" role="dialog">
         <div class="modal-dialog">
 
             <div class="modal-content">
@@ -18,11 +18,11 @@
                         <div class="form-group">
                             {{ form_errors(form) }}
                             {{ form_label(form.qcmQuestions, "Questions :") }}
-                            <ul class="qcmQuestions" data-prototype="{{ form_widget(form.qcmQuestions.vars.prototype)|e('html_attr') }}">
-
-                            </ul>
+                            {#<ul class="qcmQuestions" data-prototype="{{ form_widget(form.qcmQuestions.vars.prototype)|e('html_attr') }}">
+                            </ul>#}
                             {{ form_widget(form.qcmQuestions) }}
                             <div class="bg-danger">{{ form_errors(form.qcmQuestions) }}</div>
+                            {{ form_errors(form) }}
                         </div>
 
                         {#{{ form_label(form.save) }}
@@ -35,51 +35,19 @@
             </div>
         </div>
     </div>
+<script src="{{ asset('public/js/jquery.collection.js') }}"></script>
 <script>
-    var $collectionHolder;
-
-    // setup an "add a tag" link
-    var $addQcmQuestionLink = $('<a href="#" class="add_qcmQuestion_link">Ajouter une question</a>');
-    var $newLinkLi = $('<li></li>').append($addQcmQuestionLink);
-
-    jQuery(document).ready(function() {
-        // Get the ul that holds the collection of tags
-        $collectionHolder = $('ul.qcmQuestions');
-
-        // add the "add a tag" anchor and li to the tags ul
-        $collectionHolder.append($newLinkLi);
-
-        // count the current form inputs we have (e.g. 2), use that as the new
-        // index when inserting a new item (e.g. 2)
-        $collectionHolder.data('index', $collectionHolder.find(':input').length);
-
-        $addQcmQuestionLink.on('click', function(e) {
-            // prevent the link from creating a "#" on the URL
-            e.preventDefault();
-
-            // add a new tag form (see next code block)
-            $addQcmQuestionLinkForm($collectionHolder, $newLinkLi);
-
-        });
-
-        function $addQcmQuestionLinkForm($collectionHolder, $newLinkLi) {
-            // Get the data-prototype explained earlier
-            var prototype = $collectionHolder.data('prototype');
-
-            // get the new index
-            var index = $collectionHolder.data('index');
-
-            // Replace '__name__' in the prototype's HTML to
-            // instead be a number based on how many items we have
-            var newForm = prototype.replace(/__name__/g, index);
-
-            // increase the index with one for the next item
-            $collectionHolder.data('index', index + 1);
-
-            // Display the form in the page in an li, before the "Add a tag" link li
-            var $newFormLi = $('<li></li>').append(newForm);
-            $newLinkLi.before($newFormLi);
-        }
-
+    $('.parent-collection').collection({
+        min:0,
+        /*up: '<a href="#" class="btn btn-default"><span class="glyphicon glyphicon-arrow-up"></span> Move collection up</a>',
+        down: '<a href="#" class="btn btn-default"><span class="glyphicon glyphicon-arrow-down"></span> Move collection down</a>',
+        add: '<a href="#" class="btn btn-default"><span class="glyphicon glyphicon-plus-sign"></span> Add collection</a>',
+        remove: '<a href="#" class="btn btn-default"><span class="glyphicon glyphicon-trash"></span> Remove collection</a>',*/
+        prefix: 'parent',
+        allow_duplicate: true,
+        children: [{
+            selector: '.child-collection',
+            add: '<a href="#" class="btn btn-default">Add</span></a>',
+        }]
     });
 </script>

@@ -1,0 +1,2 @@
+base:
+    resource: "@AppBundle/Resources/config/_routing/base.yml"

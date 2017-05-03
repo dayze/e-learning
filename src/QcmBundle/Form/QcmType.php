@@ -20,9 +20,15 @@ class QcmType extends AbstractType
                 'entry_type' => QcmQuestionType::class,
                 'allow_add' => true,
                 'by_reference' => false,
-            ])
+                'prototype' => true,
+                'allow_delete' => true,
+                'prototype_name' => '__parent_name__',
+                'attr' => ['class' => 'parent-collection'],
+                'entry_options' => ['label' => false],
+                'label' => false,
+             ])
             ->add('save', SubmitType::class, array('label' => 'Envoyer',
-                "attr" => array("class" => "btn btn-primary")));
+        "attr" => array("class" => "btn btn-primary")));
     }
 
     public function configureOptions(OptionsResolver $resolver)
