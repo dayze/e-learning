@@ -18,7 +18,8 @@ class Section
 
     public function __construct()
     {
-        $this->users = new ArrayCollection();
+        $this->students = new ArrayCollection();
+        $this->supervisors = new ArrayCollection();
         $this->documents = new ArrayCollection();
     }
 
@@ -46,9 +47,14 @@ class Section
     private $promotion;
 
     /**
-     * @ORM\ManyToMany(targetEntity="User", inversedBy="sections")
+     * @ORM\ManyToMany(targetEntity="Student", inversedBy="sections")
      */
-    private $users;
+    private $students;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Supervisor", inversedBy="sections")
+     */
+    private $supervisors;
 
     /**
      * @ORM\ManyToMany(targetEntity="Document", inversedBy="sections", cascade={"persist"})
@@ -56,6 +62,11 @@ class Section
      */
 
     private $documents;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Section", inversedBy="sections")
+     */
+    private $courses;
 
     /**
      * Get id
@@ -115,38 +126,6 @@ class Section
         return $this->promotion;
     }
 
-    /**
-     * @return mixed
-     * @internal param User $user
-     */
-    public function getUsers()
-    {
-        return $this->users;
-    }
-
-    /**
-     * @param User $user
-     * @internal param mixed $users
-     * @return $this
-     */
-    public function addUser(User $user)
-    {
-        $this->users->add($user);
-        return $this;
-    }
-
-    /**
-     * @param User $user
-     */
-    public function removeUser(User $user)
-    {
-        $this->users->removeElement($user);
-    }
-
-    public function setUsers($users)
-    {
-        $this->users = $users;
-    }
 
     /**
      * @return ArrayCollection
@@ -190,6 +169,76 @@ class Section
         return $this->name;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getCourses()
+    {
+        return $this->courses;
+    }
+
+    /**
+     * @param mixed $courses
+     */
+    public function setCourses($courses)
+    {
+        $this->courses = $courses;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getStudents()
+    {
+        return $this->students;
+    }
+
+    /**
+     * @param mixed $students
+     */
+    public function setStudents($students)
+    {
+        $this->students = $students;
+    }
+
+
+    public function addStudent(Student $student)
+    {
+        $this->students->add($student);
+        return $this;
+    }
+
+    public function removeStudent(Student $student)
+    {
+        $this->students->removeElement($student);
+    }
+
+    public function addSupervisor(Supervisor $supervisor)
+    {
+        $this->supervisors->add($supervisor);
+        return $this;
+    }
+
+    public function removeSupervisor(Supervisor $supervisor)
+    {
+        $this->supervisors->removeElement($supervisor);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSupervisors()
+    {
+        return $this->supervisors;
+    }
+
+    /**
+     * @param mixed $supervisors
+     */
+    public function setSupervisors($supervisors)
+    {
+        $this->supervisors = $supervisors;
+    }
 
 
 }

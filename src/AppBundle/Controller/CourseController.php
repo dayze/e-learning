@@ -15,9 +15,11 @@ class CourseController extends Controller
     public function displayAction()
     {
         $courseService = $this->get("app.course");
-        $courses = $courseService->findAll("AppBundle:Course");
-        if (!$courses) {
-            throw $this->createNotFoundException('No courses found');
+        if(in_array('ROLE_SUPERVISOR',$this->getUser()->getRoles())){
+            $courses = $courseService->findBy('AppBundle:Course', ["supervisor" =>$this->getUser()->getId()]);
+        }
+        else{
+            $courses = $courseService->findAll("AppBundle:Course");
         }
         return $this->render('AppBundle:Course:view.html.twig', array("courses" => $courses));
     }
@@ -33,9 +35,19 @@ class CourseController extends Controller
         $course = new Course();
         $form = $this->get("form.factory")->create(CourseType::class, $course, array(
             'action' => $this->generateUrl('app_create_course'),
-            'method' => 'POST'));
+            'method' => 'POST',
+            'supervisor' => $this->getUser()
+            ));
         $form->handleRequest($request);
         if ($form->isValid()) {
+            if(in_array('ROLE_SUPERVISOR',$this->getUser()->getRoles())){
+                $em = $this->getDoctrine()->getRepository('AppBundle:Supervisor');
+                $supervisor = $em->find($this->getUser()->getId());
+                $course->setSupervisor($supervisor);
+            }
+            else{
+
+            }
             $courseService->addEntity($course);
             $data = $this->renderView("AppBundle:Course/part:raw.html.twig", array("course" => $course));
             return new JsonResponse(array('error' => false, "action" => "new", 'data' => $data), 200);

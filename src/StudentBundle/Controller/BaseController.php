@@ -8,6 +8,11 @@ class BaseController extends Controller
 {
     public function indexAction()
     {
-        return $this->render('StudentBundle:Default:index.html.twig');
+        $student = $this->getUser();
+        $sections = $student->getSections();
+        foreach ($sections as $section) {
+
+        }
+        return $this->render('StudentBundle:part:index.html.twig', ['sections' => $sections]);
     }
 }

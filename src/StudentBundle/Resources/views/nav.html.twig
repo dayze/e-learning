@@ -1,0 +1,23 @@
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">E-learning</a>
+        </div>
+        <ul class="nav navbar-nav">
+            <li><a href="#">Mes cours</a></li>
+            <li><a href="#">Mes documents</a></li>
+            <li><a href="#">Exercices</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                    <i class="fa fa-user fa-lg"></i><span> {{ app.user.username }}</span>
+                    <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="{{ path('fos_user_security_logout') }}">Mon profil</a></li>
+                    <li><a href="{{ path('fos_user_security_logout') }}">Se déconnecter</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</nav>

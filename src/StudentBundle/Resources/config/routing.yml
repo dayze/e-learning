@@ -1,2 +1,2 @@
 base:
-    resource: "@AppBundle/Resources/config/_routing/base.yml"
+    resource: "@StudentBundle/Resources/config/_routing/base.yml"

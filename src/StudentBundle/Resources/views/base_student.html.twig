@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <title>E-learning | {% block title %}Accueil{% endblock %}</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ asset('public/css/reset.css') }}">
+    <link rel="stylesheet" href="{{ asset('public/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('public/css/student/main.css') }}">
+    <link rel="stylesheet" href="{{ asset('public/css/font-awesome.css') }}">
+    <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
+    <script src="{{ asset('public/js/jquery.js') }}"></script>
+    <script src="{{ asset('public/js/bootstrap.min.js') }}"></script>
+    {% block stylesheets %}{% endblock %}
+    <style>
+
+    </style>
+</head>
+<body>
+<div id="header-top">
+    {% include 'StudentBundle::nav.html.twig' %}
+</div>
+<div class="container">
+    {% block body %}{% endblock %}
+
+
+</div>
+{% block javascripts %}{% endblock %}
+</body>
+</html>

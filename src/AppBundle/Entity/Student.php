@@ -17,4 +17,37 @@ class Student extends User
         parent::__construct();
     }
 
+    /**
+     * @ORM\ManyToMany(targetEntity="Section", mappedBy="students")
+     */
+    private $sections;
+
+    /*public function addSection(Section $section)
+    {
+        $this->sections[] = $section;
+        $section->addUser($this);
+        return $this;
+    }
+
+    public function removeSection(Section $section)
+    {
+        $this->sections->removeElement($section);
+        $section->removeDocument($this);
+    }*/
+
+
+    public function setSection($sections)
+    {
+        $this->sections = $sections;
+    }
+
+
+    /**
+     * @return mixed
+     */
+    public function getSections()
+    {
+        return $this->sections;
+    }
+
 }

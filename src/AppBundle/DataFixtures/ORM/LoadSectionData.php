@@ -20,12 +20,24 @@ class LoadSectionData extends AbstractFixture implements OrderedFixtureInterface
         $section1 = new Section();
         $section1->setName('BTS SIO');
         $section1->setPromotion(new \DateTime());
-        $section1->addUser($this->getReference('user1'))
-            ->addUser($this->getReference('user2'));
-        //$section1->addDocument($this->getReference("document1"))->addDocument($this->getReference("document2"));
-        $manager->persist($section1);
-        $manager->flush();
+        $section1->addStudent($this->getReference('student1'))
+                ->addStudent($this->getReference('student2'));
+        $section1->addSupervisor($this->getReference('supervisor1'))
+                ->addSupervisor($this->getReference('supervisor2'));
         $this->addReference('section1', $section1);
+        $manager->persist($section1);
+
+        $section2 = new Section();
+        $section2->setName('BTS MUC');
+        $section2->setPromotion(new \DateTime());
+        $section2->addStudent($this->getReference('student3'))
+                ->addStudent($this->getReference('student4'));
+        $section2->addSupervisor($this->getReference('supervisor1'))
+            ->addSupervisor($this->getReference('supervisor2'));
+        $this->addReference('section2', $section2);
+        $manager->persist($section2);
+        
+        $manager->flush();
     }
 
     public function getOrder()

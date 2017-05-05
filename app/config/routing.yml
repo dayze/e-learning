@@ -1,6 +1,6 @@
 student:
     resource: "@StudentBundle/Resources/config/routing.yml"
-    prefix:   /
+    prefix:   /etudiant
 
 qcm:
     resource: "@QcmBundle/Resources/config/routing.yml"

@@ -50,7 +50,7 @@ class Document
     private $sections;
 
     /**
-     * @ORM\ManyToOne(targetEntity="CourseCategory", inversedBy="documents")
+     * @ORM\ManyToOne(targetEntity="CourseCategory", inversedBy="documents", cascade={"remove"})
      */
     private $courseCategory;
 

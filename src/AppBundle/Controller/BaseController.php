@@ -22,8 +22,11 @@ class BaseController extends Controller
             if($securityContext->isGranted('ROLE_ADMIN')){
                 return $this->dashboardAction();
             }
+            if($securityContext->isGranted('ROLE_SUPERVISOR')){
+                return $this->dashboardAction();
+            }
             else if($securityContext->isGranted('ROLE_STUDENT')){
-                return $this->studentDashboardAction();
+                return $this->redirectToRoute('student_homepage');
             }
         } else {
             return $this->redirectToRoute('fos_user_security_login');

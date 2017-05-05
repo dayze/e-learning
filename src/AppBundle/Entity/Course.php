@@ -38,6 +38,11 @@ class Course
      */
     private $courseCategories;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="Section", mappedBy="courses")
+     */
+    private $sections;
+
 
     /**
      * Get id
@@ -103,6 +108,22 @@ class Course
     public function setCourseCategories($courseCategories)
     {
         $this->courseCategories = $courseCategories;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSections()
+    {
+        return $this->sections;
+    }
+
+    /**
+     * @param mixed $sections
+     */
+    public function setSections($sections)
+    {
+        $this->sections = $sections;
     }
 
 

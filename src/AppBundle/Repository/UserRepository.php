@@ -19,4 +19,11 @@ class UserRepository extends \Doctrine\ORM\EntityRepository
             ->setParameter('roles', '%"'.$role.'"%');
         return $qb->getQuery()->getResult();
     }
+
+    public function findSectionOfUser()
+    {
+        $qb = $this->createQueryBuilder('u');
+
+
+    }
 }

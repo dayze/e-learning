@@ -2,14 +2,12 @@
 
 namespace AppBundle\DataFixtures\ORM;
 
-use AppBundle\Entity\Supervisor;
+use AppBundle\Entity\Student;
 use Doctrine\Common\DataFixtures\AbstractFixture;
-use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use AppBundle\Entity\User;
 
-class LoadUserData extends AbstractFixture implements OrderedFixtureInterface
+class LoadStudentData extends AbstractFixture implements OrderedFixtureInterface
 {
 
     /**
@@ -19,50 +17,43 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface
      */
     public function load(ObjectManager $manager)
     {
-        $userAdmin = new User();
-        $userAdmin->setUsername("admin");
-        $userAdmin->setPlainPassword("admin");
-        $userAdmin->setEnabled(true);
-        $userAdmin->setEmail("admin@admin.fr");
-        $userAdmin->setRoles(array("ROLE_ADMIN"));
-        $manager->persist($userAdmin);
-        $manager->flush();
+        
+        $student1 = new Student();
+        $student1->setUsername("student1");
+        $student1->setPlainPassword("student1");
+        $student1->setEnabled(true);
+        $student1->setEmail("student1@student1.fr");
+        $student1->setRoles(array("ROLE_STUDENT"));
+        $manager->persist($student1);
+        $this->addReference('student1', $student1);
 
-        $user = new User();
-        $user->setUsername("user");
-        $user->setPlainPassword("user");
-        $user->setEnabled(true);
-        $user->setEmail("user@user.fr");
-        $user->setRoles(array("ROLE_STUDENT"));
-        $manager->persist($user);
-        $this->addReference('user1', $user);
+        $student2 = new Student();
+        $student2->setUsername("student2");
+        $student2->setPlainPassword("student2");
+        $student2->setEnabled(true);
+        $student2->setEmail("student2@student2.fr");
+        $student2->setRoles(array("ROLE_STUDENT"));
+        $manager->persist($student2);
+        $this->addReference('student2', $student2);
 
-        $user2 = new User();
-        $user2->setUsername("user2");
-        $user2->setPlainPassword("user2");
-        $user2->setEnabled(true);
-        $user2->setEmail("user2@user.fr");
-        $user2->setRoles(array("ROLE_STUDENT"));
-        $manager->persist($user2);
-        $this->addReference('user2', $user2);
+        $student3 = new Student();
+        $student3->setUsername("student3");
+        $student3->setPlainPassword("student3");
+        $student3->setEnabled(true);
+        $student3->setEmail("student3@student3.fr");
+        $student3->setRoles(array("ROLE_STUDENT"));
+        $manager->persist($student3);
+        $this->addReference('student3', $student3);
 
-        $user3 = new User();
-        $user3->setUsername("supervisor");
-        $user3->setPlainPassword("supervisor");
-        $user3->setEnabled(true);
-        $user3->setEmail("supervisor@user.fr");
-        $user3->setRoles(array("ROLE_SUPERVISOR"));
-        $manager->persist($user3);
-        $this->addReference('user3', $user3);
+        $student4 = new Student();
+        $student4->setUsername("student4");
+        $student4->setPlainPassword("student4");
+        $student4->setEnabled(true);
+        $student4->setEmail("student4@student4.fr");
+        $student4->setRoles(array("ROLE_STUDENT"));
+        $manager->persist($student4);
+        $this->addReference('student4', $student4);
 
-        $supervisor1 = new Supervisor();
-        $supervisor1->setUsername('supervisor1');
-        $supervisor1->setPlainPassword('supervisor1');
-        $supervisor1->setEnabled(true);
-        $supervisor1->setEmail("supervisor1@gmail.");
-        $supervisor1->setRoles(["ROLE_SUPERVISOR"]);
-        $this->addReference("supervisor1", $supervisor1);
-        $manager->persist($supervisor1);
         $manager->flush();
 
     }
