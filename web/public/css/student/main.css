@@ -10,4 +10,25 @@
   position: relative;
   margin-bottom: 15px; }
 
+p, a {
+  font-family: Helvetica, Arial, sans-serif; }
+
+.list-course li {
+  padding: 10px;
+  border-bottom: solid 1px #89C4F4; }
+  .list-course li i {
+    color: #3498db; }
+  .list-course li:hover {
+    background: #3498db;
+    cursor: pointer; }
+    .list-course li:hover a {
+      color: #ecf0f1; }
+    .list-course li:hover i {
+      color: #ecf0f1; }
+  .list-course li:first-child {
+    border-top: 1px solid #89C4F4; }
+  .list-course li a {
+    font-size: 15px;
+    color: black; }
+
 /*# sourceMappingURL=main.css.map */

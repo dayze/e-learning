@@ -9,10 +9,10 @@
                 <h2>Vue d'ensemble de mes cours</h2>
                 <hr>
                 {% for section in sections %}
-                    <h3>{{ section.name }} : {{ section.promotion|date('Y') }}</h3>
+                    <h3 class="text-center">{{ section.name }} : {{ section.promotion|date('Y') }}</h3>
                     <ul class="list-course">
                         {% for course in section.courses %}
-                            <li ><i claclassss="fa fa-arrow-circle-o-right fa-lg text-info"></i> <a href="">{{ course.name }}</a></li>
+                            <li ><i class="fa fa-arrow-circle-o-right fa-lg"></i> <a href="">{{ course.name }}</a></li>
                         {% endfor %}
                     </ul>
                 {% endfor %}
