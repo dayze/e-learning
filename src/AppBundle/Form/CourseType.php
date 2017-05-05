@@ -19,20 +19,15 @@ class CourseType extends AbstractType
             ->add('sections', EntityType::class,[
                 'class' => 'AppBundle\Entity\Section',
                 'query_builder' => function(EntityRepository $er){
-                    return $er->createQueryBuilder('s')
-                        ->join('s.users', 'users')
-                        ->addSelect('users')
-                        ->where('s.id = :user')
-                        ->setParameter('user', $this->supervisor->getId())
-                        ;
-                }
-
+                    return $er->createQueryBuilder('sec')
+                        ->innerJoin('sec.supervisors', 'sup')
+                        ->where('sup.id = :sup_id')
+                        ->setParameter('sup_id', $this->supervisor->getId());
+                },
+                'multiple' => true,
             ])
             ->add('save', SubmitType::class, array('label' => 'Envoyer',
-                "attr" => array("class" => "btn btn-primary") ))
-
-        ;
-
+                "attr" => array("class" => "btn btn-primary") ));
     }
 
     public function configureOptions(OptionsResolver $resolver)

@@ -64,7 +64,7 @@ class Section
     private $documents;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Section", inversedBy="sections")
+     * @ORM\ManyToMany(targetEntity="Course", inversedBy="sections")
      */
     private $courses;
 
