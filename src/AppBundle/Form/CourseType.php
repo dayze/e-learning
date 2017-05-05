@@ -25,6 +25,7 @@ class CourseType extends AbstractType
                         ->setParameter('sup_id', $this->supervisor->getId());
                 },
                 'multiple' => true,
+                'by_reference' => false,
             ])
             ->add('save', SubmitType::class, array('label' => 'Envoyer',
                 "attr" => array("class" => "btn btn-primary") ));

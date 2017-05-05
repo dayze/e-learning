@@ -10,10 +10,22 @@
                 <hr>
                 {% for section in sections %}
                     <h3>{{ section.name }} : {{ section.promotion|date('Y') }}</h3>
+                    <ul class="list-course">
+                        {% for course in section.courses %}
+                            <li ><i claclassss="fa fa-arrow-circle-o-right fa-lg text-info"></i> <a href="">{{ course.name }}</a></li>
+                        {% endfor %}
+                    </ul>
                 {% endfor %}
             </div>
         </div>
-        <div class="col-md-4 row-box" id="calendar"></div>
+        <div class="col-md-4">
+            <div class="col-md-12 row-box bg-success text-danger">
+                <h4>Vous avez rattrapé {insert_time} ce mois-ci.</h4>
+            </div>
+            <div class="col-md-12 row-box" id="calendar"></div>
+
+
+        </div>
     </div>
 {% endblock %}
 {% block javascripts %}

@@ -28,12 +28,12 @@ class DocumentType extends AbstractType
                 'multiple' => true,
                 'by_reference' => false
             ))
-            ->add('courseCategory', EntityType::class, array( //todo requete pr les matières des supervisors
+          /*  ->add('courseCategory', EntityType::class, array( //todo requete pr les matières des supervisors
                 'class' => 'AppBundle\Entity\CourseCategory',
                 'choice_label' => 'name',
                 'multiple' => true,
                 'by_reference' => false
-            ))
+            ))*/
             ->add('save', SubmitType::class, array('label' => 'Envoyer',
                 "attr" => array("class" => "btn btn-primary")));
     }

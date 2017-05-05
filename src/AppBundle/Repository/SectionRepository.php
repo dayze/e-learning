@@ -14,10 +14,10 @@ class SectionRepository extends \Doctrine\ORM\EntityRepository
     {
         $qb = $this->createQueryBuilder('a');
         return $qb
-            ->join('a.users', 'users')
-            ->addSelect('users')
+            ->join('a.students', 'students')
+            ->addSelect('students')
             ->where('a.id = :id')
-            ->andWhere('users.roles LIKE :roles')
+            ->andWhere('students.roles LIKE :roles')
             ->setParameter('id', $id)
             ->setParameter('roles', '%"' . $roles . '"%')
             ->getQuery()

@@ -10,9 +10,6 @@ class BaseController extends Controller
     {
         $student = $this->getUser();
         $sections = $student->getSections();
-        foreach ($sections as $section) {
-
-        }
         return $this->render('StudentBundle:part:index.html.twig', ['sections' => $sections]);
     }
 }

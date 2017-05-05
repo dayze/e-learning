@@ -21,6 +21,7 @@ class Section
         $this->students = new ArrayCollection();
         $this->supervisors = new ArrayCollection();
         $this->documents = new ArrayCollection();
+        $this->courses = new ArrayCollection();
     }
 
     /**
@@ -64,7 +65,7 @@ class Section
     private $documents;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Course", inversedBy="sections")
+     * @ORM\ManyToMany(targetEntity="Course", inversedBy="sections", cascade={"persist"})
      */
     private $courses;
 
@@ -201,6 +202,16 @@ class Section
         $this->students = $students;
     }
 
+    public function addCourse(Course $course)
+    {
+        $this->courses->add($course);
+        return $this;
+    }
+
+    public function removeCourse(Course $course)
+    {
+        $this->courses->removeElement($course);
+    }
 
     public function addStudent(Student $student)
     {

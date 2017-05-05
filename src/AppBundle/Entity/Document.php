@@ -135,10 +135,7 @@ class Document
     {
         return $this->sections;
     }
-    /**
-     * @param mixed $sections
-     * @return $this
-     */
+
     public function addSection(Section $section)
     {
         $this->sections[] = $section;

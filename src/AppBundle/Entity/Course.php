@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -12,6 +13,10 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Course
 {
+    public function __construct()
+    {
+        $this->sections = new ArrayCollection();
+    }
     /**
      * @var int
      *
@@ -39,7 +44,7 @@ class Course
     private $courseCategories;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Section", mappedBy="courses")
+     * @ORM\ManyToMany(targetEntity="Section", mappedBy="courses", cascade={"persist"}, fetch="EAGER")
      */
     private $sections;
 
@@ -109,6 +114,19 @@ class Course
     {
         $this->courseCategories = $courseCategories;
     }
+
+    public function addSection(Section $section)
+    {
+        $section->addCourse($this);
+        $this->sections[] = $section;
+    }
+
+    public function removeSection(Section $section)
+    {
+        $this->sections->removeElement($section);
+        $section->removeCourse($section);
+    }
+
 
     /**
      * @return mixed

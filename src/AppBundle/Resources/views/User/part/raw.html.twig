@@ -1,15 +1,15 @@
 <tr>
-    <td>{{ user.username }}</td>
-    <td>{{ user.email }}</td>
+    <td>{{ student.username }}</td>
+    <td>{{ student.email }}</td>
     <td>
-        {% for section in user.sections %}
+        {% for section in student.sections %}
             {% if loop.last %}
                 {{ section.promotion|date('Y') }}
             {% endif %}
         {% endfor %}
     </td>
     <td>
-        <a data-id="{{ user.id }}" href="" class="btn btn-primary btn-xs ajaxEdit"><i class="fa fa-edit"></i></a>
-        <a data-id="{{ user.id }}" class="btn btn-danger btn-xs ajaxDelete"><i class="fa fa-remove"></i></a>
+        <a data-id="{{ student.id }}" href="" class="btn btn-primary btn-xs ajaxEdit"><i class="fa fa-edit"></i></a>
+        <a data-id="{{ student.id }}" class="btn btn-danger btn-xs ajaxDelete"><i class="fa fa-remove"></i></a>
     </td>
 </tr>
