@@ -18,19 +18,20 @@ $green : #8BBF43;
   }
 
   header{
-    .btn{
+    .btn-calendar{
+      margin-top: 5px;
       display: inline-block;
       position: absolute;
       width: 30px;
       height: 30px;
       text-align: center;
-      line-height: 30px;
+      line-height: 27px;
       color: $lightgrey;
       border-radius: 50%;
       border: 2px solid $lightgrey;
     }
 
-    .btn:hover{
+    .btn-calendar:hover{
       background:$lightgrey;
       color: white;
     }
@@ -45,7 +46,7 @@ $green : #8BBF43;
 
     .month{
       padding:0;
-      margin:0;
+      margin: 5px 0 0;
     }
   }
 

@@ -37,8 +37,8 @@
             var calendar = $('<div class="calendar"></div>');
             var header = $('<header>'+
                 '<h2 class="month"></h2>'+
-                '<a class="btn btn-prev" href="#"><</a>'+
-                '<a class="btn btn-next" href="#">></a>'+
+                '<a class="btn-calendar btn-prev" href="#"><i class="fa fa-arrow-left"></i></a>'+
+                '<a class="btn-calendar btn-next" href="#"><i class="fa fa-arrow-right"></i></a>'+
                 '</header>');
 
             this.updateHeader(todayDate,header);
