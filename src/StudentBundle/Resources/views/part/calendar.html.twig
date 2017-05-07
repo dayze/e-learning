@@ -1,0 +1,23 @@
+<div class="col-md-4">
+    <div class="col-md-12 row-box" id="time-spent">
+        <h4>Vous avez rattrapé {insert_time} ce mois-ci.</h4>
+    </div>
+    <div class="col-md-12 row-box" id="calendar"></div>
+
+
+</div>
+{% block javascripts %}
+    <script src="{{ asset('public/js/simple-calendar.js') }}"></script>
+    <script>
+        $(document).ready(function () {
+            $("#calendar").simpleCalendar({
+                months: ['Janvier', 'Fevrier', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre',
+                    'Novembre', 'Décembre'], //string of months starting from january
+                days: ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'], //string of days starting from sunday
+                minDate: "YYYY-MM-DD", // minimum date
+                maxDate: "YYYY-MM-DD", // maximum date
+                fixedStartDay: true // Week begin always by monday
+            });
+        });
+    </script>
+{% endblock %}

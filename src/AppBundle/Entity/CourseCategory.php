@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Course
  *
  * @ORM\Table(name="course_category")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\CourseRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\CourseCategoryRepository")
  */
 class CourseCategory
 {
@@ -103,6 +103,11 @@ class CourseCategory
     public function setDocuments($documents)
     {
         $this->documents = $documents;
+    }
+
+    public function __toString()
+    {
+        return $this->name;
     }
 
 }

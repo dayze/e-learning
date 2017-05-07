@@ -10,4 +10,15 @@ namespace AppBundle\Repository;
  */
 class CourseRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function findCourseBySection($id)
+    {
+        $qb = $this->createQueryBuilder('c');
+        return $qb
+            ->join('c.sections', 'sec')
+            ->where('sec.id = :id')
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getResult();
+    }
+
 }

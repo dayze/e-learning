@@ -1,0 +1,19 @@
+{% extends 'StudentBundle::base_student.html.twig' %}
+{% block body %}
+    <div class="row">
+        <div class="col-md-8 ">
+            <div class="col-md-12 row-box">
+                <h2 class="text-center">{{ course.name }}</h2>
+                <ul class="list-course">
+                    {% for courseCategory in course.courseCategories %}
+                        <li>
+                            <i class="fa fa-arrow-circle-o-right fa-lg"></i>
+                            <a href="{{ path("student_display_courseCategory", {"id":courseCategory.id }) }}">{{ courseCategory.name }}</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        {% include 'StudentBundle:part:calendar.html.twig' %}
+    </div>
+{% endblock %}

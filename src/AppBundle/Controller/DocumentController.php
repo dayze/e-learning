@@ -27,9 +27,13 @@ class DocumentController extends Controller
         $document = new Document();
         $form = $this->get("form.factory")->create(DocumentType::class, $document, array(
             'action' => $this->generateUrl('app_document_create'),
-            'method' => 'POST'));
+            'method' => 'POST',
+            'supervisor' => $this->getUser()
+        ));
         $form->handleRequest($request);
         if ($form->isValid()) {
+            $document = $form->getData();
+            $documentService->addSection($document, $request->request->get('appbundle_document'));
             $file = $document->getPath();
             $fileUploadService = $this->get('app.file_uploader');
             $fileName = $fileUploadService->upload($file);
@@ -55,8 +59,8 @@ class DocumentController extends Controller
     public function deleteAction(Document $document)
     {
         $documentService = $this->get("app.document");
-        if(file_exists($this->getParameter('document_directory').'/'.$document->getPath()))
-            unlink(new File($this->getParameter('document_directory').'/'.$document->getPath()));
+        if (file_exists($this->getParameter('document_directory') . '/' . $document->getPath()))
+            unlink(new File($this->getParameter('document_directory') . '/' . $document->getPath()));
         $documentService->deleteEntity($document);
         return new JsonResponse(array("error" => false), 200);
     }
@@ -64,7 +68,7 @@ class DocumentController extends Controller
     public function editAction(Request $request, Document $document) //todo check how delete old file on edit, doctrine listener ?
     {
         $document->setPath(
-            new File($this->getParameter('document_directory').'/'.$document->getPath())
+            new File($this->getParameter('document_directory') . '/' . $document->getPath())
         );
         $form = $this->get("form.factory")->create(DocumentType::class, $document, array(
             'action' => $this->generateUrl('app_document_edit', array('id' => $document->getId())),
@@ -93,4 +97,25 @@ class DocumentController extends Controller
             'form' => $this->renderView('AppBundle:Document/part:crudModal.html.twig', array('document' => $document,
                 'form' => $form->createView()))));
     }
+
+    public function populateCourseAction(Request $request)
+    {
+        $id = (int)$request->get('section_id');
+        $courseS = $this->get('app.course');
+        $courses = $courseS->findCourseBySection('AppBundle:Course', $id);
+        $result = [];
+        foreach ($courses as $course) {
+            $result[$course->getName()] = $course->getId();
+        }
+        return new JsonResponse($result);
+    }
+
+    public function populateCourseCategoryAction(Request $request)
+    {
+        $id = (int)$request->get('courseCategory_id');
+        $courseCatS = $this->get('app.course_category');
+        $courseCategories = $courseCatS->findCourseCategoryByCourse($id);
+        return new JsonResponse($courseCategories);
+    }
+
 }

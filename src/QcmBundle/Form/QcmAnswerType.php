@@ -19,7 +19,8 @@ class QcmAnswerType extends AbstractType
         $builder->add('response', TextType::class, ['label' => false])
             ->add('isCorrect', CheckboxType::class, [
                 'label' => "Est correct ?",
-                'required' => false
+                'required' => false,
+                'attr' => ["class" => "checkbox-inline"]
             ]);
     }
 

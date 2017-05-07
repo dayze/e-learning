@@ -25,6 +25,8 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface
         $userAdmin->setEnabled(true);
         $userAdmin->setEmail("admin@admin.fr");
         $userAdmin->setRoles(array("ROLE_ADMIN"));
+        $userAdmin->setFirstName('Maxime');
+        $userAdmin->setLastName('Lainé');
         $manager->persist($userAdmin);
         $manager->flush();
 

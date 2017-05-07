@@ -1,5 +1,5 @@
 var controllerQcm = function () {
-
+    this.Dayze = new Dayze();
 };
 
 /*************************************CRUD**************************************************/
@@ -14,11 +14,11 @@ controllerQcm.prototype.addEditProcessing = function () {
         })
             .done(function (resp) {
                 $("#crudModal").modal("hide");
-                if(resp.action == "new"){
-                /*    $("#course-table").find("tr:last").after(resp.data);
-                    $("#course-table").find("tr:last").hide().fadeIn(400);*/
+                if (resp.action == "new") {
+                    /*    $("#course-table").find("tr:last").after(resp.data);
+                     $("#course-table").find("tr:last").hide().fadeIn(400);*/
                 }
-                else if(resp.action == "edit"){
+                else if (resp.action == "edit") {
                     $(".ajaxEdit[data-id=" + resp.id + "]").parents('tr').replaceWith(resp.data);
                 }
             })
@@ -64,6 +64,7 @@ controllerQcm.prototype.deleteProcess = function () {
 };
 
 controllerQcm.prototype.newDisplay = function () {
+    var that = this;
     $('body').on('click', '#qcm-add-modal', function (e) {
         e.preventDefault();
         $.ajax({
@@ -72,6 +73,8 @@ controllerQcm.prototype.newDisplay = function () {
         })
             .done(function (resp) {
                 $("#crudModal").replaceWith(resp.form);
+                that.Dayze.newModalFeatures();
+                that.initCollection();
                 $("#crudModal").modal();
             })
             .fail(function (jqXHR, textStatus, errorThrown) {
@@ -92,6 +95,8 @@ controllerQcm.prototype.editDisplay = function () {
         })
             .done(function (resp) {
                 $("#crudModal").replaceWith(resp.form);
+                that.Dayze.newModalFeatures();
+                that.initCollection();
                 $("#crudModal").modal();
             })
             .fail(function (jqXHR, textStatus, errorThrown) {
@@ -102,6 +107,26 @@ controllerQcm.prototype.editDisplay = function () {
 };
 
 /*************************************OTHERS**************************************************/
+
+controllerQcm.prototype.initCollection = function () {
+    $('.parent-collection').collection({
+        min: 1,
+        add: '<a href="#" class="btn btn-info add-qcm"><span class="fa fa-plus-circle fa-lg"></span></a>',
+        remove: '<a href="#" class="btn btn-danger"><span class="fa fa-remove fa-lg"></span></a>',
+        allow_up:false,
+        allow_down:false,
+        prefix: 'parent',
+        children: [{
+            min: 1,
+            selector: '.child-collection',
+            remove: '<a href="#" class="btn btn-danger btn-xs btn-group">Supprimer une réponse</a>',
+            add: '<a href="#" class="btn btn-info btn-xs btn-group">Ajouter une réponse</a>',
+            allow_up:false,
+            allow_down:false,
+        }]
+    });
+    console.log($('.qcm-questions'));
+};
 
 
 controllerQcm.prototype.init = function () {

@@ -157,6 +157,8 @@ class Document
         $section->removeDocument($this);
     }
 
+
+
     /**
      * @return string
      */
@@ -202,9 +204,6 @@ class Document
         return $this->courseCategory;
     }
 
-    /**
-     * @param mixed $courseCategory
-     */
     public function setCourseCategory($courseCategory)
     {
         $this->courseCategory = $courseCategory;

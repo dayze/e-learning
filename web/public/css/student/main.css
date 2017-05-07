@@ -2,6 +2,56 @@
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
   margin-bottom: 15px; }
 
+/*
+----------------------BOOTSTRAP ADD -------------------------
+*/
+/* .modal-transparent */
+.modal-transparent {
+  background: transparent; }
+
+.modal-transparent .modal-content {
+  background: transparent; }
+
+.modal-backdrop.modal-backdrop-transparent {
+  background: #ffffff; }
+
+.modal-backdrop.modal-backdrop-transparent.in {
+  opacity: .9;
+  filter: alpha(opacity=90); }
+
+/* .modal-fullscreen */
+.modal-fullscreen {
+  background: transparent; }
+
+.modal-fullscreen .modal-content {
+  background: transparent;
+  border: 0;
+  -webkit-box-shadow: none;
+  box-shadow: none; }
+
+.modal-backdrop.modal-backdrop-fullscreen {
+  background: #ffffff; }
+
+.modal-backdrop.modal-backdrop-fullscreen.in {
+  opacity: .97;
+  filter: alpha(opacity=97); }
+
+/* .modal-fullscreen size: we use Bootstrap media query breakpoints */
+.modal-fullscreen .modal-dialog {
+  margin: 0;
+  margin-right: auto;
+  margin-left: auto;
+  width: 100%; }
+
+@media (min-width: 768px) {
+  .modal-fullscreen .modal-dialog {
+    width: 750px; } }
+@media (min-width: 992px) {
+  .modal-fullscreen .modal-dialog {
+    width: 970px; } }
+@media (min-width: 1200px) {
+  .modal-fullscreen .modal-dialog {
+    width: 1170px; } }
 #header-top {
   height: 40vh;
   width: 100vw;
@@ -9,9 +59,26 @@
   background-size: cover;
   position: relative;
   margin-bottom: 15px; }
+  #header-top #header-name-student {
+    position: relative;
+    top: 50%;
+    left: 39%;
+    font-size: 45px;
+    color: #ecf0f1;
+    text-transform: uppercase;
+    font-weight: bold; }
+    #header-top #header-name-student .firstName {
+      color: #89C4F4; }
+    #header-top #header-name-student .lastName {
+      color: #2ecc71; }
 
 p, a {
   font-family: Helvetica, Arial, sans-serif; }
+
+#time-spent {
+  background: #2ecc71; }
+  #time-spent h4 {
+    color: #ecf0f1; }
 
 .list-course li {
   padding: 10px;

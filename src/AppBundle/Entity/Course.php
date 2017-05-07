@@ -44,7 +44,7 @@ class Course
     private $courseCategories;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Section", mappedBy="courses", cascade={"persist"}, fetch="EAGER")
+     * @ORM\ManyToMany(targetEntity="Section", mappedBy="courses", cascade={"persist"})
      */
     private $sections;
 
@@ -144,6 +144,10 @@ class Course
         $this->sections = $sections;
     }
 
+    public function __toString()
+    {
+        return $this->name;
+    }
 
 }
 

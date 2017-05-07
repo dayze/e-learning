@@ -1,0 +1,22 @@
+{% extends 'StudentBundle::base_student.html.twig' %}
+{% block body %}
+    <div class="row">
+        <div class="col-md-8 ">
+            <div class="col-md-12 row-box">
+                <h2 class="text-center">{{ courseCategory.name }}</h2>
+            </div>
+            <div class="col-md-12 row-box">
+                <h3 class="text-center">Documents</h3>
+                <ul class="list-course">
+                    {% for document in courseCategory.documents %}
+                        <li>
+                            <i class="fa fa-arrow-circle-o-right fa-lg"></i> <a href="">{{ document.name }}</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        {% include 'StudentBundle:part:calendar.html.twig' %}
+    </div>
+
+{% endblock %}

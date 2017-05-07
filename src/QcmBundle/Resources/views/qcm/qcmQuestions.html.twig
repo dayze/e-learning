@@ -7,3 +7,10 @@
     {{ form_rest(form) }}
 
 {% endblock %}
+{% block javascripts %}
+    <script>
+        $.each($('form').children(), function (index, value) {
+            $(this).children('.control-label').remove()
+        })
+    </script>
+{% endblock %}

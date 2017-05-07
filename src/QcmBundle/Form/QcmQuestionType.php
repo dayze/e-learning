@@ -20,11 +20,13 @@ class QcmQuestionType extends AbstractType
                 'prototype' => true,
                 'allow_delete' => true,
                 'prototype_name' => '__children_name__',
-                'attr' => ['class' => 'child-collection'],
+                'attr' => ['class' => 'child-collection answer-qcm'],
                 'entry_options' => ['label' => false],
-                'label' => 'Réponse :'
-            ])
-            ;
+                'label' => 'Réponses :',
+                'label_attr' => [
+                    "class" => "label-answer-qcm"
+                ]
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

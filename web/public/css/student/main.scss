@@ -6,10 +6,32 @@
   background-size: cover;
   position: relative;
   margin-bottom: 15px;
+  #header-name-student{
+    position: relative;
+    top: 50%;
+    left: 39%;
+    font-size: 45px;
+    color: $cloud;
+    text-transform: uppercase;
+    font-weight: bold;
+    .firstName{
+      color: $lightpeter;
+    }
+    .lastName{
+      color: $emerlad;
+    }
+  }
 }
 
 p, a{
   font-family: Helvetica, Arial, sans-serif;
+}
+
+#time-spent{
+  background: $emerlad;
+  h4{
+    color: $cloud;
+  }
 }
 
 .list-course{

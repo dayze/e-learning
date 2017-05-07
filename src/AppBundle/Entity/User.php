@@ -20,6 +20,23 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  */
 class User extends BaseUser
 {
+    public function __construct()
+    {
+        parent::__construct();
+        // your own logic
+    }
+
+    /**
+     * @var string
+     * @ORM\Column(name="firstName", type="string", length=255)
+     */
+    protected $firstName;
+
+    /**
+     * @var string
+     * @ORM\Column(name="lastName", type="string", length=255)
+     */
+    protected $lastName;
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -45,9 +62,37 @@ class User extends BaseUser
 
     protected $plainPassword;
 
-    public function __construct()
+    /**
+     * @return string
+     */
+    public function getFirstName()
     {
-        parent::__construct();
-        // your own logic
+        return $this->firstName;
     }
+
+    /**
+     * @param string $firstName
+     */
+    public function setFirstName($firstName)
+    {
+        $this->firstName = $firstName;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLastName()
+    {
+        return $this->lastName;
+    }
+
+    /**
+     * @param string $lastName
+     */
+    public function setLastName($lastName)
+    {
+        $this->lastName = $lastName;
+    }
+
+
 }

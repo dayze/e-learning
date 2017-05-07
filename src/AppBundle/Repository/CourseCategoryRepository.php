@@ -10,4 +10,14 @@ namespace AppBundle\Repository;
  */
 class CourseCategoryRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function findCourseCategoryByCourse($id)
+    {
+        $qb = $this->createQueryBuilder('course_category');
+        return $qb
+            ->join('course_category.course', 'course')
+            ->where('course.id = :id')
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getResult();
+    }
 }

@@ -23,7 +23,7 @@ class QcmType extends AbstractType
                 'prototype' => true,
                 'allow_delete' => true,
                 'prototype_name' => '__parent_name__',
-                'attr' => ['class' => 'parent-collection'],
+                'attr' => ['class' => 'parent-collection qcm-questions'],
                 'entry_options' => ['label' => false],
                 'label' => false,
              ])

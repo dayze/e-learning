@@ -1,3 +1,15 @@
 student_homepage:
     path:     /
     defaults: { _controller: StudentBundle:Base:index }
+
+student_display_course:
+    path: /cours/{id}
+    defaults: { _controller: StudentBundle:Base:displayCourse }
+    requirements:
+        id: '\d+'
+
+student_display_courseCategory:
+    path: /cours/matiere/{id}
+    defaults: { _controller: StudentBundle:Base:displayCourseCategory }
+    requirements:
+        id: '\d+'

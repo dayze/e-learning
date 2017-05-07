@@ -1,5 +1,5 @@
 {% form_theme form 'bootstrap_3_layout.html.twig' 'QcmBundle::jquery.collection.html.twig' %}
-<div id="crudModal" class="modal fade" role="dialog">
+<div id="crudModal" class="modal modal-fullscreen fade" role="dialog">
         <div class="modal-dialog">
 
             <div class="modal-content">
@@ -18,8 +18,6 @@
                         <div class="form-group">
                             {{ form_errors(form) }}
                             {{ form_label(form.qcmQuestions, "Questions :") }}
-                            {#<ul class="qcmQuestions" data-prototype="{{ form_widget(form.qcmQuestions.vars.prototype)|e('html_attr') }}">
-                            </ul>#}
                             {{ form_widget(form.qcmQuestions) }}
                             <div class="bg-danger">{{ form_errors(form.qcmQuestions) }}</div>
                             {{ form_errors(form) }}
@@ -37,17 +35,4 @@
     </div>
 <script src="{{ asset('public/js/jquery.collection.js') }}"></script>
 <script>
-    $('.parent-collection').collection({
-        min:0,
-        /*up: '<a href="#" class="btn btn-default"><span class="glyphicon glyphicon-arrow-up"></span> Move collection up</a>',
-        down: '<a href="#" class="btn btn-default"><span class="glyphicon glyphicon-arrow-down"></span> Move collection down</a>',
-        add: '<a href="#" class="btn btn-default"><span class="glyphicon glyphicon-plus-sign"></span> Add collection</a>',
-        remove: '<a href="#" class="btn btn-default"><span class="glyphicon glyphicon-trash"></span> Remove collection</a>',*/
-        prefix: 'parent',
-        allow_duplicate: true,
-        children: [{
-            selector: '.child-collection',
-            add: '<a href="#" class="btn btn-default">Add</span></a>',
-        }]
-    });
 </script>

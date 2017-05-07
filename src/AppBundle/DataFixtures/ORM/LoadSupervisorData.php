@@ -24,6 +24,8 @@ class LoadSupervisorData extends AbstractFixture implements OrderedFixtureInterf
         $supervisor1->setEnabled(true);
         $supervisor1->setEmail("supervisor1@supervisor1.fr");
         $supervisor1->setRoles(array("ROLE_SUPERVISOR"));
+        $supervisor1->setFirstName('Sophie');
+        $supervisor1->setLastName('Boucher');
         $manager->persist($supervisor1);
         $this->addReference('supervisor1', $supervisor1);
 
@@ -33,6 +35,8 @@ class LoadSupervisorData extends AbstractFixture implements OrderedFixtureInterf
         $supervisor2->setEnabled(true);
         $supervisor2->setEmail("supervisor2@supervisor2.fr");
         $supervisor2->setRoles(array("ROLE_SUPERVISOR"));
+        $supervisor2->setFirstName('Henri');
+        $supervisor2->setLastName('Dumas');
         $manager->persist($supervisor2);
         $this->addReference('supervisor2', $supervisor2);
 
@@ -42,6 +46,8 @@ class LoadSupervisorData extends AbstractFixture implements OrderedFixtureInterf
         $supervisor3->setEnabled(true);
         $supervisor3->setEmail("supervisor3@supervisor3.fr");
         $supervisor3->setRoles(array("ROLE_SUPERVISOR"));
+        $supervisor3->setFirstName('Émilie');
+        $supervisor3->setLastName('Mary');
         $manager->persist($supervisor3);
         $this->addReference('supervisor3', $supervisor3);
 
@@ -51,6 +57,8 @@ class LoadSupervisorData extends AbstractFixture implements OrderedFixtureInterf
         $supervisor4->setEnabled(true);
         $supervisor4->setEmail("supervisor4@supervisor4.fr");
         $supervisor4->setRoles(array("ROLE_SUPERVISOR"));
+        $supervisor4->setFirstName('Marcel');
+        $supervisor4->setLastName('Legendre');
         $manager->persist($supervisor4);
         $this->addReference('supervisor4', $supervisor4);
 

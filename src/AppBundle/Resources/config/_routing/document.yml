@@ -23,3 +23,15 @@ app_document_edit:
         id: '\d+'
     options:
         expose: true
+
+app_document_populate_course:
+    path: /document/populateCourse
+    defaults: { _controller: AppBundle:Document:populateCourse }
+    options:
+        expose: true
+
+app_document_populate_courseCategory:
+    path: /document/populateCourseCategory
+    defaults: { _controller: AppBundle:Document:populateCourseCategory }
+    options:
+        expose: true
