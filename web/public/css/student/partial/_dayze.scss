@@ -69,3 +69,18 @@ $emerlad : #2ecc71;
     width: 1170px;
   }
 }
+
+@mixin flex-center(){
+  display: flex;
+  flex-direction: column;
+}
+
+.center-vertical{
+  @include flex-center;
+  justify-content: center;
+}
+
+.center-horizontal{
+  @include flex-center;
+  align-items: center;
+}

@@ -23,4 +23,16 @@ class SectionRepository extends \Doctrine\ORM\EntityRepository
             ->getQuery()
             ->getSingleResult();
     }
+
+    public function findSectionBySupervisor($id)
+    {
+        $qb = $this->createQueryBuilder('sec');
+        return $qb
+            ->innerJoin('sec.supervisors', 'sup')
+            ->where('sup.id = :sup_id')
+            ->setParameter('sup_id', $id)
+            ->getQuery()
+            ->getResult();
+    }
+
 }

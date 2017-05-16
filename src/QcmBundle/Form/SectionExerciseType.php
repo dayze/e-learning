@@ -1,22 +1,16 @@
 <?php
 
 
-namespace AppBundle\Form;
+namespace QcmBundle\Form;
 
 
 use AppBundle\Entity\Course;
 use AppBundle\Entity\CourseCategory;
-use AppBundle\Entity\Document;
 use AppBundle\Entity\Section;
-use Doctrine\ORM\EntityRepository;
 use QcmBundle\Entity\Qcm;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -30,17 +24,21 @@ class SectionExerciseType extends AbstractType
                 'class' => Section::class,
                 'mapped' => false,
                 'required' => false,
+                'label' => 'Section'
             ])
             ->add('course', EntityType::class, [
                 'attr' => ['class' => 'course-input'],
                 'mapped' => false,
+                'label' => 'Cours',
                 'class' => Course::class
             ])
             ->add('courseCategory', EntityType::class, [
                 'attr' => ['class' => 'courseCategory-input'],
                 'mapped' => false,
+                'label' => 'Matière',
                 'class' => CourseCategory::class
             ]);
+
     }
 
     public function configureOptions(OptionsResolver $resolver)
@@ -52,6 +50,6 @@ class SectionExerciseType extends AbstractType
 
     public function getBlockPrefix()
     {
-        return 'appbundle_document';
+        return 'qcmbundle_qcm';
     }
 }

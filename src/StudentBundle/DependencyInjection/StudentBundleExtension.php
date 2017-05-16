@@ -1,13 +1,13 @@
 <?php
 
-namespace QcmBundle\DependencyInjection;
+namespace StudentBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\DependencyInjection\Loader;
 
-class QcmBundleExtension extends Extension
+class StudentBundleExtension extends Extension
 {
     public function load(array $configs, ContainerBuilder $container)
     {

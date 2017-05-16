@@ -4,6 +4,7 @@ namespace AppBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use QcmBundle\Entity\Qcm;
 use Symfony\Component\Validator\Constraints as Assert;
 
 
@@ -20,7 +21,6 @@ class Section
     {
         $this->students = new ArrayCollection();
         $this->supervisors = new ArrayCollection();
-        $this->documents = new ArrayCollection();
         $this->courses = new ArrayCollection();
     }
 
@@ -58,16 +58,14 @@ class Section
     private $supervisors;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Document", inversedBy="sections", cascade={"persist"})
-     * @ORM\JoinTable(name="section_document")
-     */
-
-    private $documents;
-
-    /**
-     * @ORM\ManyToMany(targetEntity="Course", inversedBy="sections", cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="Course", mappedBy="sections", cascade={"persist"})
      */
     private $courses;
+
+    /**
+     * @ORM\OneToMany(targetEntity="DocRelation", mappedBy="section", cascade={"persist"})
+     */
+    private $docRelation;
 
     /**
      * Get id
@@ -127,43 +125,6 @@ class Section
         return $this->promotion;
     }
 
-
-    /**
-     * @return ArrayCollection
-     */
-    public function getDocuments()
-    {
-        return $this->documents;
-    }
-
-    /**
-     * @param Document $document
-     * @return $this
-     * @internal param User $user
-     * @internal param mixed $users
-     */
-    public function addDocument(Document $document)
-    {
-        $this->documents->add($document);
-        return $this;
-    }
-
-    /**
-     * @param Document $document
-     * @internal param User $user
-     */
-    public function removeDocument(Document $document)
-    {
-        $this->documents->removeElement($document);
-    }
-
-    /**
-     * @param mixed $documents
-     */
-    public function setDocuments($documents)
-    {
-        $this->documents = $documents;
-    }
 
     public function __toString()
     {
@@ -249,6 +210,22 @@ class Section
     public function setSupervisors($supervisors)
     {
         $this->supervisors = $supervisors;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDocRelation()
+    {
+        return $this->docRelation;
+    }
+
+    /**
+     * @param mixed $docRelation
+     */
+    public function setDocRelation($docRelation)
+    {
+        $this->docRelation = $docRelation;
     }
 
 

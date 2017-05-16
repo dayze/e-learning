@@ -1,15 +1,15 @@
 @import "partial/dayze";
 #header-top {
-  height: 40vh;
+  height: 200px;
   width: 100vw;
   background: url(../../img/student/bg_student.png) no-repeat center;
   background-size: cover;
   position: relative;
   margin-bottom: 15px;
   #header-name-student{
-    position: relative;
+    /*position: relative;
     top: 50%;
-    left: 39%;
+    left: 39%;*/
     font-size: 45px;
     color: $cloud;
     text-transform: uppercase;
@@ -20,6 +20,23 @@
     .lastName{
       color: $emerlad;
     }
+  }
+}
+.navbar{
+  background: rgba(0, 0, 0, 0.4);
+  position: relative;
+}
+
+.navbar-header{
+  a{
+    color: $cloud!important;
+  }
+}
+
+.navbar-nav{
+  a{
+    color: #dedede !important;
+    font-family: Helvetica, Arial, sans-serif;
   }
 }
 
@@ -59,4 +76,28 @@ p, a{
       color: black ;
     }
   }
+}
+
+.student-tr:hover{
+  background: $cloud;
+  cursor: pointer;
+}
+
+.title-course-category{
+  background: $peter;
+  color: $cloud
+}
+
+.score-input{
+  font-size: 90px;
+  color: $peter;
+}
+
+.score-div{
+  min-height: 454px;
+
+}
+
+.center-vertical{
+
 }

@@ -12,16 +12,14 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Qcm
  *
- * @ORM\Table(name="qcm")
- * @ORM\Entity(repositoryClass="QcmBundle\Repository\QcmRepository")
+ * @ORM\Table(name="score")
+ * @ORM\Entity(repositoryClass="QcmBundle\Repository\ScoreRepository")
  */
-class Qcm
+class Score
 {
     public function __construct()
     {
-        $this->qcmQuestions = new ArrayCollection();
-        $this->docRelation = new ArrayCollection();
-        $this->date = new \DateTime('now');
+        $this->date = new DateTime('now');
     }
 
     /**
@@ -34,33 +32,28 @@ class Qcm
     private $id;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="name", type="string", length=255)
+     * @ORM\Column(name="note", type="decimal")
      */
-    private $name;
+    private $note;
 
     /**
-     * @ORM\OneToMany(targetEntity="QcmQuestion", mappedBy="qcm", cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity="Qcm", inversedBy="score", cascade={"persist"})
      */
-    private $qcmQuestions;
+    private $qcm;
 
     /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\DocRelation", mappedBy="qcm", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Student", inversedBy="score", cascade={"persist"})
      */
-    private $docRelation;
+    private $student;
 
     /**
      * @var DateTime
      *
-     * @ORM\Column(name="date", type="date")
+     * @ORM\Column(name="date", type="datetime")
      */
     private $date;
 
-
     /**
-     * Get id
-     *
      * @return int
      */
     public function getId()
@@ -69,73 +62,43 @@ class Qcm
     }
 
     /**
-     * Set name
-     *
-     * @param string $name
-     *
-     * @return Qcm
+     * @param int $id
      */
-    public function setName($name)
+    public function setId($id)
     {
-        $this->name = $name;
-
-        return $this;
-    }
-
-    /**
-     * Get name
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->name;
+        $this->id = $id;
     }
 
     /**
      * @return mixed
      */
-    public function getQcmQuestions()
+    public function getQcm()
     {
-        return $this->qcmQuestions;
+        return $this->qcm;
     }
 
-    public function addQcmQuestion(QcmQuestion $qcmQuestion)
+    /**
+     * @param mixed $qcm
+     */
+    public function setQcm($qcm)
     {
-        $qcmQuestion->addQcm($this);
-        $this->qcmQuestions->add($qcmQuestion);
-    }
-
-    public function removeQcmQuestion(QcmQuestion $qcmQuestion)
-    {
-        $this->qcmQuestions->removeElement($qcmQuestion);
+        $this->qcm = $qcm;
     }
 
     /**
      * @return mixed
      */
-    public function getDocRelation()
+    public function getStudent()
     {
-        return $this->docRelation;
+        return $this->student;
     }
 
     /**
-     * @param mixed $docRelation
+     * @param mixed $student
      */
-    public function setDocRelation($docRelation)
+    public function setStudent($student)
     {
-        $this->docRelation = $docRelation;
-    }
-
-    public function addDocRelation(DocRelation $docRelation)
-    {
-        $this->docRelation->add($docRelation);
-        $docRelation->setQcm($this);
-    }
-
-    public function removeDocRelation(DocRelation $docRelation)
-    {
-
+        $this->student = $student;
     }
 
     /**
@@ -152,6 +115,22 @@ class Qcm
     public function setDate($date)
     {
         $this->date = $date;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getNote()
+    {
+        return $this->note;
+    }
+
+    /**
+     * @param mixed $note
+     */
+    public function setNote($note)
+    {
+        $this->note = $note;
     }
 
 

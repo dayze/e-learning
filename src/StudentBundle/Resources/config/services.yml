@@ -1,4 +1,6 @@
 services:
-#    student.example:
-#        class: StudentBundle\Example
-#        arguments: ["@service_id", "plain_value", "%parameter%"]
+    app.breadcrumb:
+        class: StudentBundle\Service\Breadcrumb
+        arguments:
+            breadcrumbs: "@white_october_breadcrumbs"
+            container: "@service_container"

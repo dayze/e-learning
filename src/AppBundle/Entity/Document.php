@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -17,7 +18,8 @@ class Document
 {
     public function __construct()
     {
-        $this->sections = new ArrayCollection();
+        $this->date = new \DateTime('now');
+        $this->docRelation = new ArrayCollection();
     }
 
     /**
@@ -38,37 +40,30 @@ class Document
     private $path;
 
     /**
-     * @var bool
-     *
-     * @ORM\Column(name="available", type="boolean")
-     */
-    private $available;
-
-    /**
-     * @ORM\ManyToMany(targetEntity="Section", mappedBy="documents", fetch="EAGER", cascade={"persist"})
-     */
-    private $sections;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="CourseCategory", inversedBy="documents", cascade={"remove"})
-     */
-    private $courseCategory;
-
-    /**
      * @var string
-     *
      * @ORM\Column(name="name", type="string", length=255)
+     * @Assert\NotBlank(message="Vous devez saisir un nom")
      */
     private $name;
-
 
     /**
      * @var string
      *
      * @ORM\Column(name="type", type="string", length=255)
      */
-
     private $type;
+
+    /**
+     * @var DateTime
+     *
+     * @ORM\Column(name="date", type="date")
+     */
+    private $date;
+
+    /**
+     * @ORM\OneToMany(targetEntity="DocRelation", mappedBy="document", cascade={"persist", "remove"})
+     */
+    private $docRelation;
 
     /**
      * Get id
@@ -103,61 +98,6 @@ class Document
     {
         return $this->path;
     }
-
-    /**
-     * Set available
-     *
-     * @param boolean $available
-     *
-     * @return Document
-     */
-    public function setAvailable($available)
-    {
-        $this->available = $available;
-
-        return $this;
-    }
-
-    /**
-     * Get available
-     *
-     * @return bool
-     */
-    public function getAvailable()
-    {
-        return $this->available;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getSections()
-    {
-        return $this->sections;
-    }
-
-    public function addSection(Section $section)
-    {
-        $this->sections[] = $section;
-        $section->addDocument($this);
-        return $this;
-    }
-
-    public function setSection($sections)
-    {
-        $this->sections = $sections;
-    }
-
-    /**
-     * @param Section $section
-     */
-    public function removeSection(Section $section)
-    {
-        $this->sections->removeElement($section);
-        $section->removeDocument($this);
-    }
-
-
 
     /**
      * @return string
@@ -197,16 +137,46 @@ class Document
     }
 
     /**
-     * @return mixed
+     * @return DateTime
      */
-    public function getCourseCategory()
+    public function getDate()
     {
-        return $this->courseCategory;
+        return $this->date;
     }
 
-    public function setCourseCategory($courseCategory)
+    /**
+     * @param DateTime $date
+     */
+    public function setDate($date)
     {
-        $this->courseCategory = $courseCategory;
+        $this->date = $date;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDocRelation()
+    {
+        return $this->docRelation;
+    }
+
+    /**
+     * @param mixed $docRelation
+     */
+    public function setDocRelation($docRelation)
+    {
+        $this->docRelation = $docRelation;
+    }
+
+    public function addDocRelation(DocRelation $docRelation)
+    {
+        $this->docRelation->add($docRelation);
+        $docRelation->setDocument($this);
+    }
+
+    public function removeDocRelation(DocRelation $docRelation)
+    {
+
     }
 }
 

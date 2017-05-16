@@ -21,55 +21,25 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class DocumentType extends AbstractType
 {
+    private $em;
     /**
      * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $this->supervisor = $options['supervisor'];
+        $this->em = $options["em"];
         $builder
             ->add('path', FileType::class)
-            ->add('available', CheckboxType::class, [
-                'label' => 'Disponible'
-            ])
             ->add('name')
-            ->add('sections', CollectionType::class, [
-                'entry_type' => SectionDocType::class,
+            ->add('docRelation', CollectionType::class, [
+                'entry_type' => DocRelationType::class,
+                'entry_options' => ['label' => false, 'em' => $this->em, "supervisor_id" => $options['supervisor_id']],
                 'allow_add' => true,
                 'by_reference' => false,
                 'prototype' => true,
                 'allow_delete' => true,
                 'attr' => ['class' => 'section-collection'],
-                'label' => false,
-                'mapped' => false
             ])
-            /*->add('sections', EntityType::class, array(
-                'class' => 'AppBundle\Entity\Section',
-                'query_builder' => function (EntityRepository $er) {
-                    return $er->createQueryBuilder('sec')
-                        ->innerJoin('sec.supervisors', 'sup')
-                        ->where('sup.id = :sup_id')
-                        ->setParameter('sup_id', $this->supervisor->getId());
-                },
-                'choice_label' => 'name',
-                'multiple' => true,
-                'by_reference' => false
-            ))*/
-            /*->add('courseCategory', EntityType::class, array(
-                'class' => 'AppBundle\Entity\CourseCategory',
-                'query_builder' => function (EntityRepository $er) {
-                    return $er->createQueryBuilder('cc')
-                        ->innerJoin('cc.course', 'c')
-                        ->addSelect('c')
-                        ->innerJoin('c.supervisor', 'sup')
-                        ->where('sup.id = :sup_id')
-                        ->setParameter('sup_id', $this->supervisor->getId());
-                },
-                'choice_label' => 'name',
-                'multiple' => true,
-                'expanded' => true,
-                'by_reference' => false
-            ))*/
             ->add('save', SubmitType::class, array('label' => 'Envoyer',
                 "attr" => array("class" => "btn btn-primary")));;
     }
@@ -81,7 +51,8 @@ class DocumentType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class' => Document::class,
-            'supervisor' => null,
+            'em' => null,
+            'supervisor_id' => null
         ));
     }
 

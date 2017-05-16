@@ -17,25 +17,7 @@ class LoadDocumentData extends AbstractFixture implements OrderedFixtureInterfac
      */
     public function load(ObjectManager $manager)
     {
-        $document1 = new Document();
 
-        $document1->setPath('web/upload/test.txt');
-        $document1->setAvailable(true);
-        $document1->setName("Cours 1");
-        $document1->setType('pdf');
-        $document1->setCourseCategory($this->getReference('courseCategory1'));
-        $manager->persist($document1);
-        $this->addReference('document1', $document1);
-
-        $document2 = new Document();
-
-        $document2->setPath('web/upload/test2.txt');
-        $document2->setAvailable(true);
-        $document2->setName("Cours 2");
-        $document2->setType('pdf');
-        $manager->persist($document2);
-        $this->addReference('document2', $document2);
-        $manager->flush();
     }
 
     public function getOrder()

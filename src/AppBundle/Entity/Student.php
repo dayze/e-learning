@@ -9,7 +9,6 @@ use Doctrine\ORM\Mapping as ORM;
  * Student
  * @ORM\Entity
  */
-
 class Student extends User
 {
     public function __construct()
@@ -18,22 +17,14 @@ class Student extends User
     }
 
     /**
+     * @ORM\OneToMany(targetEntity="QcmBundle\Entity\Score", mappedBy="student", cascade={"persist"})
+     */
+    private $score;
+
+    /**
      * @ORM\ManyToMany(targetEntity="Section", mappedBy="students")
      */
     private $sections;
-
-    /*public function addSection(Section $section)
-    {
-        $this->sections[] = $section;
-        $section->addUser($this);
-        return $this;
-    }
-
-    public function removeSection(Section $section)
-    {
-        $this->sections->removeElement($section);
-        $section->removeDocument($this);
-    }*/
 
 
     public function setSection($sections)
@@ -48,6 +39,22 @@ class Student extends User
     public function getSections()
     {
         return $this->sections;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getScore()
+    {
+        return $this->score;
+    }
+
+    /**
+     * @param mixed $score
+     */
+    public function setScore($score)
+    {
+        $this->score = $score;
     }
 
 }

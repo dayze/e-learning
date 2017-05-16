@@ -2,7 +2,9 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use QcmBundle\Entity\Qcm;
 
 /**
  * Course
@@ -12,6 +14,11 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class CourseCategory
 {
+    public function __construct()
+    {
+        $this->documents = new ArrayCollection();
+        $this->qcms = new ArrayCollection();
+    }
     /**
      * @var int
      *
@@ -34,10 +41,9 @@ class CourseCategory
     private $course;
 
     /**
-     * @ORM\OneToMany(targetEntity="Document", mappedBy="courseCategory", cascade={"remove"})
+     * @ORM\OneToMany(targetEntity="DocRelation", mappedBy="courseCategory", cascade={"persist"})
      */
-    private $documents;
-
+    private $docRelation;
 
     /**
      * Get id
@@ -89,25 +95,26 @@ class CourseCategory
         $this->course = $course;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getDocuments()
-    {
-        return $this->documents;
-    }
-
-    /**
-     * @param mixed $documents
-     */
-    public function setDocuments($documents)
-    {
-        $this->documents = $documents;
-    }
 
     public function __toString()
     {
         return $this->name;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDocRelation()
+    {
+        return $this->docRelation;
+    }
+
+    /**
+     * @param mixed $docRelation
+     */
+    public function setDocRelation($docRelation)
+    {
+        $this->docRelation = $docRelation;
     }
 
 }

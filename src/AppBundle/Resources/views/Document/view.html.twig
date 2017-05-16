@@ -12,10 +12,11 @@
                 <th></th>
             </tr>
             </thead>
+
             {% for document in documents %}
                 {% include "AppBundle:Document/part:raw.html.twig" %}
-
             {% endfor %}
+
         </table>
     </div>
     <div id="crudModal"></div>

@@ -35,3 +35,9 @@ app_document_populate_courseCategory:
     defaults: { _controller: AppBundle:Document:populateCourseCategory }
     options:
         expose: true
+
+app_document_populate_section:
+    path: /document/populateSection
+    defaults: { _controller: AppBundle:Document:populateSection }
+    options:
+        expose: true

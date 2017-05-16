@@ -3,35 +3,18 @@
 
 namespace AppBundle\Service;
 
+use Symfony\Component\DependencyInjection\Container;
 
-use Symfony\Component\HttpFoundation\File\UploadedFile;
-
-class FileUploader
+class CheckRole
 {
-    private $targetDir;
-    private $typeFile;
-
-    public function __construct($targetDir)
+    private $container;
+    public function __construct(Container $container)
     {
-        $this->targetDir = $targetDir;
+        $this->container = $container;
     }
 
-    public function upload(UploadedFile $file)
+    public function check($role)
     {
-        $this->typeFile = $file->guessExtension();
-        $fileName = md5(uniqid()).'.'.$this->typeFile;
-        $file->move($this->targetDir, $fileName);
-
-        return $fileName;
-    }
-
-    public function getTargetDir()
-    {
-        return $this->targetDir;
-    }
-
-    public function getTypeFile()
-    {
-        return $this->typeFile;
+        return $this->container->get('security.authorization_checker')->isGranted($role);
     }
 }

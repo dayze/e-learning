@@ -20,12 +20,15 @@
 <body>
 <div id="header-top">
     {% include 'StudentBundle::nav.html.twig' %}
-    <div id="header-name-student">
-        <span class="firstName">{{ app.user.firstName }}</span>
-        <span class="lastName">{{ app.user.lastName }}</span>
+    <div id="header-name-student" class="center-vertical center-horizontal">
+        <div>
+            <span class="firstName">{{ app.user.firstName }}</span>
+            <span class="lastName">{{ app.user.lastName }}</span>
+        </div>
     </div>
 </div>
 <div class="container">
+    {{ wo_render_breadcrumbs() }}
     {% block body %}{% endblock %}
 
 

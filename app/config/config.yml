@@ -31,8 +31,13 @@ framework:
     trusted_proxies: ~
     session:
         # http://symfony.com/doc/current/reference/configuration/framework.html#handler-id
-        handler_id:  session.handler.native_file
-        save_path:   "%kernel.root_dir%/../var/sessions/%kernel.environment%"
+        handler_id:  session.handler.pdo
+        # save_path:   "%kernel.root_dir%/../var/sessions/%kernel.environment%" use for file storing
+        cookie_lifetime: 86400
+        gc_maxlifetime: 3600
+        gc_probability: 1
+        gc_divisor: 1
+
     fragments:       ~
     http_method_override: true
     assets: ~
@@ -82,3 +87,14 @@ fos_user:
     from_email:
         address: "test"
         sender_name: "mailer_user"
+
+white_october_breadcrumbs:
+    separator:          ''
+    separatorClass:     'separator'
+    listId:             'wo-breadcrumbs'
+    listClass:          'breadcrumb'
+    itemClass:          ''
+    linkRel:            ''
+    locale:             ~ # defaults to null, so the default locale is used
+    translation_domain: ~ # defaults to null, so the default domain is used
+    viewTemplate:       'WhiteOctoberBreadcrumbsBundle::breadcrumbs.html.twig'

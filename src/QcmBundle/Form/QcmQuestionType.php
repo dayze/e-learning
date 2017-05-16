@@ -4,6 +4,7 @@ namespace QcmBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -13,6 +14,10 @@ class QcmQuestionType extends AbstractType
     {
         $builder
             ->add('question')
+            ->add('imgPath', FileType::class, [
+                "required" => false,
+                "label" => "Image (optionnel)"
+            ])
             ->add('qcmAnswers', CollectionType::class, [
                 'entry_type' => QcmAnswerType::class,
                 'allow_add' => true,

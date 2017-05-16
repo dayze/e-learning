@@ -10,5 +10,19 @@ namespace AppBundle\Repository;
  */
 class DocumentRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function findDocumentsFromSupervisor($id){
+        return $this
+            ->createQueryBuilder('doc')
+            ->innerJoin('doc.docRelation', 'docRelation')
+            ->addSelect('docRelation')
+            ->innerJoin('docRelation.section', 'section')
+            ->addSelect('section')
+            ->innerJoin('section.supervisors', 'sup')
+            ->addSelect('sup')
+            ->where('sup.id = :sup')
+            ->setParameter('sup', $id)
+            ->getQuery()
+            ->getResult();
+    }
 
 }

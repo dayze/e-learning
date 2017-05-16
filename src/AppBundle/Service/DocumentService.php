@@ -5,6 +5,7 @@ namespace AppBundle\Service;
 
 
 use AppBundle\Entity\Document;
+use AppBundle\Repository\DocumentRepository;
 
 class DocumentService extends BaseService
 {
@@ -17,13 +18,8 @@ class DocumentService extends BaseService
             );
     }
 
-    public function addSection(Document $document, $request)
+    public function findDocumentsFromSupervisor($repository, $id)
     {
-        foreach ($request['sections'] as $sections) {
-            $section = $this->container->get('doctrine')->getRepository('AppBundle:Section')->find($sections['sections']);
-            $document->addSection($section);
-            $courseCategory = $this->container->get('doctrine')->getRepository('AppBundle:CourseCategory')->find($sections['courseCategory']);
-            $document->setCourseCategory($courseCategory);
-            }
+        return $this->container->get('doctrine')->getRepository($repository)->findDocumentsFromSupervisor($id);
     }
 }

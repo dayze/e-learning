@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage;
 
 class BaseController extends Controller
 {
@@ -17,6 +18,7 @@ class BaseController extends Controller
 
     public function indexAction()
     {
+       // $nativeSessionStorage = new NativeSessionStorage(["cookie_lifetime" => 0]);
         $securityContext = $this->get('security.authorization_checker');
         if ($securityContext->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             if($securityContext->isGranted('ROLE_ADMIN')){

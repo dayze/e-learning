@@ -4,6 +4,7 @@
 namespace QcmBundle\Controller;
 
 
+use AppBundle\Entity\Section;
 use Doctrine\ORM\EntityRepository;
 use QcmBundle\Entity\Qcm;
 use QcmBundle\Entity\QcmQuestion;
@@ -21,6 +22,7 @@ use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Extension\Core\Type\RadioType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -33,10 +35,13 @@ class BaseController extends Controller
         return $this->render('QcmBundle:qcm:view.html.twig', ["qcms" => $qcms]);
     }
 
-    public function displayQuestionOfQcmAction(Request $request, $id)
+    public function displayQuestionOfQcmAction(Request $request, Qcm $qcm)
     {
+        $qcmS = $this->get('app.qcm');
+        $this->get('app.breadcrumb')->addQcm($qcm);
         $em = $this->getDoctrine()->getManager()->getRepository('QcmBundle:QcmQuestion');
-        $qcmQuestions = $em->findBy(array('qcm' => $id));
+        $qcmQuestions = $em->findBy(array('qcm' => $qcm->getId()));
+        $isAlreadyDone = $qcmS->checkQcmProperty($qcm);
         $formBuilderQuestionnaire = $this->createFormBuilder();
         $i = 0;
         foreach ($qcmQuestions as $qcmQuestion) {
@@ -64,30 +69,37 @@ class BaseController extends Controller
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $qcmQuestions = $form->getData();
-            $qcmS = $this->get('app.qcm');
-            $score = $qcmS->getScore($qcmQuestions);
-            var_dump($score);
+            $score = $qcmS->setScore($qcmQuestions);
+            return $this->render('StudentBundle:part:score.html.twig', ['score' => $score]);
         }
-        return $this->render('QcmBundle:qcm:qcmQuestions.html.twig', ["qcmQuestions" => $qcmQuestions, "form" => $form->createView()]);
+        $view = $this->get('app.check_role')->check('ROLE_STUDENT') ? "StudentBundle:part:qcm.html.twig" : "QcmBundle:qcm:qcmQuestions.html.twig";
+        return $this->render($view, ["isAlreadyDone" => $isAlreadyDone ,"qcmQuestions" => $qcmQuestions, "form" => $form->createView()]);
     }
-
 
     public function createAction(Request $request)
     {
         $qcmS = $this->get('app.qcm');
         $qcm = new Qcm();
-        $form = $this->get("form.factory")->create(QcmType::class, $qcm, array(
-            'action' => $this->generateUrl('app_create_qcm'),
-            'method' => 'POST'));
+        $supervisor_id = $this->get('app.check_role')->check('ROLE_ADMIN') ? null : $this->getUser()->getId();
+        $form = $this->get("form.factory")->create(QcmType::class, $qcm,
+            [
+                'action' => $this->generateUrl('app_create_qcm'),
+                'method' => 'POST',
+                'em' => $this->getDoctrine()->getManager(),
+                'supervisor_id' => $supervisor_id
+            ]);
         $form->handleRequest($request);
         if ($form->isValid()) {
+            $qcm = $form->getData();
+            $qcmS->handleImg($qcm);
+            //  $qcmS->addSection($qcm, $request->request->get('qcmbundle_qcm'));
             $qcmS->addEntity($qcm);
             $data = $this->renderView("QcmBundle:qcm/part:raw.html.twig", array("qcm" => $qcm));
-            return new JsonResponse(array('error' => false, "action" => "new", 'data' => $data), 200);
-        }
-        else if(!$form->isValid() && $form->isSubmitted()){
+            return new JsonResponse(array('error' => false, "action" => "new", 'data' => $data, 'supervisor' => $this->getUser()->getId()), 200);
+        } else if (!$form->isValid() && $request->get('isSubmit') == true) {
             return new JsonResponse(
                 array(
+                    'supervisor' => $this->getUser()->getId(),
                     'error' => true,
                     'form' => $this->renderView('QcmBundle:qcm/part:crudModal.html.twig', array('qcm' => $qcm,
                         'form' => $form->createView(),
@@ -95,40 +107,53 @@ class BaseController extends Controller
         }
         return new JsonResponse(array('error' => false,
             'form' => $this->renderView('QcmBundle:qcm/part:crudModal.html.twig', array(
-                'form' => $form->createView()
+                'form' => $form->createView(),
+                'supervisor' => $this->getUser()->getId()
             ))));
     }
 
     public function deleteAction(Qcm $qcm)
     {
         $qcmS = $this->get("app.qcm");
+        $qcmS->handleDeleteImg($qcm);
         $qcmS->deleteEntity($qcm);
         return new JsonResponse(array("error" => false), 200);
     }
 
     public function editAction(Request $request, Qcm $qcm)
     {
-        $form = $this->get("form.factory")->create(QcmType::class, $qcm, array(
-            'action' => $this->generateUrl('app_edit_qcm', array('id' => $qcm->getId())),
-            'method' => 'POST'));
+        $qcmS = $this->get('app.qcm');
+        $qcmS->handlePathImg($qcm);
+        $supervisor_id = $this->get('app.check_role')->check('ROLE_ADMIN') ? null : $this->getUser()->getId();
+        $form = $this->get("form.factory")->create(QcmType::class, $qcm, [
+            'action' => $this->generateUrl('app_edit_qcm', ['id' => $qcm->getId()]),
+            'method' => 'POST',
+            'em' => $this->getDoctrine()->getManager(),
+            'supervisor_id' => $supervisor_id
+        ]);
         $form->handleRequest($request);
         if ($form->isValid()) {
+            $qcm = $form->getData();
+            $qcmS->handleImg($qcm);
             $this->getDoctrine()->getManager()->flush();
             $data = $this->renderView("QcmBundle:qcm/part:raw.html.twig", array("qcm" => $qcm));
             return new JsonResponse(
                 array("error" => false, "data" => $data, "id" => $qcm->getId(), "action" => "edit")
                 , 200);
-        }
-        else if(!$form->isValid() && $form->isSubmitted()){
+        } else if (!$form->isValid() && $request->get('isSubmit') == true) {
             return new JsonResponse(array(
                 'error' => true,
-                'form' => $this->renderView('QcmBundle:qcm/part:crudModal.html.twig', array('qcm' => $qcm,
-                    'form' => $form->createView()))),400);
+                'form' => $this->renderView('QcmBundle:qcm/part:crudModal.html.twig', [
+                    'qcm' => $qcm,
+                    'form' => $form->createView()
+                ])), 400);
 
         }
         return new JsonResponse(array(
             'error' => true,
-            'form' => $this->renderView('QcmBundle:qcm/part:crudModal.html.twig', array('qcm' => $qcm,
-                'form' => $form->createView()))));
+            'form' => $this->renderView('QcmBundle:qcm/part:crudModal.html.twig', [
+                'qcm' => $qcm,
+                'form' => $form->createView()
+            ])));
     }
 }

@@ -17,10 +17,22 @@
                         </div>
                         <div class="form-group">
                             {{ form_errors(form) }}
+                            {{ form_label(form.isEvaluated) }}
+                            {{ form_widget(form.isEvaluated) }}
+                            <div class="bg-danger">{{ form_errors(form.isEvaluated) }}</div>
+                        </div>
+                        <div class="form-group">
+                            {{ form_errors(form) }}
                             {{ form_label(form.qcmQuestions, "Questions :") }}
                             {{ form_widget(form.qcmQuestions) }}
                             <div class="bg-danger">{{ form_errors(form.qcmQuestions) }}</div>
                             {{ form_errors(form) }}
+                        </div>
+                        <div class="form-group">
+                            {{ form_errors(form) }}
+                            {{ form_label(form.docRelation, "Sections :") }}
+                            {{ form_widget(form.docRelation) }}
+                            <div class="bg-danger">{{ form_errors(form.docRelation) }}</div>
                         </div>
 
                         {#{{ form_label(form.save) }}
@@ -33,6 +45,4 @@
             </div>
         </div>
     </div>
-<script src="{{ asset('public/js/jquery.collection.js') }}"></script>
-<script>
-</script>
+<script src="{{ asset('public/js/controller/dynamicSection.js') }}"></script>

@@ -1,0 +1,20 @@
+{% extends 'StudentBundle::base_student.html.twig' %}
+{% block body %}
+    <div class="col-md-8 row-box title-course-category">
+        <h3 class="text-center">Votre score</h3>
+    </div>
+    <div class="row">
+        <div class="row-box col-md-8 text-center score-div center-vertical">
+            <div>
+                <div class="col-md-6">
+                    <span class="score-input">{{ score.note }}/20</span>
+                </div>
+                <div class="col-md-6">
+                    <span class="score-input">{{ (score.note * 100) /20 }} %</span>
+                </div>
+            </div>
+        </div>
+        {% include 'StudentBundle:part:calendar.html.twig' %}
+    </div>
+{% endblock %}
+

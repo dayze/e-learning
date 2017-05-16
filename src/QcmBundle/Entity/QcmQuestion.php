@@ -4,6 +4,8 @@ namespace QcmBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * QcmQuestion
@@ -30,8 +32,8 @@ class QcmQuestion
 
     /**
      * @var string
-     *
      * @ORM\Column(name="imgPath", type="string", length=255, nullable=true)
+     * @Assert\File(mimeTypes={"image/jpeg", "image/png" }, maxSize="3M")
      */
     private $imgPath;
 

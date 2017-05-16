@@ -23,23 +23,9 @@
                     </div>
                     <div class="form-group">
                         {{ form_errors(form) }}
-                        {{ form_label(form.sections, "Sections :") }}
-                        {{ form_widget(form.sections) }}
-                        <div class="bg-danger">{{ form_errors(form.sections) }}</div>
-                    </div>
-                    {#<div class="form-group">
-                        {{ form_errors(form) }}
-                        {{ form_label(form.courseCategory, "Matière :") }}
-                        {{ form_widget(form.courseCategory) }}
-                        <div class="bg-danger">{{ form_errors(form.courseCategory) }}</div>
-                    </div>#}
-                    <div class="form-group">
-                        {{ form_errors(form) }}
-                        {{ form_label(form.available, "Public :") }}
-                        {{ form_widget(form.available) }}
-                        <div class="bg-danger">{{ form_errors(form.available) }}</div>
-                    </div>
-                    <div>
+                        {{ form_label(form.docRelation, "Sections :") }}
+                        {{ form_widget(form.docRelation) }}
+                        <div class="bg-danger">{{ form_errors(form.docRelation) }}</div>
                     </div>
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Fermer</button>
                     {{ form_label(form.save) }}
@@ -50,7 +36,4 @@
         </div>
     </div>
 </div>
-
-<script>
-
-</script>
+<script src="{{ asset('public/js/controller/dynamicSection.js') }}"></script>

@@ -28,3 +28,8 @@ services:
     app.file_uploader:
         class: AppBundle\Service\FileUploader
         arguments: ['%document_directory%']
+
+    app.check_role:
+         class: AppBundle\Service\CheckRole
+         arguments:
+             container: "@service_container"

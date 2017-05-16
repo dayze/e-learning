@@ -2,21 +2,72 @@
 {% block body %}
     <div class="row">
         <div class="col-md-8 ">
-            <div class="col-md-12 row-box">
+            <div class="col-md-12 row-box title-course-category">
                 <h2 class="text-center">{{ courseCategory.name }}</h2>
             </div>
             <div class="col-md-12 row-box">
                 <h3 class="text-center">Documents</h3>
-                <ul class="list-course">
-                    {% for document in courseCategory.documents %}
-                        <li>
-                            <i class="fa fa-arrow-circle-o-right fa-lg"></i> <a href="">{{ document.name }}</a>
-                        </li>
-                    {% endfor %}
-                </ul>
+                <hr>
+                <div class="row col-md-12 custyle">
+                    <table class="table custab sortable">
+                        <thead>
+                        <tr>
+                            <th>Nom</th>
+                            <th>Date</th>
+                            <th>Type</th>
+                        </tr>
+                        </thead>
+                        {% for docRelation in courseCategory.docRelation %}
+                            {% if docRelation.document is not null %}
+                                <tr class="student-tr doc-tr"
+                                    data-href= {{ asset('uploads/document/' ~ docRelation.document.path) }}>
+                                    <td>{{ docRelation.document.name }}</td>
+                                    <td>{{ docRelation.document.date|date('d-m-Y') }}</td>
+                                    <td>{{ docRelation.document.type }}</td>
+                                </tr>
+                            {% endif %}
+                        {% endfor %}
+
+                    </table>
+                </div>
+            </div>
+            <div class="col-md-12 row-box">
+                <h3 class="text-center">Exercices</h3>
+                <hr>
+                <div class="row col-md-12 custyle">
+                    <table class="table custab sortable">
+                        <thead>
+                        <tr>
+                            <th>Nom</th>
+                            <th>Date</th>
+                        </tr>
+                        </thead>
+                        {% for docRelation in courseCategory.docRelation %}
+                            {% if docRelation.qcm is not null %}
+                                <tr class="student-tr qcm-tr" data-href= {{ path('qcm_display_questions', {"id":docRelation.qcm.id}) }}>
+                                    <td>{{ docRelation.qcm.name }}</td>
+                                    <td>{{ docRelation.qcm.date|date('d-m-Y') }}</td>
+                                </tr>
+                            {% endif %}
+                        {% endfor %}
+                    </table>
+                </div>
             </div>
         </div>
         {% include 'StudentBundle:part:calendar.html.twig' %}
     </div>
 
+{% endblock %}
+{% block javascripts %}
+    <script>
+        $('.doc-tr').click(function () {
+            window.open($(this).attr('data-href'), '_blank');
+        })
+
+        $('.qcm-tr').click(function () {
+            window.location = $(this).attr('data-href');
+        })
+
+
+    </script>
 {% endblock %}

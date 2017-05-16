@@ -44,9 +44,14 @@ class Course
     private $courseCategories;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Section", mappedBy="courses", cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="Section", inversedBy="courses", cascade={"persist"})
      */
     private $sections;
+
+    /**
+     * @ORM\OneToMany(targetEntity="DocRelation", mappedBy="course", cascade={"persist"})
+     */
+    private $docRelation;
 
 
     /**
@@ -147,6 +152,22 @@ class Course
     public function __toString()
     {
         return $this->name;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDocRelation()
+    {
+        return $this->docRelation;
+    }
+
+    /**
+     * @param mixed $docRelation
+     */
+    public function setDocRelation($docRelation)
+    {
+        $this->docRelation = $docRelation;
     }
 
 }

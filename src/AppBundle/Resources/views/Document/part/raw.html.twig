@@ -1,8 +1,8 @@
 <tr>
     <td>{{ document.name }}</td>
     <td>
-        {% for section in document.sections %}
-            {{ section.name }}
+        {% for docRelation in document.docRelation %}
+            {{ docRelation.section.name }}
         {% endfor %}
     </td>
     <td>{{ document.type }}</td>

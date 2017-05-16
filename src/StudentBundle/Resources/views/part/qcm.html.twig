@@ -1,0 +1,41 @@
+{% form_theme form 'bootstrap_3_layout.html.twig' %}
+{% extends 'StudentBundle::base_student.html.twig' %}
+{% block body %}
+    {% if qcmQuestions[0].qcm.name is defined %}
+        <div class="col-md-8 row-box title-course-category">
+            <h3 class="text-center">{{ qcmQuestions[0].qcm.name }}</h3>
+        </div>
+    {% else %}
+        <h1>Qcm</h1>
+    {% endif %}
+
+    {% if isAlreadyDone %}
+        <div class="row">
+            <div class="row-box col-md-8 bg-danger text-center">
+                <div class="bg-danger">
+                    <h4>Vous avez déjà fait le QCM.</h4>
+                </div>
+            </div>
+            {% include 'StudentBundle:part:calendar.html.twig' %}
+
+        </div>
+    {% else %}
+        <div class="row">
+            <div class="row-box col-md-8">
+                {{ form_start(form) }}
+                {{ form_end(form) }}
+                {{ form_rest(form) }}
+            </div>
+            {% include 'StudentBundle:part:calendar.html.twig' %}
+        </div>
+    {% endif %}
+
+
+{% endblock %}
+{% block javascripts %}
+    <script>
+        $.each($('form').children(), function (index, value) {
+            $(this).children('.control-label').remove()
+        })
+    </script>
+{% endblock %}

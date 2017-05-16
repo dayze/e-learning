@@ -52,17 +52,27 @@
 @media (min-width: 1200px) {
   .modal-fullscreen .modal-dialog {
     width: 1170px; } }
+.center-vertical {
+  display: flex;
+  flex-direction: column;
+  justify-content: center; }
+
+.center-horizontal {
+  display: flex;
+  flex-direction: column;
+  align-items: center; }
+
 #header-top {
-  height: 40vh;
+  height: 200px;
   width: 100vw;
   background: url(../../img/student/bg_student.png) no-repeat center;
   background-size: cover;
   position: relative;
   margin-bottom: 15px; }
   #header-top #header-name-student {
-    position: relative;
+    /*position: relative;
     top: 50%;
-    left: 39%;
+    left: 39%;*/
     font-size: 45px;
     color: #ecf0f1;
     text-transform: uppercase;
@@ -71,6 +81,17 @@
       color: #89C4F4; }
     #header-top #header-name-student .lastName {
       color: #2ecc71; }
+
+.navbar {
+  background: rgba(0, 0, 0, 0.4);
+  position: relative; }
+
+.navbar-header a {
+  color: #ecf0f1 !important; }
+
+.navbar-nav a {
+  color: #dedede !important;
+  font-family: Helvetica, Arial, sans-serif; }
 
 p, a {
   font-family: Helvetica, Arial, sans-serif; }
@@ -97,5 +118,20 @@ p, a {
   .list-course li a {
     font-size: 15px;
     color: black; }
+
+.student-tr:hover {
+  background: #ecf0f1;
+  cursor: pointer; }
+
+.title-course-category {
+  background: #3498db;
+  color: #ecf0f1; }
+
+.score-input {
+  font-size: 90px;
+  color: #3498db; }
+
+.score-div {
+  min-height: 454px; }
 
 /*# sourceMappingURL=main.css.map */
