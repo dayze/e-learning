@@ -13,3 +13,9 @@ student_display_courseCategory:
     defaults: { _controller: StudentBundle:Base:displayCourseCategory }
     requirements:
         id: '\d+'
+
+student_set_act:
+    path: /setAct
+    defaults: { _controller: StudentBundle:Action:setStudentAct }
+    options:
+        expose: true

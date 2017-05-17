@@ -37,11 +37,13 @@ class BaseController extends Controller
 
     public function displayQuestionOfQcmAction(Request $request, Qcm $qcm)
     {
+        $actionS = $this->get('app.action');
         $qcmS = $this->get('app.qcm');
         $this->get('app.breadcrumb')->addQcm($qcm);
         $em = $this->getDoctrine()->getManager()->getRepository('QcmBundle:QcmQuestion');
         $qcmQuestions = $em->findBy(array('qcm' => $qcm->getId()));
         $isAlreadyDone = $qcmS->checkQcmProperty($qcm);
+        $act = !$isAlreadyDone ? $actionS->SaveAction($this->getUser(), $qcm->getName() . "_QCM") : null;
         $formBuilderQuestionnaire = $this->createFormBuilder();
         $i = 0;
         foreach ($qcmQuestions as $qcmQuestion) {

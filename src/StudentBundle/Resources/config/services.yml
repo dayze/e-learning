@@ -4,3 +4,7 @@ services:
         arguments:
             breadcrumbs: "@white_october_breadcrumbs"
             container: "@service_container"
+
+    app.action:
+        class: StudentBundle\Service\ActionService
+        parent: app.base

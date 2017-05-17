@@ -19,8 +19,9 @@
                         </thead>
                         {% for docRelation in courseCategory.docRelation %}
                             {% if docRelation.document is not null %}
-                                <tr class="student-tr doc-tr"
-                                    data-href= {{ asset('uploads/document/' ~ docRelation.document.path) }}>
+                                <tr class="student-tr event-listener"
+                                    data-href= "{{ asset('uploads/document/' ~ docRelation.document.path) }}"
+                                    data-name = "{{ docRelation.document.name }}" >
                                     <td>{{ docRelation.document.name }}</td>
                                     <td>{{ docRelation.document.date|date('d-m-Y') }}</td>
                                     <td>{{ docRelation.document.type }}</td>
@@ -44,7 +45,8 @@
                         </thead>
                         {% for docRelation in courseCategory.docRelation %}
                             {% if docRelation.qcm is not null %}
-                                <tr class="student-tr qcm-tr" data-href= {{ path('qcm_display_questions', {"id":docRelation.qcm.id}) }}>
+                                <tr class="student-tr qcm-tr"
+                                    data-href= "{{ path('qcm_display_questions', {"id":docRelation.qcm.id}) }}">
                                     <td>{{ docRelation.qcm.name }}</td>
                                     <td>{{ docRelation.qcm.date|date('d-m-Y') }}</td>
                                 </tr>

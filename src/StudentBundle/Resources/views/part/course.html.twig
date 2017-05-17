@@ -8,7 +8,9 @@
                     {% for courseCategory in course.courseCategories %}
                         <li>
                             <i class="fa fa-arrow-circle-o-right fa-lg"></i>
-                            <a href="{{ path("student_display_courseCategory", {"id":courseCategory.id }) }}">{{ courseCategory.name }}</a>
+                            <a href="{{ path("student_display_courseCategory", {"id":courseCategory.id }) }}">
+                                {{ courseCategory.name }}
+                            </a>
                         </li>
                     {% endfor %}
                 </ul>

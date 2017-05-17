@@ -10,7 +10,9 @@
                     <ul class="list-course">
                         {% for course in section.courses %}
                             <li ><i class="fa fa-arrow-circle-o-right fa-lg"></i>
-                                <a href="{{ path('student_display_course', {'id' : course.id}) }}">{{ course.name }}</a>
+                                <a href="{{ path('student_display_course', {'id' : course.id}) }}">
+                                    {{ course.name }}
+                                </a>
                             </li>
                         {% endfor %}
                     </ul>
