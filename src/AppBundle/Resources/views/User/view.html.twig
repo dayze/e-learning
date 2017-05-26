@@ -5,7 +5,9 @@
         <div id="userType" data-userType="user" hidden></div>
         <table class="table table-striped custab sortable" id="user-table">
             <thead>
+            {% if app.user.roles in "ROLE_ADMIN" %}
             <a id="user-add-modal" class="btn btn-primary btn-xs"><b>+</b> Ajouter un élève</a>
+            {% endif %}
             <tr>
                 <th>Nom</th>
                 <th>Email</th>

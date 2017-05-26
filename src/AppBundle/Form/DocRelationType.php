@@ -31,7 +31,8 @@ class DocRelationType extends AbstractType
         $this->supervisor_id = $options["supervisor_id"];
         $builder
             ->add('available', CheckboxType::class, [
-                'label' => "Disponible"
+                'label' => "Disponible",
+                "required" => false
             ])
             ->add('section', EntityType::class, [
                 'attr' => ['class' => 'section-input'],

@@ -5,3 +5,7 @@ app_debug:
 app_homepage:
     path:     /
     defaults: { _controller: AppBundle:Base:index }
+
+app_register:
+    path: /registers
+    defaults: { _controller: AppBundle:Base:register}

@@ -1,0 +1,27 @@
+<div id="gradeModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Mes notes pour {{ scores[0].qcm.name }} </h4>
+            </div>
+            <div class="modal-body">
+                    <table class="table custab sortable">
+                        <thead>
+                        <tr>
+                            <th>Note</th>
+                            <th>Date</th>
+                        </tr>
+                        </thead>
+                        {% for score in scores %}
+                            <tr>
+                                <td>{{ score.note }}</td>
+                                <td>{{ score.date|date('H:m d/m/Y ') }}</td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+            </div>
+        </div>
+    </div>
+</div>

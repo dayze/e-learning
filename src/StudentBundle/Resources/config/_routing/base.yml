@@ -19,3 +19,9 @@ student_set_act:
     defaults: { _controller: StudentBundle:Action:setStudentAct }
     options:
         expose: true
+
+student_display_grade:
+    path: /getGrades
+    defaults: { _controller: StudentBundle:Base:displayGrades }
+    options:
+        expose: true

@@ -4,6 +4,9 @@
 namespace AppBundle\Service;
 
 
+use AppBundle\Entity\Document;
+use Symfony\Component\DependencyInjection\Container;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class FileUploader
@@ -21,7 +24,6 @@ class FileUploader
         $this->typeFile = $file->guessExtension();
         $fileName = md5(uniqid()).'.'.$this->typeFile;
         $file->move($this->targetDir, $fileName);
-
         return $fileName;
     }
 
@@ -33,5 +35,11 @@ class FileUploader
     public function getTypeFile()
     {
         return $this->typeFile;
+    }
+
+    public function removeElement($path)
+    {
+        if (file_exists($this->targetDir . '/' . $path))
+            unlink(new File($this->targetDir . '/' . $path));
     }
 }

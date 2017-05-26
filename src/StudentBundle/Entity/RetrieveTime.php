@@ -3,6 +3,7 @@
 namespace StudentBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints\DateTime;
 
 /**
  * RetrieveTime
@@ -12,6 +13,10 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class RetrieveTime
 {
+    public function __construct()
+    {
+        $this->date = new DateTime();
+    }
     /**
      * @var int
      *
@@ -22,16 +27,24 @@ class RetrieveTime
     private $id;
 
     /**
-     * @var \DateTime
+     * @var
      *
-     * @ORM\Column(name="time", type="datetime")
+     * @ORM\Column(name="time", type="time")
      */
     private $time;
 
     /**
-    * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Student", inversedBy="retrieveTimes", cascade={"persist"})
+     * @var \DateTime
+     * @ORM\Column(name="date", type="datetime")
+     */
+    private $date;
+
+    /**
+    * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Student", inversedBy="retrieveTime", cascade={"persist"})
     */
     private $students;
+
+    private $beginDate;
 
     /**
      * Get id
@@ -82,5 +95,38 @@ class RetrieveTime
     {
         $this->students = $students;
     }
+
+    /**
+     * @return \DateTime
+     */
+    public function getDate()
+    {
+        return $this->date;
+    }
+
+    /**
+     * @param \DateTime $date
+     */
+    public function setDate($date)
+    {
+        $this->date = $date;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getBeginDate()
+    {
+        return $this->beginDate;
+    }
+
+    /**
+     * @param mixed $beginDate
+     */
+    public function setBeginDate($beginDate)
+    {
+        $this->beginDate = $beginDate;
+    }
+
 }
 

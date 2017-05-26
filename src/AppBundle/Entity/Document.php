@@ -34,7 +34,6 @@ class Document
     /**
      * @var string
      * @ORM\Column(name="path", type="string", length=255)
-     * @Assert\NotBlank(message="Vous devez saisir un document")
      * @Assert\File(mimeTypes={ "application/pdf", "image/jpeg", "image/png" }, maxSize="3M")
      */
     private $path;

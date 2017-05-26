@@ -13,29 +13,31 @@ class CourseType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $this->supervisor = $options['supervisor'];
+        $this->supervisor_id = $options['supervisor_id'];
         $builder
             ->add("name")
-            ->add('sections', EntityType::class,[
+            ->add('sections', EntityType::class, [
                 'class' => 'AppBundle\Entity\Section',
-                'query_builder' => function(EntityRepository $er){
-                    return $er->createQueryBuilder('sec')
-                        ->innerJoin('sec.supervisors', 'sup')
-                        ->where('sup.id = :sup_id')
-                        ->setParameter('sup_id', $this->supervisor->getId());
+                'query_builder' => function (EntityRepository $er) {
+                    if (!is_null($this->supervisor_id)) {
+                        return $er->createQueryBuilder('sec')
+                            ->innerJoin('sec.supervisors', 'sup')
+                            ->where('sup.id = :sup_id')
+                            ->setParameter('sup_id', $this->supervisor_id);
+                    }
                 },
                 'multiple' => true,
                 'by_reference' => false,
             ])
             ->add('save', SubmitType::class, array('label' => 'Envoyer',
-                "attr" => array("class" => "btn btn-primary") ));
+                "attr" => array("class" => "btn btn-primary")));
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
             'data_class' => 'AppBundle\Entity\Course',
-            'supervisor' => null,
+            'supervisor_id' => null,
         ));
     }
 

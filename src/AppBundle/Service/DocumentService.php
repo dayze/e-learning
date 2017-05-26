@@ -22,4 +22,15 @@ class DocumentService extends BaseService
     {
         return $this->container->get('doctrine')->getRepository($repository)->findDocumentsFromSupervisor($id);
     }
+
+    public function sendMail(Document $document)
+    {
+        if ($document->getDocRelation()->getIsAvailable()) {
+            $this->mail->sendMail("Ajout d'un document", "", "AppBundle:document.html.twig", [
+                "name" => "",
+                "id" => $document->getId()
+            ]);
+        }
+    }
+
 }

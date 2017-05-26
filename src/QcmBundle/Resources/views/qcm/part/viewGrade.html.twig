@@ -1,0 +1,49 @@
+{% extends "base_app.html.twig" %}
+
+{% block body %}
+    <h1>Notes pour {{ qcm.name }}</h1>
+    {% for section in sections %}
+        <div class="row col-md-12 custyle">
+            {{ section.name }}
+            <table class="table table-striped custab sortable" id="qcm-table">
+                <thead>
+                <tr>
+                    <th>Prénom</th>
+                    <th>Nom</th>
+                    <th>Notes</th>
+                </tr>
+                </thead>
+                {% for student in section.students %}
+                    <tr data-qcm-id="{{ qcm.id }}">
+                        <td>{{ student.firstName }}</td>
+                        <td>{{ student.lastName }}</td>
+                        <td><a class="btn btn-xs btn-info grade" data-student-id="{{ student.id }}">Voir les notes</a></td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+        <div id="gradeModal"></div>
+    {% endfor %}
+{% endblock %}
+{% block javascripts %}
+    <script>
+        $('body').on('click', '.grade', function (e) {
+            e.preventDefault();
+            var data = {}
+            data["qcm_id"] = $(this).parents('tr').attr('data-qcm-id');
+            data['student_id'] = $(this).attr('data-student-id');
+            $.ajax({
+                type: "POST",
+                url: Routing.generate('qcm_display_grades_student'),
+                data: data
+            })
+                .done(function (resp) {
+                    $('#gradeModal').replaceWith(resp);
+                    $('#gradeModal').modal();
+                })
+                .fail(function (jqXHR, textStatus, errorThrown) {
+                    alert("Cet élève n'a pas de note pour le qcm");
+                });
+        });
+    </script>
+{% endblock %}

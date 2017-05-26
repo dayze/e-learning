@@ -48,6 +48,7 @@ class DocumentController extends Controller
             $document->setPath($fileName);
             $document->setType($fileUploadService->getTypeFile());
             $documentService->addEntity($document);
+            //$documentService->sendMail($document);
             $data = $this->renderView("AppBundle:Document/part:raw.html.twig", array("document" => $document));
             return new JsonResponse(array('error' => false, "action" => "new", 'data' => $data), 200);
         } else if (!$form->isValid() && $request->get('isSubmit') == true) {
@@ -68,14 +69,14 @@ class DocumentController extends Controller
     public function deleteAction(Document $document)
     {
         $documentService = $this->get("app.document");
-        if (file_exists($this->getParameter('document_directory') . '/' . $document->getPath()))
-            unlink(new File($this->getParameter('document_directory') . '/' . $document->getPath()));
+        $this->get('app.file_uploader')->removeElement($document);
         $documentService->deleteEntity($document);
         return new JsonResponse(array("error" => false), 200);
     }
 
     public function editAction(Request $request, Document $document)
     {
+        $oldPath = $document->getPath();
         $document->setPath(
             new File($this->getParameter('document_directory') . '/' . $document->getPath())
         );
@@ -84,16 +85,25 @@ class DocumentController extends Controller
             'action' => $this->generateUrl('app_document_edit', ['id' => $document->getId()]),
             'method' => 'POST',
             'em' => $this->getDoctrine()->getManager(),
-            'supervisor_id' => $supervisor_id
+            'supervisor_id' => $supervisor_id,
+            'isEdit' => true
         ]);
         $form->handleRequest($request);
         if ($form->isValid()) {
             $file = $document->getPath();
-            $fileUploadService = $this->get('app.file_uploader');
-            $fileName = $fileUploadService->upload($file);
-            $document->setPath($fileName);
-            $document->setType($fileUploadService->getTypeFile());
+            if(is_null($file)){
+                $document->setPath($oldPath);
+            }
+            else{
+                $fileUploadService = $this->get('app.file_uploader');
+                $fileUploadService->removeElement($oldPath);
+                $fileName = $fileUploadService->upload($file);
+                $document->setType($fileUploadService->getTypeFile());
+                $document->setPath($fileName);
+            }
+
             $this->getDoctrine()->getManager()->flush();
+            //$documentService->sendMail($document);
             $data = $this->renderView("AppBundle:Document/part:raw.html.twig", array("document" => $document));
             return new JsonResponse(
                 array("error" => false, "data" => $data, "id" => $document->getId(), "action" => "edit")
@@ -111,4 +121,5 @@ class DocumentController extends Controller
                 'form' => $form->createView(), 'supervisor' => $this->getUser()->getId()
             ])]);
     }
+
 }

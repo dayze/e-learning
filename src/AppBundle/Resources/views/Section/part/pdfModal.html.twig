@@ -1,0 +1,19 @@
+{% form_theme form 'bootstrap_3_layout.html.twig' %}
+<div id="pdfModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Ajout d'une section</h4>
+            </div>
+            <div class="modal-body">
+                {{ form_start(form) }}
+                {{ form_end(form) }}
+                {{ form_rest(form) }}
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+</script>

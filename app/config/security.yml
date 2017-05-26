@@ -30,8 +30,6 @@ security:
                 csrf_token_generator: security.csrf.token_manager
             logout:
                 handlers: [appbundle_logoutlistener]
-
-
             anonymous: true
 
     access_control:

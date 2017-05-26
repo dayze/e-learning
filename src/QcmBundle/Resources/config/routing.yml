@@ -29,3 +29,19 @@ app_edit_qcm:
             id: '\d+'
     options:
         expose: true
+
+app_save_csv:
+    path: qcm/save_csv
+    defaults: { _controller: QcmBundle:Base:saveCSV }
+    options:
+        expose: true
+
+qcm_display_grades:
+    path: qcm/{id}/notes
+    defaults: { _controller: QcmBundle:Base:displayGrades }
+
+qcm_display_grades_student:
+    path: qcm/notes
+    defaults: { _controller : QcmBundle:Base:displayGradeStudent }
+    options:
+        expose: true

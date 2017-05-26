@@ -4,13 +4,15 @@ parameters:
 #    parameter_name: value
 
 services:
-    session.handler.pdo:
-        class:     Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler
-        public:    false
-        arguments:
-            - 'mysql:host=%database_host%;dbname=%database_name%'
-            - { db_table: sessions, db_username: '%database_user%', db_password: '%database_password%' }
-
     appbundle_logoutlistener:
         class: AppBundle\EventListener\LogoutListener
+        arguments: ['@app.action', '@app.check_role']
+
+    appbundle_loginlistener:
+        class: AppBundle\EventListener\LoginListener
+        arguments: ['@security.token_storage', '@doctrine.orm.entity_manager', '@app.check_role', '@app.retrievetime', '@app.action', '@twig', ]
+        tags:
+            - { name: 'kernel.event_listener', event: 'security.interactive_login' }
+
+
 

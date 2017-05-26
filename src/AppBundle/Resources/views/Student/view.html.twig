@@ -1,0 +1,27 @@
+{% extends 'base_app.html.twig' %}
+{% block body %}
+    <h1>Elèves</h1>
+    <div class="row col-md-12 custyle">
+        <div id="userType" data-userType="user" hidden></div>
+        <table class="table table-striped custab sortable" id="user-table">
+            <thead>
+            {% if "ROLE_ADMIN" in app.user.roles %}
+            <a id="user-add-modal" class="btn btn-primary btn-xs"><b>+</b> Ajouter un élève</a>
+            {% endif %}
+            <tr>
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>Pseudo</th>
+                <th>Email</th>
+                <th>Promotion</th>
+                <th></th>
+            </tr>
+            </thead>
+            {% for student in section.students %}
+                {% include "AppBundle:Student/part:raw.html.twig" %}
+            {% endfor %}
+        </table>
+    </div>
+    <div id="crudModal"></div>
+    <script src="{{ asset('public/js/controller/student.js') }}"></script>
+{% endblock %}

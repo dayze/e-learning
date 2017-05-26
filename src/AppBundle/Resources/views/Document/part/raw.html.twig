@@ -2,7 +2,7 @@
     <td>{{ document.name }}</td>
     <td>
         {% for docRelation in document.docRelation %}
-            {{ docRelation.section.name }}
+            {{ docRelation.section.name }}{% if not loop.last %},{% endif %}
         {% endfor %}
     </td>
     <td>{{ document.type }}</td>

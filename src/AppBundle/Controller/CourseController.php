@@ -15,10 +15,9 @@ class CourseController extends Controller
     public function displayAction()
     {
         $courseService = $this->get("app.course");
-        if(in_array('ROLE_SUPERVISOR',$this->getUser()->getRoles())){
-            $courses = $courseService->findBy('AppBundle:Course', ["supervisor" =>$this->getUser()->getId()]);
-        }
-        else{
+        if (in_array('ROLE_SUPERVISOR', $this->getUser()->getRoles())) {
+            $courses = $courseService->findBy('AppBundle:Course', ["supervisor" => $this->getUser()->getId()]);
+        } else {
             $courses = $courseService->findAll("AppBundle:Course");
         }
         return $this->render('AppBundle:Course:view.html.twig', array("courses" => $courses));
@@ -33,26 +32,25 @@ class CourseController extends Controller
     {
         $courseService = $this->get("app.course");
         $course = new Course();
-        $form = $this->get("form.factory")->create(CourseType::class, $course, array(
+        $supervisor_id = $this->get('app.check_role')->check('ROLE_SUPERVISOR') ? $this->getUser()->getId() : null;
+        $form = $this->get("form.factory")->create(CourseType::class, $course, [
             'action' => $this->generateUrl('app_create_course'),
             'method' => 'POST',
-            'supervisor' => $this->getUser()
-            ));
+            'supervisor_id' => $supervisor_id
+        ]);
         $form->handleRequest($request);
         if ($form->isValid()) {
-            if(in_array('ROLE_SUPERVISOR',$this->getUser()->getRoles())){
+            if (in_array('ROLE_SUPERVISOR', $this->getUser()->getRoles())) {
                 $em = $this->getDoctrine()->getRepository('AppBundle:Supervisor');
                 $supervisor = $em->find($this->getUser()->getId());
                 $course->setSupervisor($supervisor);
-            }
-            else{
+            } else {
 
             }
             $courseService->addEntity($course);
             $data = $this->renderView("AppBundle:Course/part:raw.html.twig", array("course" => $course));
             return new JsonResponse(array('error' => false, "action" => "new", 'data' => $data), 200);
-        }
-        else if(!$form->isValid() && $form->isSubmitted()){
+        } else if (!$form->isValid() && $form->isSubmitted()) {
             return new JsonResponse(
                 array(
                     'error' => true,
@@ -75,9 +73,13 @@ class CourseController extends Controller
 
     public function editAction(Request $request, Course $course)
     {
-        $form = $this->get("form.factory")->create(CourseType::class, $course, array(
-            'action' => $this->generateUrl('app_edit_course', array('id' => $course->getId())),
-            'method' => 'POST'));
+        $supervisor_id = $this->get('app.check_role')->check('ROLE_SUPERVISOR') ? $this->getUser()->getId() : null;
+        $form = $this->get("form.factory")->create(CourseType::class, $course, [
+            'action' => $this->generateUrl('app_edit_course', ['id' => $course->getId()]),
+            'method' => 'POST',
+            'supervisor_id' => $supervisor_id
+
+        ]);
         $form->handleRequest($request);
         if ($form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
@@ -85,12 +87,11 @@ class CourseController extends Controller
             return new JsonResponse(
                 array("error" => false, "data" => $data, "id" => $course->getId(), "action" => "edit")
                 , 200);
-        }
-        else if(!$form->isValid() && $form->isSubmitted()){
+        } else if (!$form->isValid() && $form->isSubmitted()) {
             return new JsonResponse(array(
                 'error' => true,
                 'form' => $this->renderView('AppBundle:Course/part:crudModal.html.twig', array('course' => $course,
-                    'form' => $form->createView()))),400);
+                    'form' => $form->createView()))), 400);
 
         }
         return new JsonResponse(array(
@@ -98,7 +99,6 @@ class CourseController extends Controller
             'form' => $this->renderView('AppBundle:Course/part:crudModal.html.twig', array('course' => $course,
                 'form' => $form->createView()))));
     }
-
 
 
 }

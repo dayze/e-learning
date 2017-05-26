@@ -64,23 +64,26 @@
     <div id="sidebar-wrapper">
         <ul class="sidebar-nav">
             <li>
-                <a class="active" href="#"><i class="fa fa-home"></i> Dashboard</a>
+                <a id="dashboard" href="{{ path('app_homepage') }}"><i class="fa fa-home"></i> Dashboard</a>
+            </li>
+            {% if "ROLE_ADMIN" in app.user.roles %}
+                <li>
+                    <a id="supervisor" href="{{ path('app_supervisor_display') }}"><i class="fa fa-address-book"></i>
+                        Formateurs</a>
+                </li>
+            {% endif %}
+            <li>
+                <a id="section" href="{{ path('app_section') }}"><i class="fa fa-folder"></i> Sections</a>
             </li>
             <li>
-                <a href="{{ path('app_supervisor_display') }}"><i class="fa fa-address-book"></i> Formateurs</a>
+                <a id="course" href="{{ path('app_course') }}"><i class="fa fa-book"></i> Cours</a>
             </li>
             <li>
-                <a href="{{ path('app_section') }}"><i class="fa fa-folder"></i> Sections</a>
-            </li>
-            <li>
-                <a href="{{ path('app_course') }}"><i class="fa fa-book"></i> Cours</a>
-            </li>
-            <li>
-                <a href="{{ path('app_document') }}"><i class="fa fa-file"></i> Documents</a>
+                <a id="document" href="{{ path('app_document') }}"><i class="fa fa-file"></i> Documents</a>
             </li>
 
             <li>
-                <a href="{{ path('qcm_display_all') }}"><i class="fa fa-bookmark"> </i> Exercices</a>
+                <a id="exercise" href="{{ path('qcm_display_all') }}"><i class="fa fa-bookmark"> </i> Exercices</a>
             </li>
         </ul>
     </div>

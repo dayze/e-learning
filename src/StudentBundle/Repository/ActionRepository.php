@@ -1,7 +1,6 @@
 <?php
 
 namespace StudentBundle\Repository;
-
 /**
  * ActionRepository
  *
@@ -10,4 +9,31 @@ namespace StudentBundle\Repository;
  */
 class ActionRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function findActionAndStudent($name_action, $student_id)
+    {
+        return $this->createQueryBuilder('a')
+            ->join('a.students', 's')
+            ->where('s.id = :student')
+            ->addSelect('s')
+            ->andWhere('a.name = :nameAction')
+            ->orderBy('a.id', 'DESC')
+            ->setParameters(['student' => $student_id, 'nameAction' => $name_action])
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
+    public function findLast($student_id)
+    {
+        return $this->createQueryBuilder('a')
+            ->join('a.students', 's')
+            ->where('s.id = :student')
+            ->addSelect('s')
+            ->setParameter('student', $student_id)
+            ->orderBy('a.id', 'DESC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getSingleResult();
+
+    }
 }

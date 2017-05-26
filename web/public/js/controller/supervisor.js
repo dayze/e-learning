@@ -1,5 +1,6 @@
 var controllerSupervisor = function () {
     this.userType = $('#userType').attr('data-userType');
+    $('#supervisor').addClass('active');
 };
 
 /*************************************CRUD**************************************************/
@@ -8,7 +9,6 @@ controllerSupervisor.prototype.addEditProcessing = function () {
     $('body').on('submit', '.ajaxForm', function (e) {
         e.preventDefault();
         var formData = $(this).serializeArray();
-        formData.push({name: "userType", value:that.userType});
         $.ajax({
             type: $(this).attr('method'),
             url: $(this).attr('action'),
@@ -46,7 +46,7 @@ controllerSupervisor.prototype.deleteProcess = function () {
         that.sectionRawElement = $(this).parents('tr');
         $.ajax({
             type: "GET",
-            url: Routing.generate("app_user_delete", {"id": $(this).attr('data-id')})
+            url: Routing.generate("app_supervisor_delete", {"id": $(this).attr('data-id')})
         })
             .done(function (resp) {
                 that.sectionRawElement.fadeOut(400, function () {
@@ -70,7 +70,7 @@ controllerSupervisor.prototype.newDisplay = function () {
         e.preventDefault();
         $.ajax({
             type: "GET",
-            url: Routing.generate("app_user_create")
+            url: Routing.generate("app_supervisor_create")
         })
             .done(function (resp) {
                 $("#crudModal").replaceWith(resp.form);
@@ -90,7 +90,7 @@ controllerSupervisor.prototype.editDisplay = function () {
         e.preventDefault();
         $.ajax({
             type: "GET",
-            url: Routing.generate("app_user_edit", {"id": $(this).attr('data-id')})
+            url: Routing.generate("app_supervisor_edit", {"id": $(this).attr('data-id')})
         })
             .done(function (resp) {
                 $("#crudModal").replaceWith(resp.form);

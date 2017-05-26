@@ -1,6 +1,7 @@
 var controllerSection = function () {
     this.sectionRawElement = "";
-    this.global = new global();
+    $('#section').addClass('active');
+    this.sectionId = "";
 };
 
 /*************************************CRUD**************************************************/
@@ -15,11 +16,11 @@ controllerSection.prototype.addEditFormSection = function () {
         })
             .done(function (resp) {
                 $("#addSectionModal").modal("hide");
-                if(resp.action == "new"){
+                if (resp.action == "new") {
                     $("#section-table").find("tr:last").after(resp.data);
                     $("#section-table").find("tr:last").hide().fadeIn(400);
                 }
-                else if(resp.action == "edit"){
+                else if (resp.action == "edit") {
                     $(".ajaxEdit[data-id=" + resp.id + "]").parents('tr').replaceWith(resp.data);
                 }
             })
@@ -101,14 +102,53 @@ controllerSection.prototype.editDisplaySection = function () {
 
 };
 
-/*************************************OTHERS**************************************************/
+controllerSection.prototype.displayPdfDate = function () {
+    var that = this;
+    $('body').on('click', '.display-pdf', function (e) {
+        var data = {};
+        data["section_id"] = $(this).attr('data-id');
+        e.preventDefault();
+        $.ajax({
+            type: "POST",
+            url: Routing.generate("app_display_pdf_date"),
+            data: data
+        })
+            .done(function (resp) {
+                $("#pdfModal").replaceWith(resp.form);
+                $("#pdfModal").modal();
+                that.initDateTimePicker();
+            })
+            .fail(function (jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR.responseJSON.error);
+            });
+    })
 
+};
+
+/*************************************OTHERS**************************************************/
+controllerSection.prototype.initDateTimePicker = function () {
+    $('.js-datepicker').datepicker.dates['fr'] = {
+        days: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+        daysShort: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+        daysMin: ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"],
+        months: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+        monthsShort: ["Jan", "Fév", "Mar", "Avr", "Mai", "Jui", "Jui", "Aoû", "Sep", "Oct", "Nov", "Déc"],
+    }
+    $('.js-datepicker').datepicker({
+        format: "mm-yyyy",
+        startView: "months",
+        minViewMode: "months",
+        language: 'fr'
+    });
+
+};
 
 controllerSection.prototype.init = function () {
     this.addEditFormSection();
     this.deleteSection();
     this.editDisplaySection();
     this.newDisplaySection();
+    this.displayPdfDate();
 };
 
 $(function () {

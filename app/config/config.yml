@@ -3,7 +3,6 @@ imports:
     - { resource: security.yml }
     - { resource: services.yml }
     - { resource: "@AppBundle/Resources/config/services.yml" }
-    - { resource: "@AdminBundle/Resources/config/services.yml" }
     - { resource: "@QcmBundle/Resources/config/services.yml" }
     - { resource: "@StudentBundle/Resources/config/services.yml" }
 
@@ -31,7 +30,8 @@ framework:
     trusted_proxies: ~
     session:
         # http://symfony.com/doc/current/reference/configuration/framework.html#handler-id
-        handler_id:  session.handler.pdo
+        handler_id:  session.handler.native_file
+        save_path:   "%kernel.root_dir%/../var/sessions/%kernel.environment%"
         # save_path:   "%kernel.root_dir%/../var/sessions/%kernel.environment%" use for file storing
         cookie_lifetime: 86400
         gc_maxlifetime: 3600
@@ -48,6 +48,9 @@ framework:
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
+    globals:
+        timeretrieve:
+
 
 # Doctrine Configuration
 doctrine:
@@ -88,6 +91,7 @@ fos_user:
         address: "test"
         sender_name: "mailer_user"
 
+
 white_october_breadcrumbs:
     separator:          ''
     separatorClass:     'separator'
@@ -98,3 +102,8 @@ white_october_breadcrumbs:
     locale:             ~ # defaults to null, so the default locale is used
     translation_domain: ~ # defaults to null, so the default domain is used
     viewTemplate:       'WhiteOctoberBreadcrumbsBundle::breadcrumbs.html.twig'
+
+knp_snappy:
+    pdf:
+        enabled: true
+        binary: "/usr/local/bin/wkhtmltopdf"

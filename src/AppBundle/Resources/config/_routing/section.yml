@@ -23,3 +23,9 @@ app_editSection:
             id: '\d+'
     options:
         expose: true
+
+app_display_pdf_date:
+    path: section/pdfDate
+    defaults: { _controller: AppBundle:Section:pdfDate }
+    options:
+        expose: true

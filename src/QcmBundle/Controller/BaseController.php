@@ -5,10 +5,12 @@ namespace QcmBundle\Controller;
 
 
 use AppBundle\Entity\Section;
+use AppBundle\Service\FileUploader;
 use Doctrine\ORM\EntityRepository;
 use QcmBundle\Entity\Qcm;
 use QcmBundle\Entity\QcmQuestion;
 use QcmBundle\Form\QcmAnswerType;
+use QcmBundle\Form\QcmCsvType;
 use QcmBundle\Form\QcmQuestionType;
 use QcmBundle\Form\QcmType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -23,8 +25,12 @@ use Symfony\Component\Form\Extension\Core\Type\RadioType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Serializer\Encoder\CsvEncoder;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\Serializer;
 
 class BaseController extends Controller
 {
@@ -37,13 +43,15 @@ class BaseController extends Controller
 
     public function displayQuestionOfQcmAction(Request $request, Qcm $qcm)
     {
+        $isStudent = $this->get('app.check_role')->check('ROLE_STUDENT');
         $actionS = $this->get('app.action');
         $qcmS = $this->get('app.qcm');
-        $this->get('app.breadcrumb')->addQcm($qcm);
+        $isStudent ? $this->get('app.breadcrumb')->addQcm($qcm) : null;
         $em = $this->getDoctrine()->getManager()->getRepository('QcmBundle:QcmQuestion');
         $qcmQuestions = $em->findBy(array('qcm' => $qcm->getId()));
         $isAlreadyDone = $qcmS->checkQcmProperty($qcm);
-        $act = !$isAlreadyDone ? $actionS->SaveAction($this->getUser(), $qcm->getName() . "_QCM") : null;
+        $timeRetrieve = $isStudent ? $this->get('app.retrievetime')->getTimeRetrieve($this->getUser()) : null;
+        $act = !$isAlreadyDone && $isStudent ? $actionS->SaveAction($this->getUser(), $qcm->getName() . "_QCM") : null;
         $formBuilderQuestionnaire = $this->createFormBuilder();
         $i = 0;
         foreach ($qcmQuestions as $qcmQuestion) {
@@ -71,11 +79,12 @@ class BaseController extends Controller
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $qcmQuestions = $form->getData();
-            $score = $qcmS->setScore($qcmQuestions);
-            return $this->render('StudentBundle:part:score.html.twig', ['score' => $score]);
+            $score = $isStudent ? $qcmS->setScore($qcmQuestions, true) : $qcmS->setScore($qcmQuestions, false);
+            $view = $isStudent ? "StudentBundle:part:score.html.twig" : "QcmBundle:qcm/part:score.html.twig";
+            return $this->render($view, ['score' => $score, "timeretrieve" => $timeRetrieve]);
         }
-        $view = $this->get('app.check_role')->check('ROLE_STUDENT') ? "StudentBundle:part:qcm.html.twig" : "QcmBundle:qcm:qcmQuestions.html.twig";
-        return $this->render($view, ["isAlreadyDone" => $isAlreadyDone ,"qcmQuestions" => $qcmQuestions, "form" => $form->createView()]);
+        $view = $isStudent ? "StudentBundle:part:qcm.html.twig" : "QcmBundle:qcm:qcmQuestions.html.twig";
+        return $this->render($view, ["timeretrieve" => $timeRetrieve, "isAlreadyDone" => $isAlreadyDone, "qcmQuestions" => $qcmQuestions, "form" => $form->createView()]);
     }
 
     public function createAction(Request $request)
@@ -93,8 +102,8 @@ class BaseController extends Controller
         $form->handleRequest($request);
         if ($form->isValid()) {
             $qcm = $form->getData();
+            //$qcmS->sendMail($qcm);
             $qcmS->handleImg($qcm);
-            //  $qcmS->addSection($qcm, $request->request->get('qcmbundle_qcm'));
             $qcmS->addEntity($qcm);
             $data = $this->renderView("QcmBundle:qcm/part:raw.html.twig", array("qcm" => $qcm));
             return new JsonResponse(array('error' => false, "action" => "new", 'data' => $data, 'supervisor' => $this->getUser()->getId()), 200);
@@ -137,7 +146,9 @@ class BaseController extends Controller
         if ($form->isValid()) {
             $qcm = $form->getData();
             $qcmS->handleImg($qcm);
+
             $this->getDoctrine()->getManager()->flush();
+            //$qcmS->sendMail($qcm);
             $data = $this->renderView("QcmBundle:qcm/part:raw.html.twig", array("qcm" => $qcm));
             return new JsonResponse(
                 array("error" => false, "data" => $data, "id" => $qcm->getId(), "action" => "edit")
@@ -157,5 +168,58 @@ class BaseController extends Controller
                 'qcm' => $qcm,
                 'form' => $form->createView()
             ])));
+    }
+
+    public function saveCSVAction(Request $request)
+    {
+        $qcm = new Qcm();
+        $form = $this->get('form.factory')->create(QcmCsvType::class, $qcm, [
+            'action' => $this->generateUrl('app_save_csv'),
+            'method' => 'POST',
+        ]);
+        $form->handleRequest($request);
+        if ($form->isValid()) {
+            $file = $request->files->get('qcmbundle_qcm')['file'];
+            /** @var $file UploadedFile */
+            $qcm = $form->getData();
+            $this->get('app.qcm')->saveCSV($file->getRealPath(), $qcm);
+            $data = $this->renderView("QcmBundle:qcm/part:raw.html.twig", array("qcm" => $qcm));
+            return new JsonResponse(
+                array("error" => false, "data" => $data, "id" => $qcm->getId(), "action" => "new")
+                , 200);
+        } else if (!$form->isValid() && $request->get('isSubmit') == true) {
+            return new JsonResponse(array(
+                'error' => true,
+                'form' => $this->renderView('QcmBundle:qcm/part:csvModal.html.twig', [
+                    'qcm' => $qcm,
+                    'form' => $form->createView()
+                ])), 400);
+        }
+        return new JsonResponse(array(
+            'error' => true,
+            'form' => $this->renderView('QcmBundle:qcm/part:csvModal.html.twig', [
+                'qcm' => $qcm,
+                'form' => $form->createView()
+            ])));
+    }
+
+    public function displayGradesAction(Qcm $qcm)
+    {
+        $repo = $this->getDoctrine()->getRepository('AppBundle:Section');
+        $sections = $repo->findSectionByQcm($qcm->getId());
+        return $this->render('QcmBundle:qcm/part:viewGrade.html.twig', [
+            "qcm" => $qcm,
+            "sections" => $sections
+        ]);
+    }
+
+    public function displayGradeStudentAction(Request $request)
+    {
+        $repo = $this->getDoctrine()->getRepository('QcmBundle:Score');
+        $scores = $repo->findByQcm($request->request->get('qcm_id'), $request->request->get('student_id'));
+        if(!$scores){
+            return new JsonResponse(null, 400);
+        }
+        return new JsonResponse($this->renderView('StudentBundle:part:gradeModal.html.twig', ["scores" => $scores]));
     }
 }

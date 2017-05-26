@@ -21,7 +21,8 @@ class QcmType extends AbstractType
         $builder
             ->add('name')
             ->add('isEvaluated', CheckboxType::class, [
-                'label' => "Est noté ?"
+                'label' => "Est noté ?",
+                'required' => false,
             ])
             ->add('qcmQuestions', CollectionType::class, [
                 'entry_type' => QcmQuestionType::class,

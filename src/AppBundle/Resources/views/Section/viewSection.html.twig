@@ -1,11 +1,17 @@
 {% extends 'base_app.html.twig' %}
+{% block stylesheets %}
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.css">
+{% endblock %}
 {% block body %}
     <h1>Sections</h1>
     <div class="row col-md-12 custyle">
         <table class="table table-striped custab sortable" id="section-table">
             <thead>
-            <a data-toggle="modal" id="section-add-modal" class="btn btn-primary btn-xs"><b>+</b>
-                Ajouter une nouvelle section</a>
+            {% if "ROLE_ADMIN" in app.user.roles %}
+                <a data-toggle="modal" id="section-add-modal" class="btn btn-primary btn-xs"><b>+</b>
+                    Ajouter une nouvelle section</a>
+            {% endif %}
             <tr>
                 <th>Nom</th>
                 <th>Promotion</th>
@@ -17,8 +23,9 @@
             {% endfor %}
         </table>
     </div>
-    <div id="addSectionModal">
-    </div>
+    <div id="addSectionModal"></div>
+    <div id="pdfModal"></div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.js"></script>
     <script src="{{ asset('public/js/dayze.js') }}"></script>
     <script src="{{ asset('public/js/controller/section.js') }}"></script>
 {% endblock %}

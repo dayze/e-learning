@@ -12,11 +12,13 @@ class BaseService
 {
     protected $em;
     protected $container;
+    protected $mail;
 
-    public function __construct(EntityManager $em, Container $container)
+    public function __construct(EntityManager $em, Container $container, Mail $mail)
     {
         $this->em = $em;
         $this->container = $container;
+        $this->mail = $mail;
     }
 
     public function findAll($repository)

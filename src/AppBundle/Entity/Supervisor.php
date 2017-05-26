@@ -3,6 +3,7 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -18,6 +19,7 @@ class Supervisor extends User
     {
         $this->setRoles(["ROLE_SUPERVISOR"]);
         parent::__construct();
+        $this->sections = new ArrayCollection();
     }
 
     /**
@@ -31,18 +33,18 @@ class Supervisor extends User
      */
     private $sections;
 
-    /*public function addSection(Section $section)
+    public function addSection(Section $section)
     {
         $this->sections[] = $section;
-        $section->addUser($this);
+        $section->addSupervisor($this);
         return $this;
     }
 
     public function removeSection(Section $section)
     {
         $this->sections->removeElement($section);
-        $section->removeDocument($this);
-    }*/
+        $section->removeSupervisor($this);
+    }
 
 
     /**

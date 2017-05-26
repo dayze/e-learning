@@ -52,5 +52,6 @@ class Breadcrumb
     public function addQcm(Qcm $qcm)
     {
         $this->addCourseCategory($qcm->getDocRelation()[0]->getCourseCategory());
+        $this->breadcrumbs->addRouteItem($qcm->getName(), "qcm_display_questions", ["id" => $qcm->getId()]);
     }
 }

@@ -10,4 +10,22 @@ namespace StudentBundle\Repository;
  */
 class RetrieveTimeRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getRetrieveTime($student)
+    {
+        $startDate = date( 'Y-m-' ) . '01'; // First day in current month
+        $endDate   = date( 'Y-m-t' ); // Last day in current month
+        return $this->createQueryBuilder('r')
+            ->join('r.students', 'stu')
+            ->where('stu.id=:student')
+            ->andWhere('r.date >= :startDate')
+            ->andWhere('r.date <= :endDate')
+            ->setParameters([
+                'student' => $student->getId(),
+                'startDate' => $startDate,
+                'endDate' => $endDate
+            ])
+            ->getQuery()
+            ->getResult();
+
+    }
 }

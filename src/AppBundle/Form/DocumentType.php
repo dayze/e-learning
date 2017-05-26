@@ -18,10 +18,13 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\File;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class DocumentType extends AbstractType
 {
     private $em;
+
     /**
      * {@inheritdoc}
      */
@@ -29,7 +32,6 @@ class DocumentType extends AbstractType
     {
         $this->em = $options["em"];
         $builder
-            ->add('path', FileType::class)
             ->add('name')
             ->add('docRelation', CollectionType::class, [
                 'entry_type' => DocRelationType::class,
@@ -41,7 +43,20 @@ class DocumentType extends AbstractType
                 'attr' => ['class' => 'section-collection'],
             ])
             ->add('save', SubmitType::class, array('label' => 'Envoyer',
-                "attr" => array("class" => "btn btn-primary")));;
+                "attr" => array("class" => "btn btn-primary")));
+        if($options['isEdit']){
+            $builder->add('path', FileType::class, [
+                "required" => false
+            ]);
+        }
+        else{
+            $builder->add('path', FileType::class, [
+               'constraints' => [
+                   new NotBlank(["message" => "Vous dezvez séléctionner un document"]),
+               ]
+            ]);
+        }
+
     }
 
     /**
@@ -52,7 +67,8 @@ class DocumentType extends AbstractType
         $resolver->setDefaults(array(
             'data_class' => Document::class,
             'em' => null,
-            'supervisor_id' => null
+            'supervisor_id' => null,
+            'isEdit' => false
         ));
     }
 

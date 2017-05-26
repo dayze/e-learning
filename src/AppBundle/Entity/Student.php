@@ -3,6 +3,7 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -13,6 +14,7 @@ class Student extends User
 {
     public function __construct()
     {
+        $this->sections = new ArrayCollection();
         parent::__construct();
     }
 
@@ -32,9 +34,12 @@ class Student extends User
     private $actions;
 
     /**
-    * @ORM\ManyToMany(targetEntity="StudentBundle\Entity\RetrieveTime", mappedBy="students", cascade={"persist"})
+    * @ORM\OneToMany(targetEntity="StudentBundle\Entity\RetrieveTime", mappedBy="students", cascade={"persist"})
     */
-    private $retriveTimes;
+    private $retrieveTime;
+
+    private $totalRetrieveTime;
+
 
 
     public function setSection($sections)
@@ -49,6 +54,18 @@ class Student extends User
     public function getSections()
     {
         return $this->sections;
+    }
+
+    public function addSection(Section $section)
+    {
+        $this->sections[] = $section;
+        $section->addStudent($this);
+    }
+
+    public function removeSection(Section $section)
+    {
+        $this->sections->removeElement($section);
+        $section->removeStudent($this);
     }
 
     /**
@@ -86,17 +103,58 @@ class Student extends User
     /**
      * @return mixed
      */
-    public function getRetriveTimes()
+    public function getRetrieveTimes()
     {
-        return $this->retriveTimes;
+        return $this->retrieveTime;
     }
 
     /**
-     * @param mixed $retriveTimes
+     * @param mixed $retrieveTimes
      */
-    public function setRetriveTimes($retriveTimes)
+    public function setRetrieveTimes($retrieveTime)
     {
-        $this->retriveTimes = $retriveTimes;
+        $this->retrieveTime = $retrieveTime;
     }
+
+    /**
+     * @param mixed $sections
+     */
+    public function setSections($sections)
+    {
+        $this->sections = $sections;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTotalRetrieveTime()
+    {
+        return $this->totalRetrieveTime;
+    }
+
+    /**
+     * @param mixed $totalRetrieveTime
+     */
+    public function setTotalRetrieveTime($totalRetrieveTime)
+    {
+        $this->totalRetrieveTime = $totalRetrieveTime;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRetrieveTime()
+    {
+        return $this->retrieveTime;
+    }
+
+    /**
+     * @param mixed $retrieveTime
+     */
+    public function setRetrieveTime($retrieveTime)
+    {
+        $this->retrieveTime = $retrieveTime;
+    }
+
 
 }

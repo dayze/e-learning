@@ -46,12 +46,12 @@ class Qcm
     private $qcmQuestions;
 
     /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\DocRelation", mappedBy="qcm", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\DocRelation", mappedBy="qcm", cascade={"persist", "remove"})
      */
     private $docRelation;
 
     /**
-     * @ORM\OneToMany(targetEntity="Score", mappedBy="qcm", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="Score", mappedBy="qcm", cascade={"persist", "remove"})
      */
     private $score;
 

@@ -1,5 +1,6 @@
 var controllerQcm = function () {
     this.Dayze = new Dayze();
+    $('#exercise').addClass('active');
 };
 
 /*************************************CRUD**************************************************/
@@ -111,6 +112,27 @@ controllerQcm.prototype.editDisplay = function () {
 
 };
 
+controllerQcm.prototype.csvDisplay = function () {
+    var that = this;
+    $('body').on('click', '#qcm-csv-modal', function (e) {
+        e.preventDefault();
+        $.ajax({
+            type: "GET",
+            url: Routing.generate("app_save_csv")
+        })
+            .done(function (resp) {
+                $("#crudModal").replaceWith(resp.form);
+                that.Dayze.newModalFeatures();
+                $("#crudModal").modal();
+            })
+            .fail(function (jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR.responseText);
+                console.log(jqXHR.responseJSON.error);
+            });
+    });
+};
+
+
 /*************************************OTHERS**************************************************/
 
 controllerQcm.prototype.initCollectionQuestion = function () {
@@ -137,6 +159,7 @@ controllerQcm.prototype.init = function () {
     this.deleteProcess();
     this.newDisplay();
     this.editDisplay();
+    this.csvDisplay();
 };
 
 $(function () {

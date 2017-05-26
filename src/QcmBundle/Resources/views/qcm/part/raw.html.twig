@@ -4,5 +4,6 @@
         <a href="{{ path('qcm_display_questions', {'id' : qcm.id}) }}" class="btn btn-success btn-xs"><i class="fa fa-eye"></i></a>
         <a data-id="{{ qcm.id }}" href="" class="btn btn-primary btn-xs ajaxEdit"><i class="fa fa-edit"></i></a>
         <a data-id="{{ qcm.id }}" class="btn btn-danger btn-xs ajaxDelete"><i class="fa fa-remove"></i></a>
+        <a class="btn btn-info btn-xs" href="{{ path('qcm_display_grades', {'id': qcm.id}) }}">Notes des élèves</a>
     </td>
 </tr>

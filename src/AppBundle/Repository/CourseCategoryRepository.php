@@ -20,4 +20,22 @@ class CourseCategoryRepository extends \Doctrine\ORM\EntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function findCourseCategoryElement($id, $student_id)
+    {
+        $qb = $this->createQueryBuilder('cc');
+        return $qb
+            ->join('cc.docRelation', 'dr')
+            ->where('dr.courseCategory = :id')
+            ->addSelect('dr')
+            ->join('dr.qcm', 'qcm')
+            ->addSelect('qcm')
+            ->join('qcm.score', 'score')
+            ->addSelect('score')
+            ->andWhere('score.student = :student_id')
+            ->setParameters(["id" => $id, "student_id" => $student_id])
+            ->getQuery()
+            ->getSingleResult()
+            ;
+    }
 }

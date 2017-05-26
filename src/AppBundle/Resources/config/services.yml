@@ -4,6 +4,7 @@ services:
         arguments:
             entityManager: "@doctrine.orm.entity_manager"
             container: "@service_container"
+            mail: "@app.mail"
 
     app.section:
         class: AppBundle\Service\SectionService
@@ -12,6 +13,7 @@ services:
     app.document:
         class: AppBundle\Service\DocumentService
         parent: app.base
+
 
     app.user:
         class: AppBundle\Service\UserService
@@ -33,3 +35,11 @@ services:
          class: AppBundle\Service\CheckRole
          arguments:
              container: "@service_container"
+
+    app.mail:
+        class: AppBundle\Service\Mail
+        arguments: ['@twig', '@mailer']
+
+    app.pdf_maker:
+        class: AppBundle\Service\PdfMaker
+        arguments: ['@service_container']

@@ -21,12 +21,14 @@ class LoadQcmData extends AbstractFixture implements OrderedFixtureInterface
     {
         $qcm1 = new Qcm();
         $qcm1->setName('Programmation Orienté Objet');
+        $qcm1->setIsEvaluated(true);
         $this->addReference('qcm1', $qcm1);
         $manager->persist($qcm1);
 
         $qcm2 = new Qcm();
         $qcm2->setName('HTML 5');
         $this->addReference('qcm2', $qcm2);
+        $qcm2->setIsEvaluated(false);
         $manager->persist($qcm2);
 
         $manager->flush();

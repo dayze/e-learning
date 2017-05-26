@@ -1,5 +1,5 @@
 var controllerDocument = function () {
-    this.supervisorId = '';
+    $('#document').addClass('active');
 };
 
 /*************************************CRUD**************************************************/

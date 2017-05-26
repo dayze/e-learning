@@ -5,7 +5,9 @@ namespace QcmBundle\Service;
 
 
 use AppBundle\Service\BaseService;
+use AppBundle\Service\Mail;
 use QcmBundle\Entity\Qcm;
+use QcmBundle\Entity\QcmAnswer;
 use QcmBundle\Entity\QcmQuestion;
 use QcmBundle\Entity\Score;
 use Symfony\Component\HttpFoundation\File\File;
@@ -24,7 +26,7 @@ class QcmService extends BaseService
         return $score;
     }
 
-    public function setScore($questions)
+    public function setScore($questions, $flush)
     {
         $finalScore = new Score();
         $nbQuestion = count($questions);
@@ -35,10 +37,10 @@ class QcmService extends BaseService
             }
         }
         $finalScore->setNote(($correctQuestion * 20) / $nbQuestion);
-        $finalScore->setStudent($this->container->get('security.token_storage')->getToken()->getUser());
+        $flush ? $finalScore->setStudent($this->container->get('security.token_storage')->getToken()->getUser()) : false;
         $finalScore->setQcm($questions[0][0]->getQcm());
         $this->em->persist($finalScore);
-        $this->em->flush();
+        $flush ? $this->em->flush() : false;
         return $finalScore;
     }
 
@@ -80,15 +82,49 @@ class QcmService extends BaseService
 
     public function checkQcmProperty(Qcm $qcm)
     {
-        if($qcm->isIsEvaluated()){
-            if($this->container->get('app.check_role')->check('ROLE_STUDENT')){
+        if ($qcm->isIsEvaluated()) {
+            if ($this->container->get('app.check_role')->check('ROLE_STUDENT')) {
                 $user_id = $this->container->get('security.token_storage')->getToken()->getUser()->getId();
                 $scoreStudent = $this->em->getRepository('QcmBundle:Qcm')->findScoreByStudent($user_id, $qcm->getId());
                 return count($scoreStudent) > 0;
             }
-        }
-        else{
+        } else {
             return false;
+        }
+    }
+
+    public function saveCSV($file, Qcm $qcm)
+    {
+        $delim = ";";
+        if (file_exists($file)) {
+            $tab = file($file);
+        }
+        for ($i = 1; $i < sizeof($tab); $i++) {
+            $ligne = preg_split("/" . $delim . "/", $tab[$i]);
+            $qcmQuestion = new QcmQuestion();
+            $qcmQuestion->setQuestion($ligne[0]);
+            for ($j = 2; $j < count($ligne); $j++) {
+                $qcmAnswer = new QcmAnswer();
+                $qcmAnswer->setResponse($ligne[$j]);
+                if ($j - 1 == $ligne[1]) {
+                    $qcmAnswer->setIsCorrect(true);
+                } else {
+                    $qcmAnswer->setIsCorrect(false);
+                }
+                $qcmQuestion->addQcmAnswer($qcmAnswer);
+            }
+            $qcm->addQcmQuestion($qcmQuestion);
+        }
+        $this->addEntity($qcm);
+    }
+
+    public function sendMail(Qcm $qcm)
+    {
+        if ($qcm->getDocRelation()->getIsAvailable()) {
+            $this->mail->sendMail("Ajout d'un QCM", "", "QcmBundle:mail.html.twig", [
+                "name" => "",
+                "id" => $qcm->getId()
+            ]);
         }
     }
 }

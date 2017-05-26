@@ -23,6 +23,8 @@ class UserType extends AbstractType
             ))
             ->add("username")
             ->add('email')
+            ->add('firstName')
+            ->add('lastName')
             ->add('plainPassword', PasswordType::class, array('constraints' => array(new NotBlank(array(
                 'groups' => array('form_validation_only')
             )))))

@@ -1,0 +1,25 @@
+app_supervisor_display:
+    path: /supervisor
+    defaults: { _controller: AppBundle:Supervisor:display }
+
+app_supervisor_create:
+     path: /supervisor/create
+     defaults: { _controller: AppBundle:Supervisor:create }
+     options:
+         expose: true
+
+app_supervisor_delete:
+     path: /supervisor/delete/{id}
+     defaults: { _controller: AppBundle:Supervisor:delete }
+     requirements:
+         id: '\d+'
+     options:
+         expose: true
+
+app_supervisor_edit:
+    path: /supervisor/edit/{id}
+    defaults: { _controller: AppBundle:Supervisor:edit }
+    requirements:
+        id: '\d+'
+    options:
+        expose: true

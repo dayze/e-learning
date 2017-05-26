@@ -18,10 +18,10 @@
                         </tr>
                         </thead>
                         {% for docRelation in courseCategory.docRelation %}
-                            {% if docRelation.document is not null %}
+                            {% if docRelation.document is not null and docRelation.available == true  %}
                                 <tr class="student-tr event-listener"
-                                    data-href= "{{ asset('uploads/document/' ~ docRelation.document.path) }}"
-                                    data-name = "{{ docRelation.document.name }}" >
+                                    data-href="{{ asset('uploads/document/' ~ docRelation.document.path) }}"
+                                    data-name="{{ docRelation.document.name }}">
                                     <td>{{ docRelation.document.name }}</td>
                                     <td>{{ docRelation.document.date|date('d-m-Y') }}</td>
                                     <td>{{ docRelation.document.type }}</td>
@@ -41,14 +41,18 @@
                         <tr>
                             <th>Nom</th>
                             <th>Date</th>
+                            <th>Note</th>
                         </tr>
                         </thead>
                         {% for docRelation in courseCategory.docRelation %}
-                            {% if docRelation.qcm is not null %}
-                                <tr class="student-tr qcm-tr"
-                                    data-href= "{{ path('qcm_display_questions', {"id":docRelation.qcm.id}) }}">
-                                    <td>{{ docRelation.qcm.name }}</td>
+                            {% if docRelation.qcm is not null and docRelation.available == true %}
+                                <tr class="student-tr qcm-tr" data-qcm-id="{{ docRelation.qcm.id  }}"
+                                    data-href="{{ path('qcm_display_questions', {"id":docRelation.qcm.id}) }}">
+                                    <td class="named">{{ docRelation.qcm.name }}</td>
                                     <td>{{ docRelation.qcm.date|date('d-m-Y') }}</td>
+                                    <td>
+                                        <a href="#" class="btn btn-xs btn-primary grade">Mes notes</a>
+                                    </td>
                                 </tr>
                             {% endif %}
                         {% endfor %}
@@ -58,7 +62,7 @@
         </div>
         {% include 'StudentBundle:part:calendar.html.twig' %}
     </div>
-
+<div id="gradeModal"></div>
 {% endblock %}
 {% block javascripts %}
     <script>
@@ -66,8 +70,9 @@
             window.open($(this).attr('data-href'), '_blank');
         })
 
-        $('.qcm-tr').click(function () {
-            window.location = $(this).attr('data-href');
+
+        $('.named').click(function () {
+            window.location = $(this).parent().attr('data-href');
         })
 
 

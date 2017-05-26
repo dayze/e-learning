@@ -1,4 +1,5 @@
 @import "partial/dayze";
+
 #header-top {
   height: 200px;
   width: 100vw;
@@ -6,7 +7,7 @@
   background-size: cover;
   position: relative;
   margin-bottom: 15px;
-  #header-name-student{
+  #header-name-student {
     /*position: relative;
     top: 50%;
     left: 39%;*/
@@ -14,90 +15,106 @@
     color: $cloud;
     text-transform: uppercase;
     font-weight: bold;
-    .firstName{
+    .firstName {
       color: $lightpeter;
     }
-    .lastName{
+    .lastName {
       color: $emerlad;
     }
   }
 }
-.navbar{
+
+.navbar {
   background: rgba(0, 0, 0, 0.4);
   position: relative;
 }
 
-.navbar-header{
-  a{
-    color: $cloud!important;
+.navbar-header {
+  a {
+    color: $cloud !important;
   }
 }
 
-.navbar-nav{
-  a{
+.navbar-nav {
+  a {
     color: #dedede !important;
     font-family: Helvetica, Arial, sans-serif;
   }
 }
 
-p, a{
+p, a {
   font-family: Helvetica, Arial, sans-serif;
 }
 
-#time-spent{
+#time-spent {
   background: $emerlad;
-  h4{
+  h4 {
     color: $cloud;
   }
 }
 
-.list-course{
-  li{
+.list-course {
+  li {
     padding: 10px;
     border-bottom: solid 1px $lightpeter;
-    i{
+    i {
       color: $peter;
     }
-    &:hover{
+    &:hover {
       background: $peter;
       cursor: pointer;
-      a{
+      a {
         color: $cloud;
       }
-      i{
+      i {
         color: $cloud;
       }
     }
-    &:first-child{
+    &:first-child {
       border-top: 1px solid $lightpeter;
     }
-    a{
+    a {
       font-size: 15px;
-      color: black ;
+      color: black;
     }
   }
 }
 
-.student-tr:hover{
+.student-tr:hover {
   background: $cloud;
   cursor: pointer;
 }
 
-.title-course-category{
+.title-course-category {
   background: $peter;
   color: $cloud
 }
 
-.score-input{
+.score-input {
   font-size: 90px;
   color: $peter;
 }
 
-.score-div{
+.score-div {
   min-height: 454px;
 
 }
 
-.center-vertical{
-
+.container {
+  margin-bottom: 50px;
 }
+
+#footer {
+  height: 45px;
+  background: $midnightblue;
+  p{
+    color: $cloud;
+  }
+}
+
+.box-pdf{
+  height: 140px;
+  width: 200px;
+  border: 1px solid;
+}
+

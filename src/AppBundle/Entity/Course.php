@@ -129,7 +129,7 @@ class Course
     public function removeSection(Section $section)
     {
         $this->sections->removeElement($section);
-        $section->removeCourse($section);
+        $section->removeCourse($this);
     }
 
 

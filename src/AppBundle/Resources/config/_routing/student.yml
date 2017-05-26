@@ -1,0 +1,27 @@
+app_student_create:
+     path: /student/create
+     defaults: { _controller: AppBundle:Student:create }
+     options:
+         expose: true
+
+app_student_delete:
+     path: /student/delete/{id}
+     defaults: { _controller: AppBundle:Student:delete }
+     requirements:
+         id: '\d+'
+     options:
+         expose: true
+
+app_student_edit:
+    path: /student/edit/{id}
+    defaults: { _controller: AppBundle:Student:edit }
+    requirements:
+        id: '\d+'
+    options:
+        expose: true
+
+app_student_display:
+    path: section/{id}/student
+    defaults: { _controller: AppBundle:Student:display }
+    requirements:
+        id: '\d+'

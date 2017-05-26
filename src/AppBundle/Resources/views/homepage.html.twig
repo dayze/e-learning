@@ -1,0 +1,67 @@
+{% extends "base_app.html.twig" %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('public/css/student/simple-calendar.css') }}">
+{% endblock %}
+{% block body %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-8 row-box ">
+                {% if "ROLE_ADMIN" in app.user.roles   %}
+                    <div class="col-md-4 pointer">
+                        <a href="{{ path('app_supervisor_display') }}"
+                           class="d-block bg-peter center-vertical center-horizontal">
+                            <i class="fa fa-address-book text-white fa-2x"></i>
+                            <span class="text-white text-size-30">Formateurs</span>
+                        </a>
+                    </div>
+                {% endif %}
+
+                <div class="col-md-4 pointer">
+                    <a href="{{ path('app_section') }}"
+                       class="d-block bg-emerald center-vertical center-horizontal">
+                        <i class="fa fa-folder text-white fa-2x"></i>
+                        <span class="text-white text-size-30">Sections</span>
+                    </a>
+                </div>
+                <div class="col-md-4 pointer">
+                    <a href="{{ path('app_course') }}" class="d-block bg-alizarin center-vertical center-horizontal">
+                        <i class="fa fa-book text-white fa-2x"></i>
+                        <span class="text-white text-size-30">Cours</span>
+                    </a>
+                </div>
+                <div class="col-md-4 pointer">
+                    <a href="{{ path('app_document') }}" class="d-block bg-carrot center-vertical center-horizontal">
+                        <i class="fa fa-file text-white fa-2x"></i>
+                        <span class="text-white text-size-30">Documents</span>
+                    </a>
+                </div>
+                <div class="col-md-4 pointer">
+                    <a href="{{ path('qcm_display_all') }}"
+                       class="d-block bg-sunflower center-vertical center-horizontal">
+                        <i class="fa fa-bookmark text-white fa-2x"></i>
+                        <span class="text-white text-size-30">Exercices</span>
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="col-md-12 row-box" id="calendar"></div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    <script src="{{ asset('public/js/simple-calendar.js') }}"></script>
+    <script>
+        $('#dashboard').addClass('active');
+        $(document).ready(function () {
+            $("#calendar").simpleCalendar({
+                months: ['Janvier', 'Fevrier', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre',
+                    'Novembre', 'Décembre'], //string of months starting from january
+                days: ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'], //string of days starting from sunday
+                minDate: "YYYY-MM-DD", // minimum date
+                maxDate: "YYYY-MM-DD", // maximum date
+                fixedStartDay: true // Week begin always by monday
+            });
+        });
+    </script>
+{% endblock %}

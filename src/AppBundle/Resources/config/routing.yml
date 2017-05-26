@@ -7,11 +7,18 @@ section:
 document:
     resource: "@AppBundle/Resources/config/_routing/document.yml"
 
-user:
-    resource: "@AppBundle/Resources/config/_routing/user.yml"
+student:
+    resource: "@AppBundle/Resources/config/_routing/student.yml"
+
+supervisor:
+    resource: "@AppBundle/Resources/config/_routing/supervisor.yml"
 
 course:
     resource: "@AppBundle/Resources/config/_routing/course.yml"
 
 courseCategory:
     resource: "@AppBundle/Resources/config/_routing/courseCategory.yml"
+
+app.pdf:
+    path: /pdf
+    defaults: { _controller: AppBundle:TimeRetrieve:pdf}

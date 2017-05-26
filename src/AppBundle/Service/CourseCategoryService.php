@@ -12,4 +12,10 @@ class CourseCategoryService extends BaseService
         }
         return $result;
     }
+
+    public function findCourseCategoryElement($id, $student_id)
+    {
+        $repository = $this->container->get('doctrine')->getRepository('AppBundle:CourseCategory');
+        return $repository->findCourseCategoryElement($id, $student_id);
+    }
 }

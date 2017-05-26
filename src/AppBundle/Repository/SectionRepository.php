@@ -35,4 +35,40 @@ class SectionRepository extends \Doctrine\ORM\EntityRepository
             ->getResult();
     }
 
+    public function findSectionByQcm($qcm_id)
+    {
+        return $this->createQueryBuilder('sec')
+            ->join('sec.docRelation', 'docRelation')
+            ->join('docRelation.qcm', 'qcm')
+            ->join('qcm.score', 'score')
+            ->addSelect('docRelation')
+            ->addSelect('qcm')
+            ->where('docRelation.qcm = :qcm_id')
+            ->setParameter('qcm_id', $qcm_id)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function getTimeRetrieveForSectionAndMonth($section_id, $date)
+    {
+        $startDate = date( 'Y-m-' ) . '01'; // First day in current month
+        $endDate   = date( 'Y-m-t' ); // Last day in current month
+        return $this->createQueryBuilder('s')
+            ->join('s.students', 'stu')
+            ->addSelect('stu')
+            ->join('stu.retrieveTime', 'rt')
+            ->addSelect('rt')
+            ->where('s.id=:section_id')
+            ->andWhere('rt.date >= :startDate')
+            ->andWhere('rt.date <= :endDate')
+            ->setParameters([
+                'section_id' => $section_id,
+                'startDate' => $startDate,
+                'endDate' => $endDate
+            ])
+            ->getQuery()
+            ->getSingleResult();
+    }
+
+
 }
