@@ -51,8 +51,8 @@ class SectionRepository extends \Doctrine\ORM\EntityRepository
 
     public function getTimeRetrieveForSectionAndMonth($section_id, $date)
     {
-        $startDate = date( 'Y-m-' ) . '01'; // First day in current month
-        $endDate   = date( 'Y-m-t' ); // Last day in current month
+        $startDate = date($date) . '-01';
+        $endDate = date('Y-m-t', strtotime($date));
         return $this->createQueryBuilder('s')
             ->join('s.students', 'stu')
             ->addSelect('stu')
@@ -67,7 +67,7 @@ class SectionRepository extends \Doctrine\ORM\EntityRepository
                 'endDate' => $endDate
             ])
             ->getQuery()
-            ->getSingleResult();
+            ->getOneOrNullResult();
     }
 
 

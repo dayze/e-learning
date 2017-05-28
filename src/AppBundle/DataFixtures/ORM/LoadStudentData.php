@@ -19,24 +19,24 @@ class LoadStudentData extends AbstractFixture implements OrderedFixtureInterface
     {
         
         $student1 = new Student();
-        $student1->setUsername("student1");
-        $student1->setPlainPassword("student1");
+        $student1->setUsername("maxime");
+        $student1->setPlainPassword("maxime");
         $student1->setEnabled(true);
         $student1->setEmail("student1@student1.fr");
         $student1->setRoles(array("ROLE_STUDENT"));
-        $student1->setFirstName('Margaret');
-        $student1->setLastName('Lagarde');
+        $student1->setFirstName('Maxime');
+        $student1->setLastName('Lainé');
         $manager->persist($student1);
         $this->addReference('student1', $student1);
 
         $student2 = new Student();
-        $student2->setUsername("student2");
-        $student2->setPlainPassword("student2");
+        $student2->setUsername("charlotte");
+        $student2->setPlainPassword("charlotte");
         $student2->setEnabled(true);
         $student2->setEmail("student2@student2.fr");
         $student2->setRoles(array("ROLE_STUDENT"));
-        $student2->setFirstName('Margot');
-        $student2->setLastName('Legros');
+        $student2->setFirstName('Charlotte');
+        $student2->setLastName('Georget');
         $manager->persist($student2);
         $this->addReference('student2', $student2);
 

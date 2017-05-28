@@ -19,13 +19,13 @@ class LoadSupervisorData extends AbstractFixture implements OrderedFixtureInterf
     {
         
         $supervisor1 = new Supervisor();
-        $supervisor1->setUsername("supervisor1");
-        $supervisor1->setPlainPassword("supervisor1");
+        $supervisor1->setUsername("jeremy");
+        $supervisor1->setPlainPassword("jeremy");
         $supervisor1->setEnabled(true);
         $supervisor1->setEmail("supervisor1@supervisor1.fr");
         $supervisor1->setRoles(array("ROLE_SUPERVISOR"));
-        $supervisor1->setFirstName('Sophie');
-        $supervisor1->setLastName('Boucher');
+        $supervisor1->setFirstName('Jérémy');
+        $supervisor1->setLastName('Habit');
         $manager->persist($supervisor1);
         $this->addReference('supervisor1', $supervisor1);
 

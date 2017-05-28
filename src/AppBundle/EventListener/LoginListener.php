@@ -41,8 +41,10 @@ class LoginListener
             $lastLogin = $this->em->getRepository('StudentBundle:Action')->findActionAndStudent('login', $student->getId());
             if ($lastLogin) {
                 $lastAction = $this->em->getRepository('StudentBundle:Action')->findLast($student->getId());
-                $retrieveTime = $lastAction->getDate()->diff($lastLogin->getDate());
-                $this->rt->addRetrieveTime($retrieveTime, $student);
+                if($lastAction != "logout"){
+                    $retrieveTime = $lastAction->getDate()->diff($lastLogin->getDate());
+                    $this->rt->addRetrieveTime($retrieveTime, $student);
+                }
             }
             $this->actionService->SaveAction($student, 'login');
         }

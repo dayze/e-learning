@@ -6,7 +6,7 @@ parameters:
 services:
     appbundle_logoutlistener:
         class: AppBundle\EventListener\LogoutListener
-        arguments: ['@app.action', '@app.check_role']
+        arguments: ['@app.action', '@app.check_role', '@doctrine.orm.entity_manager', '@app.retrievetime']
 
     appbundle_loginlistener:
         class: AppBundle\EventListener\LoginListener

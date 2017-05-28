@@ -1,32 +1,42 @@
 var controllerCourseCategory = function () {
     this.rawElement = "";
+    this.courseId = "";
 };
 
 /*************************************CRUD**************************************************/
-controllerCourseCategory.prototype.addEditProcessing = function () { //todo different
+controllerCourseCategory.prototype.addEditProcessing = function () {
     var that = this;
     $('body').on('submit', '.ajaxFormCategory', function (e) {
         e.preventDefault();
 
         $.ajax({
             type: $(this).attr('method'),
-            url: $(this).attr('action')/*Routing.generate("app_create_courseCategory", {"id": that.rawElement.attr('data-id')})*/,
+            url: $(this).attr('action'),
             data: $(this).serialize()
         })
             .done(function (resp) {
                 $("#crudModal").modal("hide");
-                if(resp.action == "new"){
-                    var tr = that.rawElement.parents('tr').nextAll(".clickable");
-                    if(tr.length == 0){
-                        that.rawElement.parents('tbody').append(resp.data);
+                if (resp.action == "new") {
+                    var tr = $("tr[data-courseId-category='" + that.courseId + "']");
+                    console.log();
+                    if(tr.length != 0){
+                        $(resp.data).insertAfter(tr.last());
+                        if (tr.hasClass('in')) {
+                            $("tr[data-courseId-category='" + that.courseId + "']").
+                            addClass('in').css('display', 'true').attr('aria-expanded', 'true').
+                            children().children().addClass('in');
+                        }
                     }
                     else{
-                        $(resp.data).insertBefore(tr);
+                        $(resp.data).insertAfter(that.rawElement.parents('tr'));
+                        $("tr[data-courseId-category='" + that.courseId + "']").
+                        addClass('in').css('display', 'true').attr('aria-expanded', 'true').
+                        children().children().addClass('in')
                     }
-                    /*$("#course-table").find("tr:last").after(resp.data);
-                    $("#course-table").find("tr:last").hide().fadeIn(400);*/
+
+
                 }
-                else if(resp.action == "edit"){
+                else if (resp.action == "edit") {
                     $(".ajaxEditCategory[data-id=" + resp.id + "]").parents('tr').replaceWith(resp.data);
                 }
             })
@@ -75,6 +85,7 @@ controllerCourseCategory.prototype.newDisplay = function () {
     var that = this;
     $('body').on('click', '#courseCategory-add-modal', function (e) {
         that.rawElement = $(this);
+        that.courseId = $(this).parents('tr').attr('data-course-id');
         e.preventDefault();
         $.ajax({
             type: "GET",
@@ -85,8 +96,7 @@ controllerCourseCategory.prototype.newDisplay = function () {
                 $("#crudModal").modal();
             })
             .fail(function (jqXHR, textStatus, errorThrown) {
-               // console.log(jqXHR.responseText);
-               // console.log(jqXHR.responseJSON.error);
+
             });
     })
 
@@ -95,6 +105,7 @@ controllerCourseCategory.prototype.newDisplay = function () {
 controllerCourseCategory.prototype.editDisplay = function () {
     var that = this;
     $('body').on('click', '.ajaxEditCategory', function (e) {
+        that.courseId = $(this).parents('tr').attr('data-course-id');
         e.preventDefault();
         $.ajax({
             type: "GET",

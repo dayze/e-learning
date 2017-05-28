@@ -19,11 +19,7 @@ class LoadActionData extends AbstractFixture implements OrderedFixtureInterface
      */
     public function load(ObjectManager $manager)
     {
-      $action1= new Action();
-      $action1->setName('login');
-      $action1->setStudents([$this->getReference('student1')]);
-      $manager->persist($action1);
-      $manager->flush();
+
 
     }
 

@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class SectionController extends Controller
 {
-    public function displayAction()
+    public function displayAction($onError = null)
     {
         $sectionService = $this->get("app.section");
         if ($this->get('app.check_role')->check("ROLE_ADMIN")) {
@@ -23,8 +23,7 @@ class SectionController extends Controller
         } else {
             $sections = $sectionService->findSectionBySupervisor($this->getUser()->getId());
         }
-
-        return $this->render('AppBundle:Section:viewSection.html.twig', array("sections" => $sections));
+        return $this->render('AppBundle:Section:viewSection.html.twig', array("sections" => $sections, "onError" => $onError));
     }
 
     /*************************************CRUD**************************************************/
@@ -99,15 +98,18 @@ class SectionController extends Controller
         $form->handleRequest($request);
         if ($form->isValid()) {
             $sectionId = $request->request->get('pdf')["section_id"];
-            $section = $this->getDoctrine()->getRepository('AppBundle:Section')->getTimeRetrieveForSectionAndMonth($sectionId, null);
+            $date = $request->request->get('pdf')["date"];
+            $section = $this->getDoctrine()->getRepository('AppBundle:Section')->getTimeRetrieveForSectionAndMonth($sectionId, $date);
+            if(!$section){
+                return $this->displayAction(true);
+            }
             /** @var $section Section */
             foreach ($section->getStudents() as $student) {
                 /** @var $student Student */
                 $student->setTotalRetrieveTime($this->get('app.retrievetime')->getTimeRetrieve($student));
             }
-            $view = $this->render('AppBundle::pdf.html.twig', ["section" => $section]);
-            return $view;
-            //return $this->get('app.pdf_maker')->makePdf($view);
+            $view = $this->renderView('AppBundle::pdf.html.twig', ["section" => $section]);
+            return $this->get('app.pdf_maker')->makePdf($view);
         } else if (!$form->isValid() && $form->isSubmitted()) {
             return new JsonResponse(array(
                 'error' => true,

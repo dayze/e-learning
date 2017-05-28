@@ -36,7 +36,7 @@ class CourseCategory
     private $name;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Course", inversedBy="courseCategories")
+     * @ORM\ManyToOne(targetEntity="Course", inversedBy="courseCategories", cascade={"persist"})
      */
     private $course;
 

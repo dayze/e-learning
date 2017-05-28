@@ -20,7 +20,7 @@ class PdfType extends AbstractType
                 'widget' => 'single_text',
                 'html5' => false,
                 'attr' => ['class' => 'js-datepicker'],
-                'format' => 'mm-yyyy'
+                'format' => 'yyyy-mm'
             ])
             ->add('save', SubmitType::class, array('label' => 'Envoyer',
                 "attr" => array("class" => "btn btn-primary pdfSend")));

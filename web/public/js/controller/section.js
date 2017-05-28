@@ -119,7 +119,7 @@ controllerSection.prototype.displayPdfDate = function () {
                 that.initDateTimePicker();
             })
             .fail(function (jqXHR, textStatus, errorThrown) {
-                console.log(jqXHR.responseJSON.error);
+                alert(jqXHR.responseJSON.message);
             });
     })
 
@@ -135,12 +135,18 @@ controllerSection.prototype.initDateTimePicker = function () {
         monthsShort: ["Jan", "Fév", "Mar", "Avr", "Mai", "Jui", "Jui", "Aoû", "Sep", "Oct", "Nov", "Déc"],
     }
     $('.js-datepicker').datepicker({
-        format: "mm-yyyy",
+        format: "yyyy-mm",
         startView: "months",
         minViewMode: "months",
         language: 'fr'
     });
 
+};
+
+controllerSection.prototype.onError = function () {
+    if($('#onError').attr('data-error') == true){
+        alert("Aucun élève de cette section n'a rattrapé de temps");
+    }
 };
 
 controllerSection.prototype.init = function () {
@@ -149,6 +155,7 @@ controllerSection.prototype.init = function () {
     this.editDisplaySection();
     this.newDisplaySection();
     this.displayPdfDate();
+    this.onError();
 };
 
 $(function () {

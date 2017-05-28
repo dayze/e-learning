@@ -58,7 +58,23 @@ class LoadCourseData extends AbstractFixture implements OrderedFixtureInterface
         $course6->addSection($this->getReference('section1'));
         $manager->persist($course6);
         $this->addReference('course6', $course6);
+
+        $course7 = new Course();
+        $course7->setName('Français');
+        $course7->setSupervisor($this->getReference("supervisor1"));
+        $course7->addSection($this->getReference('section1'));
+        $manager->persist($course7);
+        $this->addReference('course7', $course7);
+
+        $course8 = new Course();
+        $course8->setName('Anglais');
+        $course8->setSupervisor($this->getReference("supervisor1"));
+        $course8->addSection($this->getReference('section1'));
+        $manager->persist($course8);
+        $this->addReference('course8', $course8);
+
         $manager->flush();
+
     }
 
     public function getOrder()
