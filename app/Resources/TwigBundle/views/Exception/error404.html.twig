@@ -1,0 +1,8 @@
+{% extends "ROLE_STUDENT" in app.user.roles ? 'StudentBundle::base_student.html.twig' : 'base_app.html.twig' %}
+{% block body %}
+    <div class="container-fluid">
+        <div class="bg-danger jumbotron">
+            <h2>Votre page n'a pas été trouvé</h2>
+        </div>
+    </div>
+{% endblock %}
